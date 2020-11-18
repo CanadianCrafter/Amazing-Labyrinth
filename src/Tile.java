@@ -1,4 +1,6 @@
 
+import java.util.ArrayList;
+
 public class Tile {
 	
 	private int id;
@@ -23,7 +25,7 @@ public class Tile {
 	}
 
 
-	public int getId() {
+	public int getID() {
 		return id;
 	}
 
@@ -59,6 +61,17 @@ public class Tile {
 		if(isMove()) {
 			this.orientation = orientation;
 		}
+	}
+	
+	public static Tile findTileWithID(ArrayList<Tile> list, int id) {
+		
+		for(Tile t: list) {
+			if(t.getID()==id) {
+				return t;
+			}
+		}
+		
+		return null;
 	}
 	
 	

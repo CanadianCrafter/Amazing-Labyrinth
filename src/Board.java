@@ -5,8 +5,16 @@ public class Board {
 	
 	private int setID=0;
 	
+	private int notInBoardID;
+	
 	private int x,y;
 	
+	private String name;
+	
+	
+	
+	
+
 	//Moveable Treasure
 	Tile bat=new Tile(0, "bat", 1, true, (int)(4*Math.random()));
 	Tile dragon=new Tile(1, "dragon", 1, true, (int)(4*Math.random()));
@@ -67,9 +75,93 @@ public class Board {
 	Tile green=new Tile(48, "green", 3, false, 0);
 	Tile blue=new Tile(49, "blue", 3, false, 1);
 	
+	//Cards
+	Card batCard=new Card(0, "bat", false);
+	Card dragonCard=new Card(1, "dragon", false);
+	Card ghostBottleCard=new Card(2, "ghostBottle", false);
+	Card ghostWavingCard=new Card(3, "ghostWaving", false);
+	Card ladyPigCard=new Card(4, "ladyPig", false);
+	Card sorceressCard=new Card(5, "sorceress", false);
+	Card lizardCard=new Card(6, "lizard", false);
+	Card mothCard=new Card(7, "moth", false);
+	Card owlCard=new Card(8, "owl", false);
+	Card scarabCard=new Card(9, "scarab", false);
+	Card ratCard=new Card(10, "rat", false);
+	Card spiderCard=new Card(11, "spider", false);
+	Card goldCoinsCard=new Card(12, "goldCoins", false);
+	Card bookCard=new Card(13, "book", false);
+	Card crownCard=new Card(14, "crown", false);
+	Card menorahCard=new Card(15, "menorah", false);
+	Card ringCard=new Card(16, "ring", false);
+	Card helmetCard=new Card(17, "helmet", false);
+	Card jewelCard=new Card(18, "jewel", false);
+	Card keysCard=new Card(19, "keys", false);
+	Card skullCard=new Card(20, "skull", false);
+	Card swordCard=new Card(21, "sword", false);
+	Card treasurechestCard=new Card(22, "treasurechest", false);
+	Card treasureMapCard=new Card(23, "treasureMap", false);
+	
+	
 	Tile board[][]=new Tile[7][7];
 	
 	public Board() {
+		
+		ArrayList<Tile> allTiles=new ArrayList<Tile>();
+
+		allTiles.add(bat);
+		allTiles.add(dragon);
+		allTiles.add(ghostBottle);
+		allTiles.add(ghostWaving);
+		allTiles.add(ladyPig);
+		allTiles.add(sorceress);
+		allTiles.add(lizard);
+		allTiles.add(moth);
+		allTiles.add(owl);
+		allTiles.add(scarab);
+		allTiles.add(rat);
+		allTiles.add(spider);
+		
+		allTiles.add(lShape1);
+		allTiles.add(lShape2);
+		allTiles.add(lShape3);
+		allTiles.add(lShape4);
+		allTiles.add(lShape5);
+		allTiles.add(lShape6);
+		allTiles.add(lShape7);
+		allTiles.add(lShape8);
+		allTiles.add(lShape9);
+		
+		allTiles.add(iShape1);
+		allTiles.add(iShape2);
+		allTiles.add(iShape3);
+		allTiles.add(iShape4);
+		allTiles.add(iShape5);
+		allTiles.add(iShape6);
+		allTiles.add(iShape7);
+		allTiles.add(iShape8);
+		allTiles.add(iShape9);
+		allTiles.add(iShape10);
+		allTiles.add(iShape11);
+		allTiles.add(iShape12);
+		allTiles.add(iShape13);
+		
+		allTiles.add(goldCoins);
+		allTiles.add(book);
+		allTiles.add(crown);
+		allTiles.add(menorah);
+		allTiles.add(ring);
+		allTiles.add(helmet);
+		allTiles.add(jewel);
+		allTiles.add(keys);
+		allTiles.add(skull);
+		allTiles.add(sword);
+		allTiles.add(treasurechest);
+		allTiles.add(treasureMap);
+		
+		allTiles.add(yellow);
+		allTiles.add(red);
+		allTiles.add(green);
+		allTiles.add(blue);
 		
 		//Starting Point
 		board[0][0]=red;
@@ -91,6 +183,8 @@ public class Board {
 		board[6][2]=menorah;
 		board[6][4]=helmet;
 		
+		
+		
 		setID=0;
 		
 		do {
@@ -99,9 +193,15 @@ public class Board {
 				x=(int)(7*Math.random());
 				y=(int)(7*Math.random());
 				
-			}while(board[x][y]!=);
+				System.out.print("Success");
+				if(board[x][y]==null) {
+					board[x][y]=Tile.findTileWithID(allTiles, setID);
+				}
+				
+			}while(board[x][y]!=Tile.findTileWithID(allTiles, setID));
 			
 			setID++;
+			
 		}while(setID<=33);
 		
 		
@@ -112,3 +212,4 @@ public class Board {
 	
 
 }
+
