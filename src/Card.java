@@ -5,19 +5,14 @@ public class Card {
 	private String object;
 	private boolean solve;
 	
-	public Card(int id, String object, boolean solve) {
+	public Card(int id, boolean solve) {
 		
 		this.id=id;
-		this.object=object;
 		this.solve=solve;
 	}
 
 	public int getId() {
 		return id;
-	}
-
-	public String getObject() {
-		return object;
 	}
 
 	public boolean isSolve() {
@@ -26,10 +21,6 @@ public class Card {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public void setObject(String object) {
-		this.object = object;
 	}
 
 	public void setSolve(boolean solve) {
