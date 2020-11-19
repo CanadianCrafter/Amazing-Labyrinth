@@ -1,10 +1,12 @@
+import java.io.IOException;
 
 public class AmazingLabyrinthTest {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
-		Board gameBoard=new Board();
-		System.out.print("Success");
+//		Board gameBoard=new Board();
+//		System.out.print("Success");
+		new Initialize();
 	}
 	
 }

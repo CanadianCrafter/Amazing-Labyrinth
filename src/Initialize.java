@@ -1,17 +1,26 @@
+import java.io.*;
+import java.util.*;
 
 public class Initialize {
+		
+		static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+		static StringTokenizer st;
 		
 		private Tile allTiles[] = new Tile [50];
 		private Card allCards[] = new Card [24];
 		
+		static Map<String, Integer> tileNameToID = new HashMap();
 		
-		public Initialize() {
+		
+		public Initialize() throws IOException {
 			
 			initializeTiles();
 			initializeCards();
+			initializeTileNameToID();
 			
 		}
 		
+
 		private void initializeTiles() {
 			
 			int index=0;
@@ -62,13 +71,30 @@ public class Initialize {
 			//Adds: bat, dragon, ghostbottle, ghost waving, ladypig, sorceress
 			//		lizard, moth, owl, scarab, rat, spider
 			//		goldcoins, book, crown, menorah, ring, helmet, jewel, keys, skull, sword, treasurechest
-			//      treasuremap, yellow, red, green, blue
+			//      treasuremap
 			
 			for(int i=0; i<24; i++)
 				allCards[index++] = new Card(index, false);
 				
 		}
-
+		
+		private void initializeTileNameToID() throws IOException{
+			BufferedReader br = new BufferedReader(new java.io.FileReader(new File("Files/UnmovableTileIDs.txt")));
+			
+			for(int i =0;i<28;i++) {
+				while (st == null || !st.hasMoreTokens())
+		            st = new StringTokenizer(br.readLine().trim());
+				String str = st.nextToken();
+				
+				while (st == null || !st.hasMoreTokens())
+		            st = new StringTokenizer(br.readLine().trim());
+				String strNum = st.nextToken();
+				int num = Integer.parseInt(strNum);
+				
+				tileNameToID.put(str,num);
+			}
+				
+		}
 		
 		public Tile[] getAllTiles() {
 			return allTiles;
@@ -78,8 +104,13 @@ public class Initialize {
 			return allCards;
 		}
 
+		public static Map<String, Integer> getTileNameToID() {
+			return tileNameToID;
+		}
 
-		
+		public void setTileNameToID(Map<String, Integer> tileNameToID) {
+			this.tileNameToID = tileNameToID;
+		}
 
 		
 }

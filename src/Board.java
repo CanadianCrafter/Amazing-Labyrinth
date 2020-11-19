@@ -16,25 +16,25 @@ public class Board {
 		
 		//Fixed Tiles:
 		
-//		//Starting Points
-//		board[0][0]=red;
-//		board[0][6]=green;
-//		board[6][0]=yellow;
-//		board[6][6]=green;
-//		
-//		//Unmoveable Treasure
-//		board[0][2]=book;
-//		board[0][4]=goldCoins;
-//		board[2][0]=treasureMap;
-//		board[2][2]=crown;
-//		board[2][4]=keys;
-//		board[2][6]=skull;
-//		board[4][0]=ring;
-//		board[4][2]=treasurechest;
-//		board[4][4]=jewel;
-//		board[4][6]=sword;
-//		board[6][2]=menorah;
-//		board[6][4]=helmet;
+		//Starting Points
+		board[0][0]=Initialize.getTileNameToID().get("Red");
+		board[0][6]=Initialize.getTileNameToID().get("Yellow");
+		board[6][0]=Initialize.getTileNameToID().get("Green");
+		board[6][6]=Initialize.getTileNameToID().get("Blue");
+		
+		//Unmoveable Treasure
+		board[0][2]=Initialize.getTileNameToID().get("Book");
+		board[0][4]=Initialize.getTileNameToID().get("Gold_Coins");
+		board[2][0]=Initialize.getTileNameToID().get("Treasure_Map");
+		board[2][2]=Initialize.getTileNameToID().get("Crown");
+		board[2][4]=Initialize.getTileNameToID().get("Keys");
+		board[2][6]=Initialize.getTileNameToID().get("Skull");
+		board[4][0]=Initialize.getTileNameToID().get("Ring");
+		board[4][2]=Initialize.getTileNameToID().get("Treasure_Chest");
+		board[4][4]=Initialize.getTileNameToID().get("Jewel");
+		board[4][6]=Initialize.getTileNameToID().get("Sword");
+		board[6][2]=Initialize.getTileNameToID().get("Menorah");
+		board[6][4]=Initialize.getTileNameToID().get("Helmet");
 		
 		
 		//fill in board with random, movable tiles.
