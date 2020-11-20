@@ -5,9 +5,8 @@ public class Player {
 	private int row;
 	private int column;
 	
-	public Player(Card[] playCards, int row, int column) {
-		
-		this.playCards=playCards;
+	public Player(int row, int column) {
+
 		setRow(row);
 		setColumn(column);
 	}
@@ -15,6 +14,12 @@ public class Player {
 	public Card[] getPlayCards() {
 		return playCards;
 	}
+	
+
+	public void setPlayCards(Card[] playCards) {
+		this.playCards = playCards;
+	}
+	
 
 	public int getRow() {
 		return row;
@@ -39,6 +44,30 @@ public class Player {
 		}else {
 			this.column=0;
 		}
+	}
+	
+	public void setLocation(int row, int column) {
+		if(row>=0 && row<=6) {
+			this.row = row;
+		}else {
+			this.row=0;
+		}
+		
+		if(column>=0 && column<=6) {
+			this.column= column;
+		}else {
+			this.column=0;
+		}
+	}
+	
+	public int[] getLocation() {
+		
+		int[] location=new int[2];
+				
+		location[0]=row;
+		location[1]=column;
+		
+		return(location);
 	}
 	
 	
