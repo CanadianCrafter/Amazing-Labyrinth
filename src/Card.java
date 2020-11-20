@@ -2,7 +2,6 @@
 public class Card {
 	
 	private int id;
-	private String object;
 	private boolean solve;
 	
 	public Card(int id, boolean solve) {
