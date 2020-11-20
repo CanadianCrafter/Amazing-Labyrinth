@@ -27,40 +27,40 @@ public class Initialize {
 
 			//Adds: bat, dragon, ghostbottle, ghost waving, ladypig, sorceress (T-Shaped)
 			for(int i=0; i<6;i++) 
-				allTiles[index++]=new Tile(index, 1, true, (int)(4*Math.random()));
+				allTiles[index++]=new Tile(index, 0, true, (int)(4*Math.random()));
 				
 			//Adds: lizard, moth, owl, scarab, rat, spider (L-shaped)
 			for(int i=0; i<6; i++) 
-				allTiles[index++]=new Tile(index, 3, true, (int)(4*Math.random()));
+				allTiles[index++]=new Tile(index, 2, true, (int)(4*Math.random()));
 			
 			//Unmovable treasures
 			//Adds: goldcoins, book, crown, menorah, ring, helmet, jewel, keys, skull, sword, treasurechest
 			//      treasuremap, yellow, red, green, blue
 			
-			allTiles[index++]=new Tile(index, 1, false, 1);
-			allTiles[index++]=new Tile(index, 1, false, 0);
-			allTiles[index++]=new Tile(index, 1, false, 1);
-			allTiles[index++]=new Tile(index, 1, false, 2);
-			allTiles[index++]=new Tile(index, 1, false, 2);
-			allTiles[index++]=new Tile(index, 1, false, 2);
-			allTiles[index++]=new Tile(index, 1, false, 3);
-			allTiles[index++]=new Tile(index, 1, false, 0);
-			allTiles[index++]=new Tile(index, 1, false, 3);
-			allTiles[index++]=new Tile(index, 1, false, 3);
-			allTiles[index++]=new Tile(index, 1, false, 2);
-			allTiles[index++]=new Tile(index, 1, false, 1);
-			allTiles[index++]=new Tile(index, 3, false, 2);
-			allTiles[index++]=new Tile(index, 3, false, 3);
-			allTiles[index++]=new Tile(index, 3, false, 0);
-			allTiles[index++]=new Tile(index, 3, false, 1);
+			allTiles[index++]=new Tile(index, 0, false, 1);
+			allTiles[index++]=new Tile(index, 0, false, 0);
+			allTiles[index++]=new Tile(index, 0, false, 1);
+			allTiles[index++]=new Tile(index, 0, false, 2);
+			allTiles[index++]=new Tile(index, 0, false, 2);
+			allTiles[index++]=new Tile(index, 0, false, 2);
+			allTiles[index++]=new Tile(index, 0, false, 3);
+			allTiles[index++]=new Tile(index, 0, false, 0);
+			allTiles[index++]=new Tile(index, 0, false, 3);
+			allTiles[index++]=new Tile(index, 0, false, 3);
+			allTiles[index++]=new Tile(index, 0, false, 2);
+			allTiles[index++]=new Tile(index, 0, false, 1);
+			allTiles[index++]=new Tile(index, 2, false, 2);
+			allTiles[index++]=new Tile(index, 2, false, 3);
+			allTiles[index++]=new Tile(index, 2, false, 0);
+			allTiles[index++]=new Tile(index, 2, false, 1);
 			
 			//L shaped Tiles
 			for(int i=0; i<9; i++) 
-				allTiles[index++]=new Tile(index, 3, true, (int)(4*Math.random()));
+				allTiles[index++]=new Tile(index, 2, true, (int)(4*Math.random()));
 			
 			//I shaped Tiles
 			for(int i=0; i<13; i++) 
-				allTiles[index++]=new Tile(index, 2, true, (int)(4*Math.random()));
+				allTiles[index++]=new Tile(index, 1, true, (int)(4*Math.random()));
 			
 		}
 		

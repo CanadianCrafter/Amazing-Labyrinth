@@ -7,6 +7,7 @@ import javax.swing.*;
 import audio.MusicPlayer;
 
 public class GameGUI extends JFrame implements KeyListener, ActionListener{
+	
 	//Buffered Reader
 	static StringTokenizer st;
 	
