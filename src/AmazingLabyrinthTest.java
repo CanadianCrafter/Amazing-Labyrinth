@@ -6,7 +6,8 @@ public class AmazingLabyrinthTest {
 		
 //		Board gameBoard=new Board();
 //		System.out.print("Success");
-		new Initialize();
+		int undone=0;
+		new Initialize(undone, undone, undone);
 	}
 	
 }

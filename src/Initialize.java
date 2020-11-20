@@ -9,14 +9,18 @@ public class Initialize {
 		public static Tile allTiles[] = new Tile [50];
 		public static Card allCards[] = new Card [24];
 		
+		public static Player player1=new Player(0, 0);
+		public static Player player2=new Player(0, 0);
+		
 		public static Map<String, Integer> tileNameToID = new HashMap();
 		
 		
-		public Initialize() throws IOException {
+		public Initialize(int numCard, int player1Colour, int player2Colour) throws IOException {
 			
 			initializeTiles();
 			initializeCards();
 			initializeTileNameToID();
+			initializePlayer(numCard, player1Colour, player2Colour);
 			
 		}
 		
@@ -111,6 +115,57 @@ public class Initialize {
 
 		public void setTileNameToID(Map<String, Integer> tileNameToID) {
 			this.tileNameToID = tileNameToID;
+		}
+		
+public void initializePlayer(int numCards, int player1Colour, int player2Colour) {
+			
+			ArrayList<Card> player1Card=new ArrayList<Card>();
+			ArrayList<Card> player2Card=new ArrayList<Card>();
+			Boolean cardChosen[]=new Boolean[allCards.length];
+			
+			int cardIndex;
+				
+			for(int x=0; x<numCards; x++) {
+				do {
+					cardIndex=(int)(Math.random()*(allCards.length+1));
+				}while(cardChosen[cardIndex]);
+				
+				player1Card.add(allCards[cardIndex]);
+				cardChosen[cardIndex]=true;
+				
+				do {
+					cardIndex=(int)(Math.random()*(allCards.length+1));
+				}while(!cardChosen[cardIndex]);
+				
+				player2Card.add(allCards[cardIndex]);
+				cardChosen[cardIndex]=true;
+					
+			}
+			
+			player1.setPlayCards(player1Card);
+			player2.setPlayCards(player2Card);
+			
+			//Colour: 0-red, 1-yellow, 2-green, 3-blue
+			if(player1Colour==0) {
+				player1.setLocation(0, 0);
+			}else if(player1Colour==1) {
+				player1.setLocation(6, 0);
+			}else if(player1Colour==2) {
+				player1.setLocation(0, 6);
+			}else if(player1Colour==3) {
+				player1.setLocation(6, 6);
+			}
+			
+			if(player2Colour==0) {
+				player2.setLocation(0, 0);
+			}else if(player2Colour==1) {
+				player2.setLocation(6, 0);
+			}else if(player2Colour==2) {
+				player2.setLocation(0, 6);
+			}else if(player2Colour==3) {
+				player2.setLocation(6, 6);
+			}
+			
 		}
 
 		
