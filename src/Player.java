@@ -70,7 +70,16 @@ public class Player {
 		return(location);
 	}
 	
-	
+	public boolean win() {
+		
+		for(Card currentCard: playCards) {
+			if(!currentCard.isSolve()) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 	
 	
 	
