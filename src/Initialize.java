@@ -119,8 +119,8 @@ public class Initialize {
 		
 public void initializePlayer(int numCards, int player1Colour, int player2Colour) {
 			
-			Card player1Card[]=new Card[numCards];
-			Card player2Card[]=new Card[numCards];
+			ArrayList<Card> player1Card=new ArrayList<Card>();
+			ArrayList<Card> player2Card=new ArrayList<Card>();
 			Boolean cardChosen[]=new Boolean[allCards.length];
 			
 			int cardIndex;
@@ -130,20 +130,20 @@ public void initializePlayer(int numCards, int player1Colour, int player2Colour)
 					cardIndex=(int)(Math.random()*(allCards.length+1));
 				}while(cardChosen[cardIndex]);
 				
-				player1Card[x]=allCards[cardIndex];
+				player1Card.add(allCards[cardIndex]);
 				cardChosen[cardIndex]=true;
 				
 				do {
 					cardIndex=(int)(Math.random()*(allCards.length+1));
 				}while(!cardChosen[cardIndex]);
 				
-				player2Card[x]=allCards[cardIndex];
+				player2Card.add(allCards[cardIndex]);
 				cardChosen[cardIndex]=true;
 					
 			}
 			
 			player1.setPlayCards(player1Card);
-			player2.setPlayCards(player1Card);
+			player2.setPlayCards(player2Card);
 			
 			//Colour: 0-red, 1-yellow, 2-green, 3-blue
 			if(player1Colour==0) {
