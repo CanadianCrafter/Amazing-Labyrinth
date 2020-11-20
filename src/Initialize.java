@@ -6,10 +6,10 @@ public class Initialize {
 		static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
 		static StringTokenizer st;
 		
-		private Tile allTiles[] = new Tile [50];
-		private Card allCards[] = new Card [24];
+		public static Tile allTiles[] = new Tile [50];
+		public static Card allCards[] = new Card [24];
 		
-		static Map<String, Integer> tileNameToID = new HashMap();
+		public static Map<String, Integer> tileNameToID = new HashMap();
 		
 		
 		public Initialize() throws IOException {
@@ -93,6 +93,7 @@ public class Initialize {
 				
 				tileNameToID.put(str,num);
 			}
+			br.close();
 				
 		}
 		
