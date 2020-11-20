@@ -15,12 +15,12 @@ public class Initialize {
 		public static Map<String, Integer> tileNameToID = new HashMap();
 		
 		
-		public Initialize(int numCard) throws IOException {
+		public Initialize(int numCard, int player1Colour, int player2Colour) throws IOException {
 			
 			initializeTiles();
 			initializeCards();
 			initializeTileNameToID();
-			initializePlayer(numCard);
+			initializePlayer(numCard, player1Colour, player2Colour);
 			
 		}
 		
@@ -148,8 +148,23 @@ public void initializePlayer(int numCards, int player1Colour, int player2Colour)
 			//Colour: 0-red, 1-yellow, 2-green, 3-blue
 			if(player1Colour==0) {
 				player1.setLocation(0, 0);
+			}else if(player1Colour==1) {
+				player1.setLocation(6, 0);
+			}else if(player1Colour==2) {
+				player1.setLocation(0, 6);
+			}else if(player1Colour==3) {
+				player1.setLocation(6, 6);
 			}
 			
+			if(player2Colour==0) {
+				player2.setLocation(0, 0);
+			}else if(player2Colour==1) {
+				player2.setLocation(6, 0);
+			}else if(player2Colour==2) {
+				player2.setLocation(0, 6);
+			}else if(player2Colour==3) {
+				player2.setLocation(6, 6);
+			}
 			
 		}
 
