@@ -1,7 +1,9 @@
 
+import java.util.ArrayList;
+
 public class Player {
 	
-	private Card[] playCards;
+	private ArrayList<Card> playCards=new ArrayList<Card>();
 	private int row;
 	private int column;
 	
@@ -11,12 +13,12 @@ public class Player {
 		setColumn(column);
 	}
 
-	public Card[] getPlayCards() {
+	public ArrayList<Card> getPlayCards() {
 		return playCards;
 	}
 	
 
-	public void setPlayCards(Card[] playCards) {
+	public void setPlayCards(ArrayList<Card> playCards) {
 		this.playCards = playCards;
 	}
 	
