@@ -11,7 +11,7 @@ public class TileImages {
 	}
 
 	private void loadImages() {
-int index = 0;
+		int index = 0;
 		
 	    //Bat
 	    tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/Bat0.png").getImage().getScaledInstance(50, 50, 0));
@@ -25,23 +25,23 @@ int index = 0;
 	    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/Dragon2.png").getImage().getScaledInstance(50, 50, 0));
 	    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/Dragon3.png").getImage().getScaledInstance(50, 50, 0));
 	    
-	    //Ghost_Bottle
-	    tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/Ghost_Bottle0.png").getImage().getScaledInstance(50, 50, 0));
-	    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/Ghost_Bottle1.png").getImage().getScaledInstance(50, 50, 0));
-	    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/Ghost_Bottle2.png").getImage().getScaledInstance(50, 50, 0));
-	    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/Ghost_Bottle3.png").getImage().getScaledInstance(50, 50, 0));
+	    //Ghost Bottle
+	    tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/GhostBottle0.png").getImage().getScaledInstance(50, 50, 0));
+	    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/GhostBottle1.png").getImage().getScaledInstance(50, 50, 0));
+	    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/GhostBottle2.png").getImage().getScaledInstance(50, 50, 0));
+	    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/GhostBottle3.png").getImage().getScaledInstance(50, 50, 0));
 	    
-	    //Ghost_Waving
-	    tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/Ghost_Waving0.png").getImage().getScaledInstance(50, 50, 0));
-	    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/Ghost_Waving1.png").getImage().getScaledInstance(50, 50, 0));
-	    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/Ghost_Waving2.png").getImage().getScaledInstance(50, 50, 0));
-	    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/Ghost_Waving3.png").getImage().getScaledInstance(50, 50, 0));
+	    //Ghost Waving
+	    tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/GhostWaving0.png").getImage().getScaledInstance(50, 50, 0));
+	    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/GhostWaving1.png").getImage().getScaledInstance(50, 50, 0));
+	    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/GhostWaving2.png").getImage().getScaledInstance(50, 50, 0));
+	    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/GhostWaving3.png").getImage().getScaledInstance(50, 50, 0));
 	    
-	    //Lady_Pig
-	    tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/Lady_Pig0.png").getImage().getScaledInstance(50, 50, 0));
-	    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/Lady_Pig1.png").getImage().getScaledInstance(50, 50, 0));
-	    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/Lady_Pig2.png").getImage().getScaledInstance(50, 50, 0));
-	    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/Lady_Pig3.png").getImage().getScaledInstance(50, 50, 0));
+	    //Lady Pig
+	    tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/LadyPig0.png").getImage().getScaledInstance(50, 50, 0));
+	    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/LadyPig1.png").getImage().getScaledInstance(50, 50, 0));
+	    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/LadyPig2.png").getImage().getScaledInstance(50, 50, 0));
+	    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/LadyPig3.png").getImage().getScaledInstance(50, 50, 0));
 	    
 	    //Sorceress
 	    tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/Sorceress0.png").getImage().getScaledInstance(50, 50, 0));
@@ -90,7 +90,7 @@ int index = 0;
 	    //Fixed Tiles
 	    for(int i =0;i<4;i++) {
 	    	index-=16;
-		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Gold_Coins.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/GoldCoins.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Book.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Crown.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Menorah.png").getImage().getScaledInstance(50, 50, 0));
@@ -100,8 +100,8 @@ int index = 0;
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Keys.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Skull.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Sword.png").getImage().getScaledInstance(50, 50, 0));
-		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Treasure_Chest.png").getImage().getScaledInstance(50, 50, 0));
-		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Treasure_Map.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/TreasureChest.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/TreasureMap.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Yellow.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Red.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Green.png").getImage().getScaledInstance(50, 50, 0));
