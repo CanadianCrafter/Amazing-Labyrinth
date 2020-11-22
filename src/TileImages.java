@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class TileImages {
 	
-	public final ImageIcon tileImages[][] = new ImageIcon[50][4];
+	public static final ImageIcon tileImages[][] = new ImageIcon[50][4];
 	
 	public TileImages() {
 		

@@ -14,7 +14,7 @@ public class Initialize {
 		public static Tile allTiles[] = new Tile [NUM_TILES];
 		public static Card allCards[] = new Card [NUM_CARDS];
 		
-		private static Player players[] = new Player [NUM_PLAYERS];
+		public static Player players[] = new Player [NUM_PLAYERS];
 		
 		public static Map<String, Integer> tileNameToID = new HashMap();
 		

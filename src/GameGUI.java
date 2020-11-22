@@ -14,10 +14,8 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	//gui stuff
 	private static JFrame frame;
 	private static JPanel screen;
-	private  JButton[][] nums; //the "blocks" of numbers
+	private  JButton[][] tileButtons; //the "blocks" of numbers
 	
-	//stores the pictures
-	private final static ImageIcon imageArr[][] = new ImageIcon[4][50];
 	
 	//menubar stuff
 	private static JMenuBar mb = new JMenuBar();
@@ -26,14 +24,16 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private static JMenuItem exit;
 	private static JMenuItem restart;
 	
+	//Player
+	public static int currentPlayer=0;
+	
 	
 	// constructor method
 	public GameGUI(Boolean ifLoad) throws IOException {
     	//setup
-		nums = new JButton[7][7];
+		tileButtons = new JButton[7][7];
     	frame = new JFrame(); 
     	screen = new JPanel();
-    	loadImages();
     	menuBar();
     	frameSetup();
     	panelDesign();
@@ -42,26 +42,6 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
     	
     }
     
-	//puts the images stored in the "Images" folder into the imageArr, array
-	private static void loadImages() {
-//		imageArr[0] = new ImageIcon(new ImageIcon("Images/blank.png").getImage());
-//		imageArr[1] = new ImageIcon(new ImageIcon("Images/2.png").getImage());
-//		imageArr[2] = new ImageIcon(new ImageIcon("Images/4.png").getImage());
-//		imageArr[3] = new ImageIcon(new ImageIcon("Images/8.png").getImage());
-//		imageArr[4] = new ImageIcon(new ImageIcon("Images/16.png").getImage());
-//		imageArr[5] = new ImageIcon(new ImageIcon("Images/32.png").getImage());
-//		imageArr[6] = new ImageIcon(new ImageIcon("Images/64.png").getImage());
-//		imageArr[7] = new ImageIcon(new ImageIcon("Images/128.png").getImage());
-//		imageArr[8] = new ImageIcon(new ImageIcon("Images/256.png").getImage());
-//		imageArr[9] = new ImageIcon(new ImageIcon("Images/512.png").getImage());
-//		imageArr[10] = new ImageIcon(new ImageIcon("Images/1024.png").getImage());
-//		imageArr[11] = new ImageIcon(new ImageIcon("Images/2048.png").getImage());
-//		imageArr[12] = new ImageIcon(new ImageIcon("Images/4096.png").getImage());
-		
-		imageArr[0][0] = new ImageIcon(new ImageIcon("TileImages/Bat0.png").getImage());
-		imageArr[0][1] = new ImageIcon(new ImageIcon("TileImages/Bat1.png").getImage());
-	}
-
 	
     //loads saved data(block values and positions) from a text file
 	private void loadSaveState() throws IOException {
@@ -156,13 +136,13 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		//gives each block their label, and image
 		for(int i =0;i<7;i++) {
 			for(int j =0;j<7;j++){
-				nums[i][j]=new JButton();
-				nums[i][j].addActionListener(this);
-				nums[i][j].setBounds(10 + 60 * j, 10+60*i, 50, 50);  //location moves so labels don't overlap
+				tileButtons[i][j]=new JButton();
+				tileButtons[i][j].addActionListener(this);
+				tileButtons[i][j].setBounds(10 + 60 * j, 10+60*i, 50, 50);  //location moves so labels don't overlap
 				//the imagesArr index corresponds with the value on the board
-				nums[i][j].setIcon(imageArr[Initialize.allTiles[Board.board[i][j]].getOrientation()][Board.board[i][j]]); 
+				tileButtons[i][j].setIcon(TileImages.tileImages[Initialize.allTiles[Board.board[i][j]].getOrientation()][Board.board[i][j]]); 
 				
-				screen.add(nums[i][j]);
+				screen.add(tileButtons[i][j]);
 			}
 		}
 		frame.repaint();
@@ -172,8 +152,8 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private void panelUpdate() {
 		for(int i =0;i<7;i++) {
 			for(int j =0;j<7;j++){
-				nums[i][j].setIcon(imageArr[Initialize.allTiles[Board.board[i][j]].getOrientation()][Board.board[i][j]]); 
-				screen.add(nums[i][j]);
+				tileButtons[i][j].setIcon(TileImages.tileImages[Initialize.allTiles[Board.board[i][j]].getOrientation()][Board.board[i][j]]); 
+				screen.add(tileButtons[i][j]);
 			}
 		}
 		frame.repaint();
@@ -220,17 +200,35 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			try {
 				new GameGUI(false);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		
+		for(int i =0;i<7;i++) {
+			for(int j =0;j<7;j++) {
+				if(event.getSource()==tileButtons[i][j]) {
+					if(BoardGraph.canMove(
+							Board.board[Initialize.players[currentPlayer].getRow()]
+									[Initialize.players[currentPlayer].getColumn()],
+							Board.board[i][j])) {
+						Initialize.players[currentPlayer].setRow(i);
+						Initialize.players[currentPlayer].setRow(j);
+						
+					}
+					break; //this wont break out of all the loops. gonna consider a method and use return
+				}
+			}
+		}
+			
 		
 		panelUpdate();
 		frame.repaint();
 		panelUpdate();
 		if(checkWin()) { //check if the game is over after a successful move, and a new block has spawned
 			frame.setVisible(false);
-			new EndScreen();
+			new 
+			
+			EndScreen();
 		}
 		
 		
