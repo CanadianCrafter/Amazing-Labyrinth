@@ -97,7 +97,7 @@ public class Initialize {
 		}
 		
 		private void initializeTileNameToID() throws IOException{
-			BufferedReader br = new BufferedReader(new java.io.FileReader(new File("amazing-labyrinth/Files/UnmovableTileIDs.txt")));
+			BufferedReader br = new BufferedReader(new java.io.FileReader(new File("Files/UnmovableTileIDs.txt")));
 			
 			for(int i =0;i<28;i++) {
 				while (st == null || !st.hasMoreTokens())
