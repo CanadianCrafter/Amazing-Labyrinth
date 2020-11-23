@@ -53,7 +53,6 @@ public class EndScreen extends JFrame implements ActionListener {
 		try {
 			new GameGUI(false); //starts a new game without saves
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 	}

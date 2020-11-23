@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Player {
 	
-	private ArrayList<Card> playCards=new ArrayList<Card>();
+	private ArrayList<Integer> deck=new ArrayList<Integer>();
 	private int row;
 	private int column;
 	
@@ -13,13 +13,13 @@ public class Player {
 		setColumn(column);
 	}
 
-	public ArrayList<Card> getPlayCards() {
-		return playCards;
+	public ArrayList<Integer> getDeck() {
+		return deck;
 	}
 	
 
-	public void setPlayCards(ArrayList<Card> playCards) {
-		this.playCards = playCards;
+	public void setDeck(ArrayList<Integer> deck) {
+		this.deck = deck;
 	}
 	
 
@@ -72,16 +72,16 @@ public class Player {
 		return(location);
 	}
 	
-	public boolean win() {
-		
-		for(Card currentCard: playCards) {
-			if(!currentCard.isSolve()) {
-				return false;
-			}
-		}
-		
-		return true;
-	}
+//	public boolean win() {
+//		
+//		for(Card currentCard: playCards) {
+//			if(!currentCard.isSolve()) {
+//				return false;
+//			}
+//		}
+//		
+//		return true;
+//	}
 	
 	
 	

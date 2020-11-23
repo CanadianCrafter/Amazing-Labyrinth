@@ -16,7 +16,7 @@ public class Tile {
 		this.id=id;
 		this.move=move;
 		
-		//1=T, 2=I, 3=L
+		//0=T, 1=I, 2=L
 		this.shape=shape;
 		
 		//Changeable

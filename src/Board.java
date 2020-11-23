@@ -8,6 +8,9 @@ public class Board {
 	public static int board[][]=new int[7][7];
 	private static boolean vis[] = new boolean [33];
 	
+	public static Tile tileBoard[][] = new Tile[7][7];
+	public static Tile tileFreeTile;
+	
 	public Board() {
 		
 		//initialize board with -1 to indicate what positions don't have tiles
@@ -60,6 +63,19 @@ public class Board {
 				break;
 			}
 		}
+		
+		createTileBoard();
+		
+	}
+
+	private void createTileBoard() {
+		
+		for(int i =0;i<7;i++) {
+			for(int j =0;j<7;j++) {
+				tileBoard[i][j]=Initialize.allTiles[board[i][j]];
+			}
+		}
+		tileFreeTile = Initialize.allTiles[freeTile];
 		
 	}
 

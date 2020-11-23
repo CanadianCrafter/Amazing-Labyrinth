@@ -6,21 +6,35 @@ public class Initialize {
 		static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
 		static StringTokenizer st;
 		
-		public static Tile allTiles[] = new Tile [50];
-		public static Card allCards[] = new Card [24];
+		public final static int NUM_TILES=50;
+		public final static int NUM_CARDS=24;
+		public final static int NUM_PLAYERS=2;
 		
-		public static Player player1=new Player(0, 0);
-		public static Player player2=new Player(0, 0);
+		
+		public static Tile allTiles[] = new Tile [NUM_TILES];
+		public static Card allCards[] = new Card [NUM_CARDS];
+		
+		public static Player players[] = new Player [NUM_PLAYERS];
 		
 		public static Map<String, Integer> tileNameToID = new HashMap();
 		
+		private static int cardsPerPlayer;
 		
-		public Initialize(int numCard, int player1Colour, int player2Colour) throws IOException {
+		Boolean cardChosen[]=new Boolean[NUM_CARDS];
+		
+		private static int playerColours[];
+		
+		
+		public Initialize(int cardsPerPlayer, int[] playerColours) throws IOException {
+			this.cardsPerPlayer = cardsPerPlayer;
+			this.playerColours  =playerColours;
 			
 			initializeTiles();
 			initializeCards();
 			initializeTileNameToID();
-			initializePlayer(numCard, player1Colour, player2Colour);
+			initializePlayers();
+			
+			
 			
 		}
 		
@@ -31,40 +45,40 @@ public class Initialize {
 
 			//Adds: bat, dragon, ghostbottle, ghost waving, ladypig, sorceress (T-Shaped)
 			for(int i=0; i<6;i++) 
-				allTiles[index++]=new Tile(index, 1, true, (int)(4*Math.random()));
+				allTiles[index++]=new Tile(index, 0, true, (int)(4*Math.random()));
 				
 			//Adds: lizard, moth, owl, scarab, rat, spider (L-shaped)
 			for(int i=0; i<6; i++) 
-				allTiles[index++]=new Tile(index, 3, true, (int)(4*Math.random()));
+				allTiles[index++]=new Tile(index, 2, true, (int)(4*Math.random()));
 			
 			//Unmovable treasures
 			//Adds: goldcoins, book, crown, menorah, ring, helmet, jewel, keys, skull, sword, treasurechest
 			//      treasuremap, yellow, red, green, blue
 			
-			allTiles[index++]=new Tile(index, 1, false, 1);
-			allTiles[index++]=new Tile(index, 1, false, 0);
-			allTiles[index++]=new Tile(index, 1, false, 1);
-			allTiles[index++]=new Tile(index, 1, false, 2);
-			allTiles[index++]=new Tile(index, 1, false, 2);
-			allTiles[index++]=new Tile(index, 1, false, 2);
-			allTiles[index++]=new Tile(index, 1, false, 3);
-			allTiles[index++]=new Tile(index, 1, false, 0);
-			allTiles[index++]=new Tile(index, 1, false, 3);
-			allTiles[index++]=new Tile(index, 1, false, 3);
-			allTiles[index++]=new Tile(index, 1, false, 2);
-			allTiles[index++]=new Tile(index, 1, false, 1);
-			allTiles[index++]=new Tile(index, 3, false, 2);
-			allTiles[index++]=new Tile(index, 3, false, 3);
-			allTiles[index++]=new Tile(index, 3, false, 0);
-			allTiles[index++]=new Tile(index, 3, false, 1);
+			allTiles[index++]=new Tile(index, 0, false, 1);
+			allTiles[index++]=new Tile(index, 0, false, 0);
+			allTiles[index++]=new Tile(index, 0, false, 1);
+			allTiles[index++]=new Tile(index, 0, false, 2);
+			allTiles[index++]=new Tile(index, 0, false, 2);
+			allTiles[index++]=new Tile(index, 0, false, 2);
+			allTiles[index++]=new Tile(index, 0, false, 3);
+			allTiles[index++]=new Tile(index, 0, false, 0);
+			allTiles[index++]=new Tile(index, 0, false, 3);
+			allTiles[index++]=new Tile(index, 0, false, 3);
+			allTiles[index++]=new Tile(index, 0, false, 2);
+			allTiles[index++]=new Tile(index, 0, false, 1);
+			allTiles[index++]=new Tile(index, 2, false, 2);
+			allTiles[index++]=new Tile(index, 2, false, 3);
+			allTiles[index++]=new Tile(index, 2, false, 0);
+			allTiles[index++]=new Tile(index, 2, false, 1);
 			
 			//L shaped Tiles
 			for(int i=0; i<9; i++) 
-				allTiles[index++]=new Tile(index, 3, true, (int)(4*Math.random()));
+				allTiles[index++]=new Tile(index, 2, true, (int)(4*Math.random()));
 			
 			//I shaped Tiles
 			for(int i=0; i<13; i++) 
-				allTiles[index++]=new Tile(index, 2, true, (int)(4*Math.random()));
+				allTiles[index++]=new Tile(index, 1, true, (int)(4*Math.random()));
 			
 		}
 		
@@ -77,7 +91,7 @@ public class Initialize {
 			//		goldcoins, book, crown, menorah, ring, helmet, jewel, keys, skull, sword, treasurechest
 			//      treasuremap
 			
-			for(int i=0; i<24; i++)
+			for(int i=0; i<NUM_CARDS; i++)
 				allCards[index++] = new Card(index, false);
 				
 		}
@@ -101,6 +115,51 @@ public class Initialize {
 				
 		}
 		
+		private void initializePlayers() {
+			players[0] =new Player(0, 0);
+			players[1] =new Player(0, 0);
+			
+			for(int i =0;i<NUM_PLAYERS;i++)
+				players[i].setDeck(generateDeck(i));
+			
+			//Colour: 0-red, 1-yellow, 2-green, 3-blue
+			
+			for(int i =0;i<NUM_PLAYERS;i++) {
+				if(playerColours[i]==0) {
+					players[i].setLocation(0, 0);
+				}else if(playerColours[i]==1) {
+					players[i].setLocation(6, 0);
+				}else if(playerColours[i]==2) {
+					players[i].setLocation(0, 6);
+				}else if(playerColours[i]==3) {
+					players[i].setLocation(6, 6);
+				}
+			}
+			
+			
+		}
+		
+		public ArrayList<Integer> generateDeck(int playerID) {
+			
+			ArrayList<Integer> cards=new ArrayList<Integer>();
+			
+			int cardIndex;
+			
+			Arrays.fill(cardChosen, false);
+				
+			for(int i=0; i<cardsPerPlayer; i++) {
+				do {
+					cardIndex=(int)(Math.random()*NUM_CARDS);
+				}while(!cardChosen[cardIndex]);
+				
+				cards.add(cardIndex);
+				cardChosen[cardIndex]=true;
+			}
+			return cards;
+			
+		}
+		
+		
 		public Tile[] getAllTiles() {
 			return allTiles;
 		}
@@ -116,57 +175,5 @@ public class Initialize {
 		public void setTileNameToID(Map<String, Integer> tileNameToID) {
 			this.tileNameToID = tileNameToID;
 		}
-		
-public void initializePlayer(int numCards, int player1Colour, int player2Colour) {
-			
-			ArrayList<Card> player1Card=new ArrayList<Card>();
-			ArrayList<Card> player2Card=new ArrayList<Card>();
-			Boolean cardChosen[]=new Boolean[allCards.length];
-			
-			int cardIndex;
-				
-			for(int x=0; x<numCards; x++) {
-				do {
-					cardIndex=(int)(Math.random()*(allCards.length+1));
-				}while(cardChosen[cardIndex]);
-				
-				player1Card.add(allCards[cardIndex]);
-				cardChosen[cardIndex]=true;
-				
-				do {
-					cardIndex=(int)(Math.random()*(allCards.length+1));
-				}while(!cardChosen[cardIndex]);
-				
-				player2Card.add(allCards[cardIndex]);
-				cardChosen[cardIndex]=true;
-					
-			}
-			
-			player1.setPlayCards(player1Card);
-			player2.setPlayCards(player2Card);
-			
-			//Colour: 0-red, 1-yellow, 2-green, 3-blue
-			if(player1Colour==0) {
-				player1.setLocation(0, 0);
-			}else if(player1Colour==1) {
-				player1.setLocation(6, 0);
-			}else if(player1Colour==2) {
-				player1.setLocation(0, 6);
-			}else if(player1Colour==3) {
-				player1.setLocation(6, 6);
-			}
-			
-			if(player2Colour==0) {
-				player2.setLocation(0, 0);
-			}else if(player2Colour==1) {
-				player2.setLocation(6, 0);
-			}else if(player2Colour==2) {
-				player2.setLocation(0, 6);
-			}else if(player2Colour==3) {
-				player2.setLocation(6, 6);
-			}
-			
-		}
-
 		
 }
