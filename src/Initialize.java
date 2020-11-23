@@ -19,7 +19,9 @@ public class Initialize {
 		public static Map<String, Integer> tileNameToID = new HashMap();
 		
 		private static int cardsPerPlayer;
+		
 		Boolean cardChosen[]=new Boolean[NUM_CARDS];
+		
 		private static int playerColours[];
 		
 		
@@ -95,7 +97,7 @@ public class Initialize {
 		}
 		
 		private void initializeTileNameToID() throws IOException{
-			BufferedReader br = new BufferedReader(new java.io.FileReader(new File("Files/UnmovableTileIDs.txt")));
+			BufferedReader br = new BufferedReader(new java.io.FileReader(new File("amazing-labyrinth/Files/UnmovableTileIDs.txt")));
 			
 			for(int i =0;i<28;i++) {
 				while (st == null || !st.hasMoreTokens())
@@ -142,6 +144,8 @@ public class Initialize {
 			ArrayList<Integer> cards=new ArrayList<Integer>();
 			
 			int cardIndex;
+			
+			Arrays.fill(cardChosen, false);
 				
 			for(int i=0; i<cardsPerPlayer; i++) {
 				do {
