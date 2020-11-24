@@ -241,4 +241,31 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	}
 	public void keyTyped(KeyEvent e) {
 	}
+	
+	
+	public static void main(String[] args) {
+		//Method that create and show a GUI should be
+		//run from an event-dispatchinb thread
+		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					runGUI();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public static void runGUI() throws IOException {
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		
+		GameGUI greeting=new GameGUI(false);
+	}
+	
 }
+
+	
+	
