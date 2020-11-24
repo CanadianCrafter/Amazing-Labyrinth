@@ -29,10 +29,21 @@ public class Initialize {
 			this.cardsPerPlayer = cardsPerPlayer;
 			this.playerColours  =playerColours;
 			
+			
 			initializeTiles();
+			
 			initializeCards();
+			
 			initializeTileNameToID();
+			
 			initializePlayers();
+			
+			
+			new Board();
+			
+			
+			
+			new TileImages();
 			
 			
 			
@@ -50,6 +61,16 @@ public class Initialize {
 			//Adds: lizard, moth, owl, scarab, rat, spider (L-shaped)
 			for(int i=0; i<6; i++) 
 				allTiles[index++]=new Tile(index, 2, true, (int)(4*Math.random()));
+			
+			
+			
+			//L shaped Tiles
+			for(int i=0; i<9; i++) 
+				allTiles[index++]=new Tile(index, 2, true, (int)(4*Math.random()));
+			
+			//I shaped Tiles
+			for(int i=0; i<13; i++) 
+				allTiles[index++]=new Tile(index, 1, true, (int)(4*Math.random()));
 			
 			//Unmovable treasures
 			//Adds: goldcoins, book, crown, menorah, ring, helmet, jewel, keys, skull, sword, treasurechest
@@ -71,14 +92,6 @@ public class Initialize {
 			allTiles[index++]=new Tile(index, 2, false, 3);
 			allTiles[index++]=new Tile(index, 2, false, 0);
 			allTiles[index++]=new Tile(index, 2, false, 1);
-			
-			//L shaped Tiles
-			for(int i=0; i<9; i++) 
-				allTiles[index++]=new Tile(index, 2, true, (int)(4*Math.random()));
-			
-			//I shaped Tiles
-			for(int i=0; i<13; i++) 
-				allTiles[index++]=new Tile(index, 1, true, (int)(4*Math.random()));
 			
 		}
 		
@@ -150,7 +163,7 @@ public class Initialize {
 			for(int i=0; i<cardsPerPlayer; i++) {
 				do {
 					cardIndex=(int)(Math.random()*NUM_CARDS);
-				}while(!cardChosen[cardIndex]);
+				}while(cardChosen[cardIndex]);
 				
 				cards.add(cardIndex);
 				cardChosen[cardIndex]=true;
@@ -158,6 +171,8 @@ public class Initialize {
 			return cards;
 			
 		}
+		
+		
 		
 		
 		public Tile[] getAllTiles() {

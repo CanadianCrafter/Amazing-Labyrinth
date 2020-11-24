@@ -6,7 +6,7 @@ public class Board {
 	
 	public static int freeTile;
 	public static int board[][]=new int[7][7];
-	private static boolean vis[] = new boolean [33];
+	private static boolean vis[] = new boolean [34];
 	
 	public static Tile tileBoard[][] = new Tile[7][7];
 	public static Tile tileFreeTile;
@@ -41,24 +41,38 @@ public class Board {
 		
 		
 		//fill in board with random, movable tiles.
+		
+		Arrays.fill(vis, false);
+		
 		for(int i =0; i<7; i++) {
 			for(int j =0; j<7; j++) {
 				
-				if(board[i][j]!=-1) continue;
 				
-				int index = (int)(33*Math.random());
+				if(board[i][j]==-1) {
+					int index = (int)(34*Math.random());
 				
-				while(!vis[index])
-					index = (int)(33*Math.random());
+				
+				while(vis[index])
+					index = (int)(34*Math.random());
+				
 				
 				board[i][j]=index;
+				
+				
+				
+				
+				
 				vis[index]=true;
+				
+				}
+				
 				
 			}
 		}
 		
-		for(int i =0;i<33;i++) {
+		for(int i =0;i<34;i++) {
 			if(!vis[i]) {
+				
 				freeTile=i;
 				break;
 			}
@@ -66,13 +80,16 @@ public class Board {
 		
 		createTileBoard();
 		
+		
 	}
 
 	private void createTileBoard() {
 		
 		for(int i =0;i<7;i++) {
 			for(int j =0;j<7;j++) {
+				
 				tileBoard[i][j]=Initialize.allTiles[board[i][j]];
+			
 			}
 		}
 		tileFreeTile = Initialize.allTiles[freeTile];

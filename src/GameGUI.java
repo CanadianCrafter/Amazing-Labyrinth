@@ -31,14 +31,19 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	// constructor method
 	public GameGUI(Boolean ifLoad) throws IOException {
     	//setup
+		
 		tileButtons = new JButton[7][7];
     	frame = new JFrame(); 
     	screen = new JPanel();
     	menuBar();
     	frameSetup();
     	panelDesign();
-    	if(ifLoad) loadSaveState();
-    	panelUpdate();
+    	if(ifLoad) {
+    		loadSaveState();
+    	}
+    	
+    	
+    	//panelUpdate();
     	
     }
     
@@ -140,8 +145,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				tileButtons[i][j].addActionListener(this);
 				tileButtons[i][j].setBounds(10 + 60 * j, 10+60*i, 50, 50);  //location moves so labels don't overlap
 				//the imagesArr index corresponds with the value on the board
-				tileButtons[i][j].setIcon(TileImages.tileImages[Initialize.allTiles[Board.board[i][j]].getOrientation()][Board.board[i][j]]); 
-				
+				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]);
 				screen.add(tileButtons[i][j]);
 			}
 		}
@@ -152,7 +156,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private void panelUpdate() {
 		for(int i =0;i<7;i++) {
 			for(int j =0;j<7;j++){
-				tileButtons[i][j].setIcon(TileImages.tileImages[Initialize.allTiles[Board.board[i][j]].getOrientation()][Board.board[i][j]]); 
+				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]);
 				screen.add(tileButtons[i][j]);
 			}
 		}
@@ -243,9 +247,20 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		//Method that create and show a GUI should be
 		//run from an event-dispatchinb thread
+		
+		int[] arr= {1,2};
+		new Initialize(1, arr);
+		
+		
+		for(int i=0; i<7; i++) {
+			for(int j=0; j<7; j++) {
+				System.out.print(" "+Board.board[i][j]+" ");
+			}
+			System.out.println();
+		}
 		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
