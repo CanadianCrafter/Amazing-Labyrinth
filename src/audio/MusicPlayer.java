@@ -1,6 +1,5 @@
 package audio;
-//Partial Credit: ALAN SUN 
-// Implemented by Bryan Wang
+//Partially by Lord ALAN SUN 
 import java.io.File;
 
 import javax.sound.sampled.AudioInputStream;
@@ -44,22 +43,23 @@ public class MusicPlayer {
 		
 	}
 	
+	//added by Bryan
 	public static void pauseMusic(){
 		
 		time = clip.getMicrosecondPosition();
+		
 		clip.stop();
 		
 	}
 	
 	public static void unpauseMusic(String audioLocation){
 		
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
+		
 		clip.setMicrosecondPosition(time);
 		
 		clip.start();
-		
-		
-		
-		
+				
 	}
 	
 	
