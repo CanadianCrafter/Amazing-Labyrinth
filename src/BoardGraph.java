@@ -78,9 +78,10 @@ public class BoardGraph {
 		//BFS
 		Queue<Integer> que = new LinkedList<Integer>();
     	que.add(sID);
-    	boolean vis[] = new boolean[NUM_BOARD_TILES];
+    	boolean vis[] = new boolean[Initialize.NUM_TILES];
     	Arrays.fill(vis, false);
     	vis[sID]=true;
+    	vis[Board.freeTile]=true;
     	while(!que.isEmpty()) {
     		int u = que.poll();
     		for(int v : adj[u]) {
@@ -93,6 +94,27 @@ public class BoardGraph {
     	return vis[dID];
 		
 		
+	}
+	
+	public static boolean[] possiblePaths (int sID) {
+		
+		//BFS
+		Queue<Integer> que = new LinkedList<Integer>();
+    	que.add(sID);
+    	boolean vis[] = new boolean[Initialize.NUM_TILES];
+    	Arrays.fill(vis, false);
+    	vis[sID]=true;
+    	vis[Board.freeTile]=true;
+    	while(!que.isEmpty()) {
+    		int u = que.poll();
+    		for(int v : adj[u]) {
+    			if(!vis[v]) {
+    				que.add(v);
+    				vis[v]=true;
+    			}
+    		}
+		}
+    	return vis;
 	}
 	
 }

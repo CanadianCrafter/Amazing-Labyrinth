@@ -133,6 +133,9 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		screen.setBounds(0,0,456,502);
 		screen.setLayout(null);
 		
+		boolean reachableTiles[] = BoardGraph.possiblePaths(Board.board[Initialize.players[currentPlayer].getRow()]
+				[Initialize.players[currentPlayer].getColumn()]);
+		
 		//gives each block their label, and image
 		for(int i =0;i<7;i++) {
 			for(int j =0;j<7;j++){
@@ -142,12 +145,20 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				//the imagesArr index corresponds with the value on the board
 				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]); 
 				
+				//creates a border around the buttons. 
+				//if the tile is not reachable from the player's position, its border is the same colour as the background to hide its existence.
+				//if the tile is reachable, the tile is highlighted blue.
+				if(reachableTiles[Board.board[i][j]])
+					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 5)); 
+				else
+					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(47, 47, 47), 5)); 
+				
+				
+				
 				screen.add(tileButtons[i][j]);
 			}
 		}
 		frame.repaint();
-		
-		
 		
 	}
 	
@@ -210,6 +221,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			}
 		}
 		
+		//move a player
 		loop:
 		for(int i =0;i<7;i++) {
 			for(int j =0;j<7;j++) {
