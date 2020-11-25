@@ -9,9 +9,10 @@ import javax.sound.sampled.Clip;
 
 public class MusicPlayer {
 	
-	private static Clip clip;
+	public static Clip clip;
 	private static Clip SE;
 	private static AudioInputStream audioInput;
+	private static long time;
 	
 	public static void playAudio(String audioLocation) {
 	
@@ -37,32 +38,29 @@ public class MusicPlayer {
 		
 	}
 	
-	//plays a clip once - my only edit
-	public static void playClip(String audioLocation) { 
-		
-		try {
-			
-			File sound = new File(audioLocation);
-			
-			audioInput = AudioSystem.getAudioInputStream(sound);
-			
-			SE = AudioSystem.getClip();
-			
-			SE.open(audioInput);
-		
-			SE.start();
-					
-		} catch(Exception ex) {
-			
-			ex.printStackTrace();
-			
-		}
-		
-	}
-	
 	public static void stopMusic(){
 		
 		clip.stop();
 		
 	}
+	
+	public static void pauseMusic(){
+		
+		time = clip.getMicrosecondPosition();
+		clip.stop();
+		
+	}
+	
+	public static void unpauseMusic(String audioLocation){
+		
+		clip.setMicrosecondPosition(time);
+		
+		clip.start();
+		
+		
+		
+		
+	}
+	
+	
 }

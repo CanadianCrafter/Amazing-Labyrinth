@@ -18,7 +18,7 @@ public class SplashGUI extends JFrame implements ActionListener {
 
 	// constructor method
 	public SplashGUI() {
-//		MusicPlayer.playAudio("Music - Route 2.wav");
+		MusicPlayer.playAudio("Audio/BGM/Amazing Labyrinth BGM.wav");
 		frameSetup();
 		panelDesign();
 	}

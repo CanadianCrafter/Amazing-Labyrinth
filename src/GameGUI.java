@@ -23,6 +23,9 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private static JMenuItem save;
 	private static JMenuItem exit;
 	private static JMenuItem restart;
+	private static JMenuItem music;
+	private static boolean playingMusic = true;
+	private static long time;
 	
 	//Player
 	public static int currentPlayer=0;
@@ -90,9 +93,9 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	//sets up the JFrame
 	private void frameSetup() {
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //program will end when exited
-		frame.setSize(450,450); // sets the size of the frame
+		frame.setSize(1000,500); // sets the size of the frame
 		frame.setTitle("Amazing Labyrinth");
-		frame.setBounds(0,0,456,502);
+		frame.setBounds(0,0,1000,500);
 		frame.setLayout(null);
 		frame.setResizable(false); // can't resize
 		frame.add(screen); // add panel to the frame
@@ -109,18 +112,21 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		menu = new JMenu("Menu");
 		
 		//menu items
+		music = new JMenuItem("Toggle Music");
 		save = new JMenuItem("Save and Exit");
 		exit = new JMenuItem("Exit");
 		restart = new JMenuItem("Restart");
-
+		
 		// add to action listener for the menu items
+		music.addActionListener(this);
 		save.addActionListener(this);
 		exit.addActionListener(this);
 		restart.addActionListener(this);
 		
 		frame.setJMenuBar(mb); // add menu bar
 		mb.add(menu); // add menu to menubar
-		menu.add(restart); //add items
+		menu.add(music); //add items
+		menu.add(restart);
 		menu.add(save); 
 		menu.add(exit);
 		
@@ -130,7 +136,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private void panelDesign() {
 		screen.setBorder(null);
 		screen.setBackground(new java.awt.Color(47, 47, 47));
-		screen.setBounds(0,0,456,502);
+		screen.setBounds(0,0,1000,500);
 		screen.setLayout(null);
 		
 		boolean reachableTiles[] = BoardGraph.possiblePaths(Board.board[Initialize.players[currentPlayer].getRow()]
@@ -141,7 +147,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			for(int j =0;j<7;j++){
 				tileButtons[i][j]=new JButton();
 				tileButtons[i][j].addActionListener(this);
-				tileButtons[i][j].setBounds(10 + 60 * j, 10+60*i, 50, 50);  //location moves so labels don't overlap
+				tileButtons[i][j].setBounds(30 + 55 * j, 30+55*i, 50, 50);  //location moves so labels don't overlap
 				//the imagesArr index corresponds with the value on the board
 				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]); 
 				
@@ -152,17 +158,17 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				if(reachableTiles[Board.board[i][j]]) {
 					int colourID=Initialize.players[currentPlayer].getColourID();
 					if(colourID==0)
-						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(232, 17, 35), 5));
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(232, 17, 35), 3));
 					else if(colourID==1)
-						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(255, 185, 0), 5));
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(255, 185, 0), 3));
 					else if(colourID==2)
-						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(16, 124, 16), 5));
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(16, 124, 16), 3));
 					else if(colourID==3)
-						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 5));
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 3));
 				}
 					
 				else
-					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(47, 47, 47), 5)); 
+					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(47, 47, 47), 3)); 
 				
 				screen.add(tileButtons[i][j]);
 			}
@@ -183,17 +189,17 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				if(reachableTiles[Board.board[i][j]]) {
 					int colourID=Initialize.players[currentPlayer].getColourID();
 					if(colourID==0)
-						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(232, 17, 35), 5));
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(232, 17, 35), 3));
 					else if(colourID==1)
-						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(255, 185, 0), 5));
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(255, 185, 0), 3));
 					else if(colourID==2)
-						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(16, 124, 16), 5));
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(16, 124, 16), 3));
 					else if(colourID==3)
-						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 5));
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 3));
 				}
 					
 				else
-					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(47, 47, 47), 5)); 
+					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(47, 47, 47), 3)); 
 				
 				screen.add(tileButtons[i][j]);
 			}
@@ -247,6 +253,21 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		
+//		if(event.getSource()==music) {
+//			if(playingMusic) 
+//				MusicPlayer.stopMusic();
+//			else
+//				MusicPlayer.playAudio("Audio/BGM/Amazing Labyrinth BGM.wav");
+//			playingMusic = !playingMusic;
+//		}
+		if(event.getSource()==music) {
+			if(playingMusic) 
+				MusicPlayer.pauseMusic();
+			else
+				MusicPlayer.unpauseMusic("Audio/BGM/Amazing Labyrinth BGM.wav");
+			playingMusic = !playingMusic;
 		}
 		
 		//move a player
