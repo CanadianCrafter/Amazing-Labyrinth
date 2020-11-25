@@ -148,12 +148,21 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				//creates a border around the buttons. 
 				//if the tile is not reachable from the player's position, its border is the same colour as the background to hide its existence.
 				//if the tile is reachable, the tile is highlighted blue.
-				if(reachableTiles[Board.board[i][j]])
-					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 5)); 
+				//Colour: 0-red, 1-yellow, 2-green, 3-blue
+				if(reachableTiles[Board.board[i][j]]) {
+					int colourID=Initialize.players[currentPlayer].getColourID();
+					if(colourID==0)
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(232, 17, 35), 5));
+					else if(colourID==1)
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(255, 185, 0), 5));
+					else if(colourID==2)
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(16, 124, 16), 5));
+					else if(colourID==3)
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 5));
+				}
+					
 				else
 					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(47, 47, 47), 5)); 
-				
-				
 				
 				screen.add(tileButtons[i][j]);
 			}
@@ -167,6 +176,25 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		for(int i =0;i<7;i++) {
 			for(int j =0;j<7;j++){
 				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]); 
+				
+				boolean reachableTiles[] = BoardGraph.possiblePaths(Board.board[Initialize.players[currentPlayer].getRow()]
+						[Initialize.players[currentPlayer].getColumn()]);
+				
+				if(reachableTiles[Board.board[i][j]]) {
+					int colourID=Initialize.players[currentPlayer].getColourID();
+					if(colourID==0)
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(232, 17, 35), 5));
+					else if(colourID==1)
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(255, 185, 0), 5));
+					else if(colourID==2)
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(16, 124, 16), 5));
+					else if(colourID==3)
+						tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 5));
+				}
+					
+				else
+					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(47, 47, 47), 5)); 
+				
 				screen.add(tileButtons[i][j]);
 			}
 		}
@@ -231,10 +259,11 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 									[Initialize.players[currentPlayer].getColumn()],
 							Board.board[i][j])) {
 						Initialize.players[currentPlayer].setRow(i);
-						Initialize.players[currentPlayer].setRow(j);
-						
+						Initialize.players[currentPlayer].setColumn(j);
+						currentPlayer = currentPlayer==0 ? 1:0;
 					}
 					break loop; 
+					
 				}
 			}
 		}
@@ -245,7 +274,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		panelUpdate();
 		checkWin();
 		
-		currentPlayer = currentPlayer==0 ? 1:0;
+		
 		
 	}
 

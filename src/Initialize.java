@@ -114,12 +114,13 @@ public class Initialize {
 				if(playerColours[i]==0) {
 					players[i].setLocation(0, 0);
 				}else if(playerColours[i]==1) {
-					players[i].setLocation(6, 0);
-				}else if(playerColours[i]==2) {
 					players[i].setLocation(0, 6);
+				}else if(playerColours[i]==2) {
+					players[i].setLocation(6, 0);
 				}else if(playerColours[i]==3) {
 					players[i].setLocation(6, 6);
 				}
+				players[i].setColourID(playerColours[i]);
 			}
 			
 			

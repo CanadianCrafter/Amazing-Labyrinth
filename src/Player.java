@@ -6,6 +6,7 @@ public class Player {
 	private TreeSet <Integer> deck=new TreeSet<Integer>();
 	private int row;
 	private int column;
+	private int colourID;
 	
 	public Player(int row, int column) {
 
@@ -71,17 +72,17 @@ public class Player {
 		
 		return(location);
 	}
+
+	//Colour: 0-red, 1-yellow, 2-green, 3-blue
+	public int getColourID() {
+		return colourID;
+	}
+
+	public void setColourID(int colourID) {
+		this.colourID = colourID;
+	}
 	
-//	public boolean win() {
-//		
-//		for(Card currentCard: playCards) {
-//			if(!currentCard.isSolve()) {
-//				return false;
-//			}
-//		}
-//		
-//		return true;
-//	}
+	
 	
 	
 	

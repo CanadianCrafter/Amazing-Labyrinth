@@ -75,7 +75,8 @@ public class SplashGUI extends JFrame implements ActionListener {
 			}
 			dispose();
 			try {
-				int arr[] = {0,1};
+				//NEED TO double check that the array doesn't have two of the same values
+				int arr[] = {1,0};
 				new Initialize(5,arr);
 				new GameGUI(false);//starts a game without loading saves
 			} catch (IOException e) {
