@@ -47,9 +47,9 @@ public class Tile {
 	public void setOrientation(int orientation) {
 		
 		//0= T / I / L
-		//1= T with exits up/down/right  /  I with exits left/right  / L with exit up and left
-		//2= T with exits up/left/right  /  I  /  L with exits left/down
-		//3= T with exits up/left/down   /  I with exits left/right /  L with exit down and right
+		//1= -| /  -  / r
+		//2= _|_  /  I  /  7
+		//3= |-  /  - /  _|
 		
 		if(isMove()) {
 			this.orientation = orientation;

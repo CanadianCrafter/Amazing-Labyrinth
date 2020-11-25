@@ -55,22 +55,22 @@ public class Initialize {
 			//Adds: goldcoins, book, crown, menorah, ring, helmet, jewel, keys, skull, sword, treasurechest
 			//      treasuremap, yellow, red, green, blue
 			
+			allTiles[index]=new Tile(index++, 0, false, 0);
+			allTiles[index]=new Tile(index++, 0, false, 0);
+			allTiles[index]=new Tile(index++, 0, false, 3);
+			allTiles[index]=new Tile(index++, 0, false, 2);
+			allTiles[index]=new Tile(index++, 0, false, 3);
+			allTiles[index]=new Tile(index++, 0, false, 2);
 			allTiles[index]=new Tile(index++, 0, false, 1);
 			allTiles[index]=new Tile(index++, 0, false, 0);
 			allTiles[index]=new Tile(index++, 0, false, 1);
-			allTiles[index]=new Tile(index++, 0, false, 2);
-			allTiles[index]=new Tile(index++, 0, false, 2);
-			allTiles[index]=new Tile(index++, 0, false, 2);
-			allTiles[index]=new Tile(index++, 0, false, 3);
-			allTiles[index]=new Tile(index++, 0, false, 0);
-			allTiles[index]=new Tile(index++, 0, false, 3);
-			allTiles[index]=new Tile(index++, 0, false, 3);
-			allTiles[index]=new Tile(index++, 0, false, 2);
 			allTiles[index]=new Tile(index++, 0, false, 1);
+			allTiles[index]=new Tile(index++, 0, false, 2);
+			allTiles[index]=new Tile(index++, 0, false, 3);
 			allTiles[index]=new Tile(index++, 2, false, 2);
-			allTiles[index]=new Tile(index++, 2, false, 3);
-			allTiles[index]=new Tile(index++, 2, false, 0);
 			allTiles[index]=new Tile(index++, 2, false, 1);
+			allTiles[index]=new Tile(index++, 2, false, 0);
+			allTiles[index]=new Tile(index++, 2, false, 3);
 			
 			//L shaped Tiles
 			for(int i=0; i<9; i++) 

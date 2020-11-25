@@ -5,9 +5,9 @@ import java.util.Queue;
 
 public class BoardGraph {
 	
-	private static final int NUM_BOARD_TILES = 49;
+//	private static final int NUM_BOARD_TILES = 49;
 	
-	public static ArrayList<Integer> adj[]= new ArrayList[NUM_BOARD_TILES];
+	public static ArrayList<Integer> adj[]= new ArrayList[Initialize.NUM_TILES];
 	private static int tempAdj[][] = new int [Initialize.NUM_TILES][Initialize.NUM_TILES];	
 	
 	//tile shape, orientation, movement directions
@@ -46,7 +46,7 @@ public class BoardGraph {
 
 
 	public static void createBoardGraph() {
-		for(int i =0;i<NUM_BOARD_TILES;i++)
+		for(int i =0;i<Initialize.NUM_TILES;i++)
 			adj[i] = new ArrayList<Integer>();
 
 		
@@ -56,17 +56,17 @@ public class BoardGraph {
 					int r2 = directions[Board.tileBoard[r][c].getShape()][Board.tileBoard[r][c].getOrientation()][d][0]+r;
 					int c2 = directions[Board.tileBoard[r][c].getShape()][Board.tileBoard[r][c].getOrientation()][d][1]+c;
 					if(r2<0||r2>=7||c2<0||c2>=7)continue;
-					tempAdj[Board.tileBoard[r][c].getID()][Board.tileBoard[r2][c2].getID()]++;
-					tempAdj[Board.tileBoard[r2][c2].getID()][Board.tileBoard[r][c].getID()]++;
+					tempAdj[Board.board[r][c]][Board.board[r2][c2]]++;
+					tempAdj[Board.board[r2][c2]][Board.board[r][c]]++;
 				}
 			}
 		}
 		
-		for(int r =0;r<NUM_BOARD_TILES;r++) {
-			for(int c =0;c<NUM_BOARD_TILES;c++) {
+		for(int r =0;r<Initialize.NUM_TILES;r++) {
+			for(int c =0;c<Initialize.NUM_TILES;c++) {
 				if(tempAdj[r][c]==2) {
 					adj[r].add(c);
-					adj[c].add(r);
+//					adj[c].add(r);
 				}
 			}
 		}
