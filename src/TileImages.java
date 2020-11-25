@@ -85,33 +85,12 @@ public class TileImages {
 	    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/Spider2.png").getImage().getScaledInstance(50, 50, 0));
 	    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/Spider3.png").getImage().getScaledInstance(50, 50, 0));
 	    
-	    
-	    //L shaped Tiles
-		for(int i=0; i<9; i++) {
-			tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/L0.png").getImage().getScaledInstance(50, 50, 0));
-		    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/L1.png").getImage().getScaledInstance(50, 50, 0));
-		    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/L2.png").getImage().getScaledInstance(50, 50, 0));
-		    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/L3.png").getImage().getScaledInstance(50, 50, 0));
-		   
-		}
-		
-		//I shaped Tiles
-		for(int i=0; i<13; i++){
-			tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/I0.png").getImage().getScaledInstance(50, 50, 0));
-		    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/I1.png").getImage().getScaledInstance(50, 50, 0));
-		    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/I2.png").getImage().getScaledInstance(50, 50, 0));
-		    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/I3.png").getImage().getScaledInstance(50, 50, 0));	    
-		}
-		
-		index+=16;
-		
-		
-		
+	    index+= 16;
 	    
 	    //Fixed Tiles
 	    for(int i =0;i<4;i++) {
 	    	index-=16;
-		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Gold Coins.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/GoldCoins.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Book.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Crown.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Menorah.png").getImage().getScaledInstance(50, 50, 0));
@@ -121,16 +100,30 @@ public class TileImages {
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Keys.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Skull.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Sword.png").getImage().getScaledInstance(50, 50, 0));
-		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Treasure Chest.png").getImage().getScaledInstance(50, 50, 0));
-		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Treasure Map.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/TreasureChest.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/TreasureMap.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Yellow.png").getImage().getScaledInstance(50, 50, 0));
-		    
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Red.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Green.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/Blue.png").getImage().getScaledInstance(50, 50, 0));
 	    }
 	    
-	   
+	    //L shaped Tiles
+		for(int i=0; i<9; i++) {
+			tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/L0.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/L1.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/L2.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/L3.png").getImage().getScaledInstance(50, 50, 0));
+		}    
+		
+		//I shaped Tiles
+		for(int i=0; i<13; i++) {
+			tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/I0.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/I1.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/I2.png").getImage().getScaledInstance(50, 50, 0));
+		    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/I3.png").getImage().getScaledInstance(50, 50, 0));	    
+		}
+		
 	}
     
 }

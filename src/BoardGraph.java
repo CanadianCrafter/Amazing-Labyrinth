@@ -5,8 +5,10 @@ import java.util.Queue;
 
 public class BoardGraph {
 	
-	public static ArrayList<Integer> adj[]= new ArrayList[49];
-	private static int tempAdj[][] = new int [49][49];	
+	private static final int NUM_BOARD_TILES = 49;
+	
+	public static ArrayList<Integer> adj[]= new ArrayList[NUM_BOARD_TILES];
+	private static int tempAdj[][] = new int [Initialize.NUM_TILES][Initialize.NUM_TILES];	
 	
 	//tile shape, orientation, movement directions
 	private static int directions[][][][] = {
@@ -44,13 +46,13 @@ public class BoardGraph {
 
 
 	public static void createBoardGraph() {
-		for(int i =0;i<49;i++)
+		for(int i =0;i<NUM_BOARD_TILES;i++)
 			adj[i] = new ArrayList<Integer>();
-		
+
 		
 		for(int r =0;r<7;r++) {
 			for(int c =0;c<7;c++) {
-				for(int d=0;d<4;d++) {
+				for(int d=0;d<directions[Board.tileBoard[r][c].getShape()][Board.tileBoard[r][c].getOrientation()].length;d++) {
 					int r2 = directions[Board.tileBoard[r][c].getShape()][Board.tileBoard[r][c].getOrientation()][d][0]+r;
 					int c2 = directions[Board.tileBoard[r][c].getShape()][Board.tileBoard[r][c].getOrientation()][d][1]+c;
 					if(r2<0||r2>=7||c2<0||c2>=7)continue;
@@ -60,8 +62,8 @@ public class BoardGraph {
 			}
 		}
 		
-		for(int r =0;r<49;r++) {
-			for(int c =0;c<49;c++) {
+		for(int r =0;r<NUM_BOARD_TILES;r++) {
+			for(int c =0;c<NUM_BOARD_TILES;c++) {
 				if(tempAdj[r][c]==2) {
 					adj[r].add(c);
 					adj[c].add(r);
@@ -76,7 +78,7 @@ public class BoardGraph {
 		//BFS
 		Queue<Integer> que = new LinkedList<Integer>();
     	que.add(sID);
-    	boolean vis[] = new boolean[49];
+    	boolean vis[] = new boolean[NUM_BOARD_TILES];
     	Arrays.fill(vis, false);
     	vis[sID]=true;
     	while(!que.isEmpty()) {

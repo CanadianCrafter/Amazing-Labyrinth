@@ -4,9 +4,10 @@ import java.util.*;
 public class Board {
 	
 	
+	
 	public static int freeTile;
 	public static int board[][]=new int[7][7];
-	private static boolean vis[] = new boolean [34];
+	private static boolean vis[] = new boolean [Initialize.NUM_TILES];
 	
 	public static Tile tileBoard[][] = new Tile[7][7];
 	public static Tile tileFreeTile;
@@ -39,47 +40,52 @@ public class Board {
 		board[6][2]=Initialize.tileNameToID.get("Menorah");
 		board[6][4]=Initialize.tileNameToID.get("Helmet");
 		
+		vis[Initialize.tileNameToID.get("Red")]=true;
+		vis[Initialize.tileNameToID.get("Yellow")]=true;
+		vis[Initialize.tileNameToID.get("Green")]=true;
+		vis[Initialize.tileNameToID.get("Blue")]=true;
+	
+		vis[Initialize.tileNameToID.get("Book")]=true;
+		vis[Initialize.tileNameToID.get("Gold_Coins")]=true;
+		vis[Initialize.tileNameToID.get("Treasure_Map")]=true;
+		vis[Initialize.tileNameToID.get("Crown")]=true;
+		vis[Initialize.tileNameToID.get("Keys")]=true;
+		vis[Initialize.tileNameToID.get("Skull")]=true;
+		vis[Initialize.tileNameToID.get("Ring")]=true;
+		vis[Initialize.tileNameToID.get("Treasure_Chest")]=true;
+		vis[Initialize.tileNameToID.get("Jewel")]=true;
+		vis[Initialize.tileNameToID.get("Sword")]=true;
+		vis[Initialize.tileNameToID.get("Menorah")]=true;
+		vis[Initialize.tileNameToID.get("Helmet")]=true;
+		
 		
 		//fill in board with random, movable tiles.
-		
-		Arrays.fill(vis, false);
-		
 		for(int i =0; i<7; i++) {
 			for(int j =0; j<7; j++) {
 				
+				if(board[i][j]!=-1) continue;
 				
-				if(board[i][j]==-1) {
-					int index = (int)(34*Math.random());
-				
+				int index = (int)(Initialize.NUM_TILES*Math.random());
 				
 				while(vis[index])
-					index = (int)(34*Math.random());
+					index = (int)(Initialize.NUM_TILES*Math.random());
 				
 				
 				board[i][j]=index;
-				
-				
-				
-				
-				
 				vis[index]=true;
-				
-				}
-				
 				
 			}
 		}
 		
-		for(int i =0;i<34;i++) {
+		for(int i =0;i<Initialize.NUM_TILES;i++) {
 			if(!vis[i]) {
-				
 				freeTile=i;
 				break;
 			}
 		}
 		
 		createTileBoard();
-		
+		new BoardGraph();
 		
 	}
 
@@ -89,7 +95,7 @@ public class Board {
 			for(int j =0;j<7;j++) {
 				
 				tileBoard[i][j]=Initialize.allTiles[board[i][j]];
-			
+				
 			}
 		}
 		tileFreeTile = Initialize.allTiles[freeTile];

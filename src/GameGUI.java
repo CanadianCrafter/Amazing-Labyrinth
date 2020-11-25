@@ -12,7 +12,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	static StringTokenizer st;
 	
 	//gui stuff
-	private static JFrame frame;
+	static JFrame frame;
 	private static JPanel screen;
 	private  JButton[][] tileButtons; //the "blocks" of numbers
 	
@@ -31,19 +31,14 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	// constructor method
 	public GameGUI(Boolean ifLoad) throws IOException {
     	//setup
-		
 		tileButtons = new JButton[7][7];
     	frame = new JFrame(); 
     	screen = new JPanel();
     	menuBar();
     	frameSetup();
     	panelDesign();
-    	if(ifLoad) {
-    		loadSaveState();
-    	}
-    	
-    	
-    	//panelUpdate();
+    	if(ifLoad) loadSaveState();
+    	panelUpdate();
     	
     }
     
@@ -145,18 +140,22 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				tileButtons[i][j].addActionListener(this);
 				tileButtons[i][j].setBounds(10 + 60 * j, 10+60*i, 50, 50);  //location moves so labels don't overlap
 				//the imagesArr index corresponds with the value on the board
-				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]);
+				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]); 
+				
 				screen.add(tileButtons[i][j]);
 			}
 		}
 		frame.repaint();
+		
+		
+		
 	}
 	
 	//updates the board again
 	private void panelUpdate() {
 		for(int i =0;i<7;i++) {
 			for(int j =0;j<7;j++){
-				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]);
+				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]); 
 				screen.add(tileButtons[i][j]);
 			}
 		}
@@ -164,10 +163,13 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	}
 
 	
-	//checks if the game has been won
-	private static boolean checkWin() {
-		
-		return false;
+	//checks if the game has been won after a move
+	private static void checkWin() {
+		if(Initialize.players[currentPlayer].getDeck().isEmpty()) {
+			frame.setVisible(false);
+			new WinScreen(currentPlayer);
+		}
+			
 	}
 	
 	//saves the game onto a text file
@@ -208,6 +210,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			}
 		}
 		
+		loop:
 		for(int i =0;i<7;i++) {
 			for(int j =0;j<7;j++) {
 				if(event.getSource()==tileButtons[i][j]) {
@@ -219,7 +222,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 						Initialize.players[currentPlayer].setRow(j);
 						
 					}
-					break; //this wont break out of all the loops. gonna consider a method and use return
+					break loop; 
 				}
 			}
 		}
@@ -228,59 +231,16 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		panelUpdate();
 		frame.repaint();
 		panelUpdate();
-		if(checkWin()) { //check if the game is over after a successful move, and a new block has spawned
-			frame.setVisible(false);
-			new 
-			
-			EndScreen();
-		}
+		checkWin();
 		
+		currentPlayer = currentPlayer==0 ? 1:0;
 		
 	}
 
 	public void keyPressed(KeyEvent key) {
 	}
-
 	public void keyReleased(KeyEvent e) {
 	}
 	public void keyTyped(KeyEvent e) {
 	}
-	
-	
-	public static void main(String[] args) throws IOException {
-		//Method that create and show a GUI should be
-		//run from an event-dispatchinb thread
-		
-		int[] arr= {1,2};
-		new Initialize(1, arr);
-		
-		
-		for(int i=0; i<7; i++) {
-			for(int j=0; j<7; j++) {
-				System.out.print(" "+Board.board[i][j]+" ");
-			}
-			System.out.println();
-		}
-		
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					runGUI();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	public static void runGUI() throws IOException {
-		JFrame.setDefaultLookAndFeelDecorated(true);
-		
-		GameGUI greeting=new GameGUI(false);
-	}
-	
 }
-
-	
-	

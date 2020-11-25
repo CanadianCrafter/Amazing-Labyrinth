@@ -18,7 +18,7 @@ public class SplashGUI extends JFrame implements ActionListener {
 
 	// constructor method
 	public SplashGUI() {
-		MusicPlayer.playAudio("Music - Route 2.wav");
+//		MusicPlayer.playAudio("Music - Route 2.wav");
 		frameSetup();
 		panelDesign();
 	}
@@ -57,7 +57,7 @@ public class SplashGUI extends JFrame implements ActionListener {
 		
 		//adds the image that is the splash screen
 		image.setBounds(0,0,500,500);
-		image.setIcon(new ImageIcon(new ImageIcon("Images/Splash Screen.png").getImage().getScaledInstance(500, 500, 0)));
+//		image.setIcon(new ImageIcon(new ImageIcon("Images/Splash Screen.png").getImage().getScaledInstance(500, 500, 0)));
 		splashScreen.add(image);
 		repaint();
 
@@ -69,15 +69,16 @@ public class SplashGUI extends JFrame implements ActionListener {
 		if(event.getSource()==playButton) {
 			//wipes the save file
 			try {
-				new PrintWriter("Save.txt").close();
+				new PrintWriter("Files/Save.txt").close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
 			dispose();
 			try {
+				int arr[] = {0,1};
+				new Initialize(5,arr);
 				new GameGUI(false);//starts a game without loading saves
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 			
@@ -86,7 +87,7 @@ public class SplashGUI extends JFrame implements ActionListener {
 		else if(event.getSource()==loadButton) {
 			//if the save file is empty, change the splash screen image to show an error message
 			if(!checkLoad()) {
-				image.setIcon(new ImageIcon(new ImageIcon("Images/Splash Screen Error.png").getImage().getScaledInstance(500, 500, 0)));
+//				image.setIcon(new ImageIcon(new ImageIcon("Images/Splash Screen Error.png").getImage().getScaledInstance(500, 500, 0)));
 			}
 			//if the save file isn't empty, start a game that loads the save
 			else {
@@ -94,7 +95,6 @@ public class SplashGUI extends JFrame implements ActionListener {
 				try {
 					new GameGUI(true);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

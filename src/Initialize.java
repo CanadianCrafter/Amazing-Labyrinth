@@ -6,22 +6,20 @@ public class Initialize {
 		static PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
 		static StringTokenizer st;
 		
+		//Constants
 		public final static int NUM_TILES=50;
 		public final static int NUM_CARDS=24;
 		public final static int NUM_PLAYERS=2;
 		
 		
 		public static Tile allTiles[] = new Tile [NUM_TILES];
-		public static Card allCards[] = new Card [NUM_CARDS];
 		
 		public static Player players[] = new Player [NUM_PLAYERS];
 		
 		public static Map<String, Integer> tileNameToID = new HashMap();
 		
 		private static int cardsPerPlayer;
-		
-		Boolean cardChosen[]=new Boolean[NUM_CARDS];
-		
+		boolean cardChosen[]=new boolean[NUM_CARDS];
 		private static int playerColours[];
 		
 		
@@ -29,21 +27,12 @@ public class Initialize {
 			this.cardsPerPlayer = cardsPerPlayer;
 			this.playerColours  =playerColours;
 			
-			
 			initializeTiles();
-			
-			initializeCards();
-			
 			initializeTileNameToID();
-			
 			initializePlayers();
 			
-			
-			new Board();
-			
-			
-			
 			new TileImages();
+			new Board();
 			
 			
 			
@@ -56,57 +45,41 @@ public class Initialize {
 
 			//Adds: bat, dragon, ghostbottle, ghost waving, ladypig, sorceress (T-Shaped)
 			for(int i=0; i<6;i++) 
-				allTiles[index++]=new Tile(index, 0, true, (int)(4*Math.random()));
+				allTiles[index]=new Tile(index++, 0, true, (int)(4*Math.random()));
 				
 			//Adds: lizard, moth, owl, scarab, rat, spider (L-shaped)
 			for(int i=0; i<6; i++) 
-				allTiles[index++]=new Tile(index, 2, true, (int)(4*Math.random()));
-			
-			
-			
-			//L shaped Tiles
-			for(int i=0; i<9; i++) 
-				allTiles[index++]=new Tile(index, 2, true, (int)(4*Math.random()));
-			
-			//I shaped Tiles
-			for(int i=0; i<13; i++) 
-				allTiles[index++]=new Tile(index, 1, true, (int)(4*Math.random()));
+				allTiles[index]=new Tile(index++, 2, true, (int)(4*Math.random()));
 			
 			//Unmovable treasures
 			//Adds: goldcoins, book, crown, menorah, ring, helmet, jewel, keys, skull, sword, treasurechest
 			//      treasuremap, yellow, red, green, blue
 			
-			allTiles[index++]=new Tile(index, 0, false, 1);
-			allTiles[index++]=new Tile(index, 0, false, 0);
-			allTiles[index++]=new Tile(index, 0, false, 1);
-			allTiles[index++]=new Tile(index, 0, false, 2);
-			allTiles[index++]=new Tile(index, 0, false, 2);
-			allTiles[index++]=new Tile(index, 0, false, 2);
-			allTiles[index++]=new Tile(index, 0, false, 3);
-			allTiles[index++]=new Tile(index, 0, false, 0);
-			allTiles[index++]=new Tile(index, 0, false, 3);
-			allTiles[index++]=new Tile(index, 0, false, 3);
-			allTiles[index++]=new Tile(index, 0, false, 2);
-			allTiles[index++]=new Tile(index, 0, false, 1);
-			allTiles[index++]=new Tile(index, 2, false, 2);
-			allTiles[index++]=new Tile(index, 2, false, 3);
-			allTiles[index++]=new Tile(index, 2, false, 0);
-			allTiles[index++]=new Tile(index, 2, false, 1);
+			allTiles[index]=new Tile(index++, 0, false, 1);
+			allTiles[index]=new Tile(index++, 0, false, 0);
+			allTiles[index]=new Tile(index++, 0, false, 1);
+			allTiles[index]=new Tile(index++, 0, false, 2);
+			allTiles[index]=new Tile(index++, 0, false, 2);
+			allTiles[index]=new Tile(index++, 0, false, 2);
+			allTiles[index]=new Tile(index++, 0, false, 3);
+			allTiles[index]=new Tile(index++, 0, false, 0);
+			allTiles[index]=new Tile(index++, 0, false, 3);
+			allTiles[index]=new Tile(index++, 0, false, 3);
+			allTiles[index]=new Tile(index++, 0, false, 2);
+			allTiles[index]=new Tile(index++, 0, false, 1);
+			allTiles[index]=new Tile(index++, 2, false, 2);
+			allTiles[index]=new Tile(index++, 2, false, 3);
+			allTiles[index]=new Tile(index++, 2, false, 0);
+			allTiles[index]=new Tile(index++, 2, false, 1);
 			
-		}
-		
-		private void initializeCards() {
+			//L shaped Tiles
+			for(int i=0; i<9; i++) 
+				allTiles[index]=new Tile(index++, 2, true, (int)(4*Math.random()));
 			
-			int index=0;
+			//I shaped Tiles
+			for(int i=0; i<13; i++) 
+				allTiles[index]=new Tile(index++, 1, true, (int)(4*Math.random()));
 			
-			//Adds: bat, dragon, ghostbottle, ghost waving, ladypig, sorceress
-			//		lizard, moth, owl, scarab, rat, spider
-			//		goldcoins, book, crown, menorah, ring, helmet, jewel, keys, skull, sword, treasurechest
-			//      treasuremap
-			
-			for(int i=0; i<NUM_CARDS; i++)
-				allCards[index++] = new Card(index, false);
-				
 		}
 		
 		private void initializeTileNameToID() throws IOException{
@@ -152,13 +125,11 @@ public class Initialize {
 			
 		}
 		
-		public ArrayList<Integer> generateDeck(int playerID) {
+		public TreeSet<Integer> generateDeck(int playerID) {
 			
-			ArrayList<Integer> cards=new ArrayList<Integer>();
+			TreeSet<Integer> cards=new TreeSet<Integer>();
 			
 			int cardIndex;
-			
-			Arrays.fill(cardChosen, false);
 				
 			for(int i=0; i<cardsPerPlayer; i++) {
 				do {
@@ -173,16 +144,10 @@ public class Initialize {
 		}
 		
 		
-		
-		
 		public Tile[] getAllTiles() {
 			return allTiles;
 		}
 		
-		public Card[] getAllCards() {
-			return allCards;
-		}
-
 		public static Map<String, Integer> getTileNameToID() {
 			return tileNameToID;
 		}

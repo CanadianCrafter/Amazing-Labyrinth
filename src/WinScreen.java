@@ -8,19 +8,22 @@ import java.util.*;
 import javax.swing.*;
 import audio.MusicPlayer;
 
-public class EndScreen extends JFrame implements ActionListener {
+public class WinScreen extends JFrame implements ActionListener {
 	//gui stuff
 	JPanel splashScreen = new JPanel();
 	JButton screenButton = new JButton();
+	//win type
+	int winningPlayer;
 
 	//constructor method
-	public EndScreen() {
-		MusicPlayer.playClip("Voltorb Flip Game Over.wav");
+	public WinScreen(int winningPlayer) {
+		this.winningPlayer = winningPlayer;
 		frameSetup();
 		panelDesign();
+
 	}
 
-	//set up the frame
+	//sets up the frame
 	private void frameSetup() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setSize(500, 500);
@@ -30,7 +33,7 @@ public class EndScreen extends JFrame implements ActionListener {
 		setResizable(false);
 	}
 
-	//set up the panel
+	//sets up the panel
 	private void panelDesign() {
 		//add features for the screen
 		splashScreen.setBorder(null);
@@ -40,20 +43,23 @@ public class EndScreen extends JFrame implements ActionListener {
 
 		//add features for the button
 		screenButton.addActionListener(this);
-		screenButton.setBounds(0, 0, 500, 500); //this button fills the entire screen
-		screenButton.setIcon(new ImageIcon(new ImageIcon("Images/End Screen.png").getImage().getScaledInstance(500, 500, 0)));
-		splashScreen.add(screenButton); 
+		screenButton.setBounds(0, 0, 500, 500); //the button fills the entire screen
+		
+		//add labels to show winner
+		
+		splashScreen.add(screenButton);
 
 	}
 
-	//starts a new game, and skips the starting splash screen
+	//returns to continue the game
+	//before the win screen was opened, the game was saved - that game is being loaded again
 	public void actionPerformed(ActionEvent arg0) {
-//		TwentyFortyEight.frame.dispose();
+		GameGUI.frame.dispose();
 		dispose();
 		try {
-			new GameGUI(false); //starts a new game without saves
+			new GameGUI(false);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 }

@@ -1,9 +1,9 @@
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Player {
 	
-	private ArrayList<Integer> deck=new ArrayList<Integer>();
+	private TreeSet <Integer> deck=new TreeSet<Integer>();
 	private int row;
 	private int column;
 	
@@ -13,12 +13,12 @@ public class Player {
 		setColumn(column);
 	}
 
-	public ArrayList<Integer> getDeck() {
+	public TreeSet<Integer> getDeck() {
 		return deck;
 	}
 	
 
-	public void setDeck(ArrayList<Integer> deck) {
+	public void setDeck(TreeSet<Integer> deck) {
 		this.deck = deck;
 	}
 	
