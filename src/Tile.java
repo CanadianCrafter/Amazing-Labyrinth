@@ -51,9 +51,7 @@ public class Tile {
 		//2= _|_  /  I  /  7
 		//3= |-  /  - /  _|
 		
-		if(isMove()) {
-			this.orientation = orientation;
-		}
+		this.orientation = orientation;
 	}
 	
 	public static Tile findTileWithID(ArrayList<Tile> list, int id) {

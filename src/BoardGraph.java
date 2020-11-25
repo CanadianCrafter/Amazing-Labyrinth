@@ -48,7 +48,13 @@ public class BoardGraph {
 	public static void createBoardGraph() {
 		for(int i =0;i<Initialize.NUM_TILES;i++)
 			adj[i] = new ArrayList<Integer>();
-
+		
+		for(int i =0;i<7;i++) {
+			for(int j =0;j<7;j++) {
+				System.out.print(Board.board[i][j]+" ");
+			}
+			System.out.println();
+		}
 		
 		for(int r =0;r<7;r++) {
 			for(int c =0;c<7;c++) {
@@ -66,7 +72,8 @@ public class BoardGraph {
 			for(int c =0;c<Initialize.NUM_TILES;c++) {
 				if(tempAdj[r][c]==2) {
 					adj[r].add(c);
-//					adj[c].add(r);
+					adj[c].add(r);
+					System.out.println(c+" "+r);
 				}
 			}
 		}
