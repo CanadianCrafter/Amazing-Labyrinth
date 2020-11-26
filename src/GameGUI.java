@@ -93,9 +93,9 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	//sets up the JFrame
 	private void frameSetup() {
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //program will end when exited
-		frame.setSize(1000,500); // sets the size of the frame
+		frame.setSize(750,500); // sets the size of the frame
 		frame.setTitle("Amazing Labyrinth");
-		frame.setBounds(0,0,1000,500);
+		frame.setBounds(0,0,750,500);
 		frame.setLayout(null);
 		frame.setResizable(false); // can't resize
 		frame.add(screen); // add panel to the frame
@@ -136,7 +136,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private void panelDesign() {
 		screen.setBorder(null);
 		screen.setBackground(new java.awt.Color(47, 47, 47));
-		screen.setBounds(0,0,1000,500);
+		screen.setBounds(0,0,750,500);
 		screen.setLayout(null);
 		
 		boolean reachableTiles[] = BoardGraph.possiblePaths(Board.board[Initialize.players[currentPlayer].getRow()]
@@ -212,7 +212,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private static void checkWin() {
 		if(Initialize.players[currentPlayer].getDeck().isEmpty()) {
 			frame.setVisible(false);
-			new WinScreen(currentPlayer);
+			new WinScreenGUI(currentPlayer);
 		}
 			
 	}
@@ -255,18 +255,12 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			}
 		}
 		
-//		if(event.getSource()==music) {
-//			if(playingMusic) 
-//				MusicPlayer.stopMusic();
-//			else
-//				MusicPlayer.playAudio("Audio/BGM/Amazing Labyrinth BGM.wav");
-//			playingMusic = !playingMusic;
-//		}
+		//toggle the music
 		if(event.getSource()==music) {
 			if(playingMusic) 
 				MusicPlayer.pauseMusic();
 			else
-				MusicPlayer.unpauseMusic("Audio/BGM/Amazing Labyrinth BGM.wav");
+				MusicPlayer.unpauseMusic();
 			playingMusic = !playingMusic;
 		}
 		
