@@ -109,19 +109,20 @@ public class TileImages {
 	    }
 	    
 	    //L shaped Tiles
-		for(int i=0; i<9; i++) 
+		for(int i=0; i<9; i++) {
 			tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/L0.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/L1.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/L2.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/L3.png").getImage().getScaledInstance(50, 50, 0));
-		    
+		}    
+		
 		//I shaped Tiles
-		for(int i=0; i<13; i++) 
+		for(int i=0; i<13; i++) {
 			tileImages[index][0] = new ImageIcon(new ImageIcon("TileImages/I0.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index][1] = new ImageIcon(new ImageIcon("TileImages/I1.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index][2] = new ImageIcon(new ImageIcon("TileImages/I2.png").getImage().getScaledInstance(50, 50, 0));
 		    tileImages[index++][3] = new ImageIcon(new ImageIcon("TileImages/I3.png").getImage().getScaledInstance(50, 50, 0));	    
-	   
+		}
 		
 	}
     

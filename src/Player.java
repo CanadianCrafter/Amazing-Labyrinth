@@ -1,11 +1,12 @@
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Player {
 	
-	private ArrayList<Integer> deck=new ArrayList<Integer>();
+	private TreeSet <Integer> deck=new TreeSet<Integer>();
 	private int row;
 	private int column;
+	private int colourID;
 	
 	public Player(int row, int column) {
 
@@ -13,12 +14,12 @@ public class Player {
 		setColumn(column);
 	}
 
-	public ArrayList<Integer> getDeck() {
+	public TreeSet<Integer> getDeck() {
 		return deck;
 	}
 	
 
-	public void setDeck(ArrayList<Integer> deck) {
+	public void setDeck(TreeSet<Integer> deck) {
 		this.deck = deck;
 	}
 	
@@ -71,17 +72,17 @@ public class Player {
 		
 		return(location);
 	}
+
+	//Colour: 0-red, 1-yellow, 2-green, 3-blue
+	public int getColourID() {
+		return colourID;
+	}
+
+	public void setColourID(int colourID) {
+		this.colourID = colourID;
+	}
 	
-//	public boolean win() {
-//		
-//		for(Card currentCard: playCards) {
-//			if(!currentCard.isSolve()) {
-//				return false;
-//			}
-//		}
-//		
-//		return true;
-//	}
+	
 	
 	
 	
