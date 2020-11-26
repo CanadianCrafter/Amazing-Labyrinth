@@ -2,16 +2,19 @@ import javax.swing.*;
 
 public class CardImages {
 	
-	public static final ImageIcon cardImages[]=new ImageIcon[23];
+	public static final ImageIcon cardImages[]=new ImageIcon[24];
 	
 	public CardImages() {
+		
 		loadImages();
+		
 	}
 	
 	private void loadImages() {
+		
 		int index=0;
 		
-		cardImages[index]=new ImageIcon(new ImageIcon("CardImages/Bat.png").getImage().getScaledInstance(45, 70, 0));
+		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/Bat.png").getImage().getScaledInstance(45, 70, 0));
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/Dragon.png").getImage().getScaledInstance(45, 70, 0));
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/GhostBottle.png").getImage().getScaledInstance(45, 70, 0));
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/GhostWaving.png").getImage().getScaledInstance(45, 70, 0));
@@ -35,6 +38,8 @@ public class CardImages {
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/Sword.png").getImage().getScaledInstance(45, 70, 0));
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/TreasureChest.png").getImage().getScaledInstance(45, 70, 0));
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/TreasureMap.png").getImage().getScaledInstance(45, 70, 0));
+		
+		
 		
 		
 	}
