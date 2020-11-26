@@ -9,10 +9,7 @@ public class Player {
 	private int colourID;
 
 	
-	public Player(int row, int column, int ColourID) {
-
-		setRow(row);
-		setColumn(column);
+	public Player(int ColourID) {
 		setColourID(ColourID);;
 	}
 

@@ -16,11 +16,14 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private static JPanel screen;
 	private  JButton[][] tileButtons; //the "blocks" of numbers
 	private JButton[] insertButtons;
-	
+	private JLabel[] playerLabel;
+	private JLabel[] player1CardLabel;
+	private JLabel[] player2CardLabel;
+	private JLabel[] playerIndicationLabel;
 	
 	//menubar stuff
 	private static JMenuBar mb = new JMenuBar();
-	private static JMenu menu = new JMenu();
+	private static JMenu menu = new JMenu();;
 	private static JMenuItem save;
 	private static JMenuItem exit;
 	private static JMenuItem restart;
@@ -28,7 +31,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private static boolean playingMusic = true;
 	private static long time;
 	
-	private JLabel[] player;
+	
 	
 	//Player
 	public static int currentPlayer=0;
@@ -39,7 +42,12 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
     	//setup
 		tileButtons = new JButton[7][7];
 		insertButtons=new JButton[12];
-		this.player=new JLabel[3];//Initialize.players.length
+		playerLabel=new JLabel[Initialize.NUM_PLAYERS];//Initialize.players.length
+		player1CardLabel=new JLabel[Initialize.cardsPerPlayer];
+		player2CardLabel=new JLabel[Initialize.cardsPerPlayer];
+		
+		playerIndicationLabel=new JLabel[Initialize.NUM_PLAYERS];
+		
     	frame = new JFrame(); 
     	screen = new JPanel();
     	menuBar();
@@ -180,29 +188,91 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		
 		}
 		
-		insertButtons[0]=new JButton();
+		//playerLabel[0]=new JLabel();
+		//playerLabel[0].setBounds(600,200,50,50);
+		
+		//player
 		
 		
-		int index=0;
+		
+		for(int x=0; x<2; x++) {
+			
+			playerLabel[x]=new JLabel();
+			
+			playerLabel[x].setBounds(40+55*Initialize.players[x].getColumn(), 40+55*Initialize.players[x].getRow(), 30, 30);
+			
+			if(Initialize.players[x].getColourID()==0) {
+				playerLabel[x].setBackground(new java.awt.Color(232, 17, 35));
 				
-		for(Player currentPlayer: Initialize.players) {
-			player[index]=new JLabel("AAAAAAAA");
-			
-			player[index].setBounds(30+55*currentPlayer.getColumn(), 30+55*currentPlayer.getRow(), 30, 30);
-			
-			if(currentPlayer.getColourID()==0) {
-				player[index].setForeground(new java.awt.Color(232, 17, 35));
-			}else if(currentPlayer.getColourID()==1) {
-				player[index].setForeground(new java.awt.Color(255, 185, 0));
-			}else if(currentPlayer.getColourID()==2) {
-				player[index].setForeground(new java.awt.Color(16, 124, 16));
-			}else if(currentPlayer.getColourID()==3) {
-				player[index].setForeground(new java.awt.Color(16, 124, 16));
+			}else if(Initialize.players[x].getColourID()==1) {
+				playerLabel[x].setBackground(new java.awt.Color(255, 185, 0));
+				
+			}else if(Initialize.players[x].getColourID()==2) {
+				playerLabel[x].setBackground(new java.awt.Color(16, 124, 16));
+				
+			}else if(Initialize.players[x].getColourID()==3) {
+				playerLabel[x].setBackground(new java.awt.Color(16, 124, 16));
+				
 			}
 			
-			player[index].setOpaque(true);
-			screen.add(player[index++]);
+			playerLabel[x].setOpaque(true);
+			playerLabel[x].setVisible(true);
+			screen.add(playerLabel[x]);
+			
 		}
+		
+		for(int x=0; x<2; x++) {
+			
+			playerIndicationLabel[x]=new JLabel();
+			
+			playerIndicationLabel[x].setBounds(430, 120+200*x, 30, 30);
+			
+			if(Initialize.players[x].getColourID()==0) {
+				playerIndicationLabel[x].setBackground(new java.awt.Color(232, 17, 35));
+				
+			}else if(Initialize.players[x].getColourID()==1) {
+				playerIndicationLabel[x].setBackground(new java.awt.Color(255, 185, 0));
+				
+			}else if(Initialize.players[x].getColourID()==2) {
+				playerIndicationLabel[x].setBackground(new java.awt.Color(16, 124, 16));
+				
+			}else if(Initialize.players[x].getColourID()==3) {
+				playerIndicationLabel[x].setBackground(new java.awt.Color(16, 124, 16));
+				
+			}
+			
+			playerIndicationLabel[x].setOpaque(true);
+			playerIndicationLabel[x].setVisible(true);
+			screen.add(playerIndicationLabel[x]);
+			
+		}
+		
+		for(int x=0; x<Initialize.cardsPerPlayer; x++) {
+			
+			player1CardLabel[x]=new JLabel();
+			
+			player1CardLabel[x].setBounds(480+50*x, 100, 45, 70);
+			
+			player1CardLabel[x].setIcon(CardImages.cardImages[2]);
+			
+			player1CardLabel[x].setOpaque(true);
+			player1CardLabel[x].setVisible(true);
+			screen.add(player1CardLabel[x]);
+		}
+		
+		for(int x=0; x<Initialize.cardsPerPlayer; x++) {
+			
+			player1CardLabel[x]=new JLabel();
+			
+			player1CardLabel[x].setBounds(480+50*x, 300, 45, 70);
+			
+			player1CardLabel[x].setIcon(CardImages.cardImages[0]);
+			
+			player1CardLabel[x].setOpaque(true);
+			player1CardLabel[x].setVisible(true);
+			screen.add(player1CardLabel[x]);
+		}
+		
 		
 		frame.repaint();
 		
@@ -233,17 +303,20 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(47, 47, 47), 3)); 
 				
 				screen.add(tileButtons[i][j]);
+				
+				
 			}
 		}
 		
-		int index=0;
-		
-		for(Player currentPlayer: Initialize.players) {
+		for(int x=0; x<2; x++) {
 			
-			player[index].setBounds(30+55*currentPlayer.getColumn(), 30+55*currentPlayer.getRow(), 30, 30);
-				
-			screen.add(player[index++]);
+			
+			playerLabel[x].setBounds(40+55*Initialize.players[x].getColumn(), 40+55*Initialize.players[x].getRow(), 30, 30);
+			
 		}
+		
+
+		
 		
 		frame.repaint();
 	}
@@ -301,7 +374,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			if(playingMusic) 
 				MusicPlayer.pauseMusic();
 			else
-				MusicPlayer.unpauseMusic("Audio/BGM/Amazing Labyrinth BGM.wav");
+				MusicPlayer.unpauseMusic();
 			playingMusic = !playingMusic;
 		}
 		
