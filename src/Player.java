@@ -7,11 +7,13 @@ public class Player {
 	private int row;
 	private int column;
 	private int colourID;
+
 	
-	public Player(int row, int column) {
+	public Player(int row, int column, int ColourID) {
 
 		setRow(row);
 		setColumn(column);
+		setColourID(ColourID);;
 	}
 
 	public TreeSet<Integer> getDeck() {

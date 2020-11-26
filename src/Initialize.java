@@ -102,8 +102,9 @@ public class Initialize {
 		}
 		
 		private void initializePlayers() {
-			players[0] =new Player(0, 0);
-			players[1] =new Player(0, 0);
+			players[0] =new Player(0, 0, 2);
+			players[1] =new Player(6, 6, 2);
+			
 			
 			for(int i =0;i<NUM_PLAYERS;i++)
 				players[i].setDeck(generateDeck(i));

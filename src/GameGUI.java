@@ -15,6 +15,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	static JFrame frame;
 	private static JPanel screen;
 	private  JButton[][] tileButtons; //the "blocks" of numbers
+	private JButton[] insertButtons;
 	
 	
 	//menubar stuff
@@ -27,6 +28,8 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private static boolean playingMusic = true;
 	private static long time;
 	
+	private JLabel[] player;
+	
 	//Player
 	public static int currentPlayer=0;
 	
@@ -35,6 +38,8 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	public GameGUI(Boolean ifLoad) throws IOException {
     	//setup
 		tileButtons = new JButton[7][7];
+		insertButtons=new JButton[12];
+		this.player=new JLabel[3];//Initialize.players.length
     	frame = new JFrame(); 
     	screen = new JPanel();
     	menuBar();
@@ -171,8 +176,34 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(47, 47, 47), 3)); 
 				
 				screen.add(tileButtons[i][j]);
-			}
+				}
+		
 		}
+		
+		insertButtons[0]=new JButton();
+		
+		
+		int index=0;
+				
+		for(Player currentPlayer: Initialize.players) {
+			player[index]=new JLabel("AAAAAAAA");
+			
+			player[index].setBounds(30+55*currentPlayer.getColumn(), 30+55*currentPlayer.getRow(), 30, 30);
+			
+			if(currentPlayer.getColourID()==0) {
+				player[index].setForeground(new java.awt.Color(232, 17, 35));
+			}else if(currentPlayer.getColourID()==1) {
+				player[index].setForeground(new java.awt.Color(255, 185, 0));
+			}else if(currentPlayer.getColourID()==2) {
+				player[index].setForeground(new java.awt.Color(16, 124, 16));
+			}else if(currentPlayer.getColourID()==3) {
+				player[index].setForeground(new java.awt.Color(16, 124, 16));
+			}
+			
+			player[index].setOpaque(true);
+			screen.add(player[index++]);
+		}
+		
 		frame.repaint();
 		
 	}
@@ -204,6 +235,16 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				screen.add(tileButtons[i][j]);
 			}
 		}
+		
+		int index=0;
+		
+		for(Player currentPlayer: Initialize.players) {
+			
+			player[index].setBounds(30+55*currentPlayer.getColumn(), 30+55*currentPlayer.getRow(), 30, 30);
+				
+			screen.add(player[index++]);
+		}
+		
 		frame.repaint();
 	}
 
@@ -212,7 +253,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private static void checkWin() {
 		if(Initialize.players[currentPlayer].getDeck().isEmpty()) {
 			frame.setVisible(false);
-			new WinScreenGUI(currentPlayer);
+		//	new WinScreenGUI(currentPlayer);
 		}
 			
 	}
@@ -260,7 +301,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			if(playingMusic) 
 				MusicPlayer.pauseMusic();
 			else
-				MusicPlayer.unpauseMusic();
+				MusicPlayer.unpauseMusic("Audio/BGM/Amazing Labyrinth BGM.wav");
 			playingMusic = !playingMusic;
 		}
 		
