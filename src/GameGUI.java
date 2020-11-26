@@ -19,7 +19,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	
 	//menubar stuff
 	private static JMenuBar mb = new JMenuBar();
-	private static JMenu menu = new JMenu();;
+	private static JMenu menu = new JMenu();
 	private static JMenuItem save;
 	private static JMenuItem exit;
 	private static JMenuItem restart;

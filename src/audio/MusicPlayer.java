@@ -52,7 +52,7 @@ public class MusicPlayer {
 		
 	}
 	
-	public static void unpauseMusic(String audioLocation){
+	public static void unpauseMusic(){
 		
 		clip.loop(Clip.LOOP_CONTINUOUSLY);
 		
