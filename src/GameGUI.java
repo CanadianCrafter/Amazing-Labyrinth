@@ -24,6 +24,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	
 	public static ImageIcon clockwiseImage=new ImageIcon();
 	public static ImageIcon antiClockwiseImage=new ImageIcon();
+	public static ImageIcon[] arrows=new ImageIcon[4];
 	
 	//menubar stuff
 	private static JMenuBar mb = new JMenuBar();
@@ -52,6 +53,14 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		rotateButtons=new JButton[2];
 		freeTileLabel=new JLabel();
 		
+
+		clockwiseImage=new ImageIcon(new ImageIcon("OtherImages/clockwise.png").getImage().getScaledInstance(30, 30, 0));
+		antiClockwiseImage=new ImageIcon(new ImageIcon("OtherImages/anticlockwise.png").getImage().getScaledInstance(30, 30, 0));
+		
+		arrows[0]=new ImageIcon(new ImageIcon("OtherImages/Arrow0.png").getImage().getScaledInstance(24, 16, 0));
+		arrows[1]=new ImageIcon(new ImageIcon("OtherImages/Arrow1.png").getImage().getScaledInstance(16, 24, 0));
+		arrows[2]=new ImageIcon(new ImageIcon("OtherImages/Arrow2.png").getImage().getScaledInstance(24, 16, 0));
+		arrows[3]=new ImageIcon(new ImageIcon("OtherImages/Arrow3.png").getImage().getScaledInstance(16, 24, 0));
 		
     	frame = new JFrame(); 
     	screen = new JPanel();
@@ -257,18 +266,20 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				
 				screen.add(cardLabels[i][j]);
 				
-				System.out.print(Initialize.players[i].getDeck().get(j)+" ");
 			}
 			System.out.println();
 			
 			
 		}
 		
+		// Free Tile Label
 		freeTileLabel.setBounds(560, 100, 50, 50);
 		freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
 		freeTileLabel.setVisible(true);
 		screen.add(freeTileLabel);
 		
+		
+		//Rotate Buttons
 		rotateButtons[0]=new JButton();
 		rotateButtons[1]=new JButton();
 		
@@ -278,8 +289,6 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		rotateButtons[0].setBounds(520, 110, 30, 30);
 		rotateButtons[1].setBounds(620, 110, 30, 30);
 		
-		clockwiseImage=new ImageIcon(new ImageIcon("OtherImages/clockwise.png").getImage().getScaledInstance(30, 30, 0));
-		antiClockwiseImage=new ImageIcon(new ImageIcon("OtherImages/anticlockwise.png").getImage().getScaledInstance(30, 30, 0));
 		
 		rotateButtons[0].setIcon(clockwiseImage);
 		rotateButtons[1].setIcon(antiClockwiseImage);
@@ -289,6 +298,46 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		
 		screen.add(rotateButtons[0]);
 		screen.add(rotateButtons[1]);
+		
+		//Insert Buttons
+		
+		
+			
+		for(int n=0; n<3; n++) {
+			insertButtons[n]=new JButton();
+			insertButtons[n].addActionListener(this);
+			insertButtons[n].setBounds(100+110*n, 10, 24, 16);
+			insertButtons[n].setIcon(arrows[0]);
+			insertButtons[n].setVisible(true);
+			screen.add(insertButtons[n]);
+		}
+			
+			for(int n=3; n<6; n++) {
+				insertButtons[n]=new JButton();
+				insertButtons[n].addActionListener(this);
+				insertButtons[n].setBounds(410, 100+110*(n-3), 16, 24);
+				insertButtons[n].setIcon(arrows[1]);
+				insertButtons[n].setVisible(true);
+				screen.add(insertButtons[n]);
+			}
+		
+			for(int n=6; n<9; n++) {
+				insertButtons[n]=new JButton();
+				insertButtons[n].addActionListener(this);
+				insertButtons[n].setBounds(100+110*(n-6), 415, 24, 16);
+				insertButtons[n].setIcon(arrows[2]);
+				insertButtons[n].setVisible(true);
+				screen.add(insertButtons[n]);
+			}
+			
+			for(int n=9; n<12; n++) {
+				insertButtons[n]=new JButton();
+				insertButtons[n].addActionListener(this);
+				insertButtons[n].setBounds(5, 100+110*(n-9), 16, 24);
+				insertButtons[n].setIcon(arrows[3]);
+				insertButtons[n].setVisible(true);
+				screen.add(insertButtons[n]);
+			}
 		
 		frame.repaint();
 		
@@ -455,6 +504,32 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				}
 			}
 		}
+		
+		for(int i=0; i<3; i++) {
+			if(event.getSource()==insertButtons[i]) {
+			insertTileToBoard(0,1+2*i);
+			
+			}
+		}
+		
+		for(int i=3; i<6; i++) {
+			if(event.getSource()==insertButtons[i]) {
+				insertTileToBoard(1+2*(i-3), 6);
+			}
+		}
+		
+		for(int i=6; i<9; i++) {
+			if(event.getSource()==insertButtons[i]) {
+			insertTileToBoard(6,1+2*(i-6));
+			}
+		}
+		
+		for(int i=9; i<12; i++) {
+			if(event.getSource()==insertButtons[i]) {
+				insertTileToBoard(1+2*(i-9), 0);
+			}
+		}
+		
 			
 		
 		panelUpdate();
@@ -464,6 +539,55 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		
 		
 		
+	}
+	
+	public void insertTileToBoard(int row, int column) {
+		
+		// Tile Board Array AND Tile Free Tile is not updated in this method.
+		
+		int removeRow=0;
+		int removeColumn=0;
+		
+		if(row==0) {
+			removeRow=6;
+			removeColumn=column;
+		}else if(row==6) {
+			removeRow=0;
+			removeColumn=column;
+		}else if(column==0) {
+			removeColumn=6;
+			removeRow=row;
+		}else if(column==6) {
+			removeColumn=0;
+			removeRow=row;
+		}
+		
+		
+		
+		Tile newFreeTile=Initialize.allTiles[Board.board[removeRow][removeColumn]];
+		
+		if(row==0) {
+			for(int x=5; x>=0; x--) {
+				Board.board[x+1][column]=Board.board[x][column];
+			}
+		}else if(row==6) {
+			for(int x=1; x<=6; x++) {
+				Board.board[x-1][column]=Board.board[x][column];
+			}
+		}else if(column==0) {
+			for(int y=5; y>=0; y--) {
+				Board.board[row][y+1]=Board.board[row][y];
+			}
+		}else if(column==6) {
+			for(int y=1; y<=6; y++) {
+				Board.board[row][y-1]=Board.board[row][y];
+			}
+		}
+		
+		
+		Board.board[row][column]=Board.getFreeTile();
+		Board.setFreeTile(newFreeTile.getID());
+		freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
 	}
 
 	public void keyPressed(KeyEvent key) {

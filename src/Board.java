@@ -115,6 +115,7 @@ public class Board {
 	}
 
 	public static void setFreeTile(int tile) {
+		tileFreeTile = Initialize.allTiles[tile];
 		freeTile = tile;
 	}
 	
