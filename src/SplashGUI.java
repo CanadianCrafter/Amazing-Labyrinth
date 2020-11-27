@@ -45,12 +45,6 @@ public class SplashGUI extends JFrame implements ActionListener {
 		splashScreen.setBounds(-12, -25, 800, 600); // sets the boundaries and location of the panel
 		splashScreen.setLayout(null);
 		
-		// cinematic mode; no gui
-//		animation.setBounds(0, 0, 1024, 768);
-//		animation.setIcon(new ImageIcon(new ImageIcon("EndingAnimation/Screenshot (1341).png").getImage().getScaledInstance(1024, 768, 0)));
-//		endScreen.add(animation);
-
-
 		//add features for the buttons
 		playButton.addActionListener(this);
 		playButton.setBounds(-12, -25, 800, 600); 
@@ -76,7 +70,7 @@ public class SplashGUI extends JFrame implements ActionListener {
 			if(index==135)
 				animationTimer.stop();
 
-			if(index==160) {
+			if(index==150) {
 				setVisible(false);
 				MusicPlayer.stopMusic();
 				new GameSetUpGUI();

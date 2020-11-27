@@ -17,8 +17,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private  JButton[][] tileButtons; //the "blocks" of numbers
 	private JButton[] insertButtons;
 	private JLabel[] playerLabel;
-	private JLabel[] player1CardLabel;
-	private JLabel[] player2CardLabel;
+	private JLabel[][] cardLabels; 
 	private JLabel[] playerIndicationLabel;
 	
 	//menubar stuff
@@ -42,10 +41,8 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
     	//setup
 		tileButtons = new JButton[7][7];
 		insertButtons=new JButton[12];
-		playerLabel=new JLabel[Initialize.NUM_PLAYERS];//Initialize.players.length
-		player1CardLabel=new JLabel[Initialize.cardsPerPlayer];
-		player2CardLabel=new JLabel[Initialize.cardsPerPlayer];
-		
+		playerLabel=new JLabel[Initialize.NUM_PLAYERS];
+		cardLabels= new JLabel [Initialize.NUM_PLAYERS][Initialize.cardsPerPlayer];
 		playerIndicationLabel=new JLabel[Initialize.NUM_PLAYERS];
 		
     	frame = new JFrame(); 
@@ -187,96 +184,73 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				}
 		
 		}
-		
-		//playerLabel[0]=new JLabel();
-		//playerLabel[0].setBounds(600,200,50,50);
-		
-		//player
-		
-		
-		
-		for(int x=0; x<2; x++) {
+
+		//player Piece
+		for(int i=0; i<Initialize.NUM_PLAYERS; i++) {
 			
-			playerLabel[x]=new JLabel();
+			playerLabel[i]=new JLabel();
 			
-			playerLabel[x].setBounds(40+55*Initialize.players[x].getColumn(), 40+55*Initialize.players[x].getRow(), 30, 30);
+			playerLabel[i].setBounds(40+55*Initialize.players[i].getColumn(), 40+55*Initialize.players[i].getRow(), 30, 30);
 			
-			if(Initialize.players[x].getColourID()==0) {
-				playerLabel[x].setBackground(new java.awt.Color(232, 17, 35));
+			if(Initialize.players[i].getColourID()==0)
+				playerLabel[i].setBackground(new java.awt.Color(232, 17, 35));
 				
-			}else if(Initialize.players[x].getColourID()==1) {
-				playerLabel[x].setBackground(new java.awt.Color(255, 185, 0));
+			else if(Initialize.players[i].getColourID()==1)
+				playerLabel[i].setBackground(new java.awt.Color(255, 185, 0));
 				
-			}else if(Initialize.players[x].getColourID()==2) {
-				playerLabel[x].setBackground(new java.awt.Color(16, 124, 16));
+			else if(Initialize.players[i].getColourID()==2)
+				playerLabel[i].setBackground(new java.awt.Color(16, 124, 16));
 				
-			}else if(Initialize.players[x].getColourID()==3) {
-				playerLabel[x].setBackground(new java.awt.Color(16, 124, 16));
+			else if(Initialize.players[i].getColourID()==3)
+				playerLabel[i].setBackground(new java.awt.Color(16, 124, 16));
+			
+			playerLabel[i].setOpaque(true);
+			playerLabel[i].setVisible(true);
+			screen.add(playerLabel[i]);
+			
+		}
+		
+		for(int i=0; i<Initialize.NUM_PLAYERS; i++) {
+			
+			playerIndicationLabel[i]=new JLabel();
+			
+			playerIndicationLabel[i].setBounds(430, 230+100*i, 305, 80);
+			
+			if(Initialize.players[i].getColourID()==0)
+				playerIndicationLabel[i].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 3));
 				
+			else if(Initialize.players[i].getColourID()==1)
+				playerIndicationLabel[i].setBorder(BorderFactory.createLineBorder(new java.awt.Color(255, 185, 0), 3));
+				
+			else if(Initialize.players[i].getColourID()==2)
+				playerIndicationLabel[i].setBorder(BorderFactory.createLineBorder(new java.awt.Color(16, 124, 16), 3));
+				
+			else if(Initialize.players[i].getColourID()==3) 
+				playerIndicationLabel[i].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 3));
+
+			
+			playerIndicationLabel[i].setOpaque(false);
+			playerIndicationLabel[i].setVisible(true);
+			screen.add(playerIndicationLabel[i]);
+			
+		}
+		
+		//add Cards
+		for(int i =0;i<Initialize.NUM_PLAYERS;i++) {
+			for(int j=0; j<Initialize.players[i].getDeck().size(); j++) {
+				
+				cardLabels[i][j]=new JLabel();
+				
+				cardLabels[i][j].setBounds(435+50*j, 235+i*100, 45, 70);
+				
+				cardLabels[i][j].setIcon(CardImages.cardImages[Initialize.players[i].getDeck().get(j)]);
+				
+				cardLabels[i][j].setVisible(true);
+				
+				screen.add(cardLabels[i][j]);
 			}
-			
-			playerLabel[x].setOpaque(true);
-			playerLabel[x].setVisible(true);
-			screen.add(playerLabel[x]);
-			
+			System.out.println();
 		}
-		
-		for(int x=0; x<2; x++) {
-			
-			playerIndicationLabel[x]=new JLabel();
-			
-			playerIndicationLabel[x].setBounds(430, 230+100*x, 305, 80);
-			
-			if(Initialize.players[x].getColourID()==0) {
-				playerIndicationLabel[x].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 3));
-				
-			}else if(Initialize.players[x].getColourID()==1) {
-				playerIndicationLabel[x].setBorder(BorderFactory.createLineBorder(new java.awt.Color(255, 185, 0), 3));
-				
-			}else if(Initialize.players[x].getColourID()==2) {
-				playerIndicationLabel[x].setBorder(BorderFactory.createLineBorder(new java.awt.Color(16, 124, 16), 3));
-				
-			}else if(Initialize.players[x].getColourID()==3) {
-				playerIndicationLabel[x].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 3));
-				
-			}
-			
-			playerIndicationLabel[x].setOpaque(false);
-			playerIndicationLabel[x].setVisible(true);
-			screen.add(playerIndicationLabel[x]);
-			
-		}
-		
-		Object[] player1Card=Initialize.players[0].getDeck().toArray();
-		
-		for(int x=0; x<Initialize.cardsPerPlayer; x++) {
-			
-			player1CardLabel[x]=new JLabel();
-			
-			player1CardLabel[x].setBounds(435+50*x, 235, 45, 70);
-			
-			player1CardLabel[x].setIcon(CardImages.cardImages[(int)(player1Card[x])]);
-			
-			player1CardLabel[x].setOpaque(true);
-			player1CardLabel[x].setVisible(true);
-			screen.add(player1CardLabel[x]);
-		}
-		
-		Object[] player2Card=Initialize.players[1].getDeck().toArray();
-		
-		for(int x=0; x<Initialize.cardsPerPlayer; x++) {
-			
-			player2CardLabel[x]=new JLabel();
-			
-			player2CardLabel[x].setBounds(435+50*x, 335, 45, 70);
-			
-			player2CardLabel[x].setIcon(CardImages.cardImages[(int)(player2Card[x])]);
-			
-			player2CardLabel[x].setOpaque(true);
-			player2CardLabel[x].setVisible(true);
-			screen.add(player2CardLabel[x]);
-		}
-		
 		
 		frame.repaint();
 		
@@ -307,20 +281,11 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 					tileButtons[i][j].setBorder(BorderFactory.createLineBorder(new java.awt.Color(47, 47, 47), 3)); 
 				
 				screen.add(tileButtons[i][j]);
-				
-				
 			}
 		}
 		
-		for(int x=0; x<2; x++) {
-			
-			
-			playerLabel[x].setBounds(40+55*Initialize.players[x].getColumn(), 40+55*Initialize.players[x].getRow(), 30, 30);
-			
-		}
-		
-
-		
+		for(int i=0; i<Initialize.NUM_PLAYERS; i++)
+			playerLabel[i].setBounds(40+55*Initialize.players[i].getColumn(), 40+55*Initialize.players[i].getRow(), 30, 30);
 		
 		frame.repaint();
 	}

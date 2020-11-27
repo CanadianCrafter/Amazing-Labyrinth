@@ -3,22 +3,23 @@ import java.util.*;
 
 public class Player {
 	
-	private TreeSet <Integer> deck=new TreeSet<Integer>();
+	private ArrayList <Integer> deck=new ArrayList<Integer>();
 	private int row;
 	private int column;
 	private int colourID;
 
 	
-	public Player(int ColourID) {
-		setColourID(ColourID);;
+	public Player() {
+	
 	}
+	
 
-	public TreeSet<Integer> getDeck() {
+	public ArrayList<Integer> getDeck() {
 		return deck;
 	}
 	
 
-	public void setDeck(TreeSet<Integer> deck) {
+	public void setDeck(ArrayList<Integer> deck) {
 		this.deck = deck;
 	}
 	

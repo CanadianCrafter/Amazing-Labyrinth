@@ -29,13 +29,11 @@ public class Initialize {
 			
 			initializeTiles();
 			initializeTileNameToID();
-			initializePlayers(playerColours);
+			initializePlayers();
 			
 			new TileImages();
-			new Board();
 			new CardImages();
-			
-			
+			new Board();
 			
 		}
 		
@@ -102,9 +100,10 @@ public class Initialize {
 				
 		}
 		
-		private void initializePlayers(int[] colour) {
-			players[0] =new Player(colour[0]);
-			players[1] =new Player(colour[1]);
+		private void initializePlayers() {
+			
+			for(int i =0;i<NUM_PLAYERS;i++)
+				players[i] =new Player();
 			
 			
 			for(int i =0;i<NUM_PLAYERS;i++)
@@ -128,9 +127,9 @@ public class Initialize {
 			
 		}
 		
-		public TreeSet<Integer> generateDeck(int playerID) {
+		public ArrayList<Integer> generateDeck(int playerID) {
 			
-			TreeSet<Integer> cards=new TreeSet<Integer>();
+			ArrayList<Integer> cards=new ArrayList<Integer>();
 			
 			int cardIndex;
 				
