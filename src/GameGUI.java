@@ -588,6 +588,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		Board.board[row][column]=Board.getFreeTile();
 		Board.setFreeTile(newFreeTile.getID());
 		freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
+		Board.createTileBoard();
 	}
 
 	public void keyPressed(KeyEvent key) {
