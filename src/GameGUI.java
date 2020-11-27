@@ -14,11 +14,16 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	//gui stuff
 	static JFrame frame;
 	private static JPanel screen;
+	private JLabel freeTileLabel;
 	private  JButton[][] tileButtons; //the "blocks" of numbers
 	private JButton[] insertButtons;
+	private JButton[] rotateButtons;
 	private JLabel[] playerLabel;
 	private JLabel[][] cardLabels; 
 	private JLabel[] playerIndicationLabel;
+	
+	public static ImageIcon clockwiseImage=new ImageIcon();
+	public static ImageIcon antiClockwiseImage=new ImageIcon();
 	
 	//menubar stuff
 	private static JMenuBar mb = new JMenuBar();
@@ -44,6 +49,9 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		playerLabel=new JLabel[Initialize.NUM_PLAYERS];
 		cardLabels= new JLabel [Initialize.NUM_PLAYERS][Initialize.cardsPerPlayer];
 		playerIndicationLabel=new JLabel[Initialize.NUM_PLAYERS];
+		rotateButtons=new JButton[2];
+		freeTileLabel=new JLabel();
+		
 		
     	frame = new JFrame(); 
     	screen = new JPanel();
@@ -256,6 +264,31 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			
 		}
 		
+		freeTileLabel.setBounds(560, 100, 50, 50);
+		freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
+		freeTileLabel.setVisible(true);
+		screen.add(freeTileLabel);
+		
+		rotateButtons[0]=new JButton();
+		rotateButtons[1]=new JButton();
+		
+		rotateButtons[0].addActionListener(this);
+		rotateButtons[1].addActionListener(this);
+		
+		rotateButtons[0].setBounds(520, 110, 30, 30);
+		rotateButtons[1].setBounds(620, 110, 30, 30);
+		
+		clockwiseImage=new ImageIcon(new ImageIcon("OtherImages/clockwise.png").getImage().getScaledInstance(30, 30, 0));
+		antiClockwiseImage=new ImageIcon(new ImageIcon("OtherImages/anticlockwise.png").getImage().getScaledInstance(30, 30, 0));
+		
+		rotateButtons[0].setIcon(clockwiseImage);
+		rotateButtons[1].setIcon(antiClockwiseImage);
+		
+		rotateButtons[0].setVisible(true);
+		rotateButtons[1].setVisible(true);
+		
+		screen.add(rotateButtons[0]);
+		screen.add(rotateButtons[1]);
 		
 		frame.repaint();
 		
@@ -352,6 +385,25 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			playingMusic = !playingMusic;
 		}
 		
+		if(event.getSource()==rotateButtons[0]) {
+			if(Board.tileFreeTile.getOrientation()==3) {
+				Board.tileFreeTile.setOrientation(0);
+			}else {
+				Board.tileFreeTile.setOrientation(Board.tileFreeTile.getOrientation()+1);
+			}
+			
+			freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
+		}
+		
+		if(event.getSource()==rotateButtons[1]) {
+			if(Board.tileFreeTile.getOrientation()==0) {
+				Board.tileFreeTile.setOrientation(3);
+			}else {
+				Board.tileFreeTile.setOrientation(Board.tileFreeTile.getOrientation()-1);
+			}
+			
+			freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
+		}
 		
 		//move a player
 		loop:
