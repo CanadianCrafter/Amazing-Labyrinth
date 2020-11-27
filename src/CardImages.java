@@ -20,7 +20,7 @@ public class CardImages {
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/GhostWaving.png").getImage().getScaledInstance(45, 70, 0));
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/LadyPig.png").getImage().getScaledInstance(45, 70, 0));
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/Sorceress.png").getImage().getScaledInstance(45, 70, 0));
-		cardImages[index++]=new ImageIcon(new ImageIcon("CardImage/Lizard.png").getImage().getScaledInstance(45, 70, 0));
+		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/Lizard.png").getImage().getScaledInstance(45, 70, 0));
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/Moth.png").getImage().getScaledInstance(45, 70, 0));
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/Owl.png").getImage().getScaledInstance(45, 70, 0));
 		cardImages[index++]=new ImageIcon(new ImageIcon("CardImages/Scarab.png").getImage().getScaledInstance(45, 70, 0));

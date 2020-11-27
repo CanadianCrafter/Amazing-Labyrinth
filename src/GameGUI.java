@@ -248,9 +248,14 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				cardLabels[i][j].setVisible(true);
 				
 				screen.add(cardLabels[i][j]);
+				
+				System.out.print(Initialize.players[i].getDeck().get(j)+" ");
 			}
 			System.out.println();
+			
+			
 		}
+		
 		
 		frame.repaint();
 		
@@ -359,6 +364,37 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 							Board.board[i][j])) {
 						Initialize.players[currentPlayer].setRow(i);
 						Initialize.players[currentPlayer].setColumn(j);
+						
+						
+						if(Board.board[i][j]<24) {
+							
+							System.out.println("checked");
+							
+							if(currentPlayer==0) {
+								
+								System.out.print("Player 1");
+								
+								for(int x=0; x<Initialize.players[0].getDeck().size(); x++) {
+									if(Board.board[i][j]==Initialize.players[0].getDeck().get(x)) {
+										System.out.println(x+" deleted");
+										Initialize.players[0].getDeck().remove(x);
+										cardLabels[0][x].setVisible(false);
+									}
+								}
+							}else if(currentPlayer==1) {
+								
+								System.out.print("Player 2");
+								
+								for(int x=0; x<Initialize.players[1].getDeck().size(); x++) {
+									if(Board.board[i][j]==Initialize.players[1].getDeck().get(x)) {
+										System.out.println(x+" deleted");
+										Initialize.players[1].getDeck().remove(x);
+										cardLabels[1][x].setVisible(false);
+									}
+								}
+							}
+						}
+						
 						currentPlayer = currentPlayer==0 ? 1:0;
 						
 					}
