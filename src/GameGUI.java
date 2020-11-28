@@ -21,6 +21,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private JLabel[] playerLabel;
 	private JLabel[][] cardLabels; 
 	private JLabel[] playerIndicationLabel;
+	private JLabel notification;
 	
 	//menubar stuff
 	private static JMenuBar mb = new JMenuBar();
@@ -49,6 +50,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		playerIndicationLabel=new JLabel[Initialize.NUM_PLAYERS];
 		rotateButtons=new JButton[2];
 		freeTileLabel=new JLabel();
+		notification=new JLabel();
 
     	frame = new JFrame(); 
     	screen = new JPanel();
@@ -294,38 +296,47 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			screen.add(insertButtons[i]);
 		}
 			
-			for(int i=3; i<6; i++) {
-				insertButtons[i]=new JButton();
-				insertButtons[i].addActionListener(this);
-				insertButtons[i].setBounds(410, 100+110*(i-3), 16, 24);
-				insertButtons[i].setIcon(ExtraBoardImages.arrows[1]);
-				insertButtons[i].setVisible(true);
-				insertButtons[i].setContentAreaFilled(false);
-				insertButtons[i].setBorderPainted(false);
-				screen.add(insertButtons[i]);
-			}
+		for(int i=3; i<6; i++) {
+			insertButtons[i]=new JButton();
+			insertButtons[i].addActionListener(this);
+			insertButtons[i].setBounds(410, 100+110*(i-3), 16, 24);
+			insertButtons[i].setIcon(ExtraBoardImages.arrows[1]);
+			insertButtons[i].setVisible(true);				
+			insertButtons[i].setContentAreaFilled(false);
+			insertButtons[i].setBorderPainted(false);
+			screen.add(insertButtons[i]);
+		}
 		
-			for(int i=6; i<9; i++) {
-				insertButtons[i]=new JButton();
-				insertButtons[i].addActionListener(this);
-				insertButtons[i].setBounds(100+110*(i-6), 415, 24, 16);
-				insertButtons[i].setIcon(ExtraBoardImages.arrows[2]);
-				insertButtons[i].setVisible(true);
-				insertButtons[i].setContentAreaFilled(false);
-				insertButtons[i].setBorderPainted(false);
-				screen.add(insertButtons[i]);
-			}
+		for(int i=6; i<9; i++) {
+			insertButtons[i]=new JButton();
+			insertButtons[i].addActionListener(this);
+			insertButtons[i].setBounds(100+110*(i-6), 415, 24, 16);
+			insertButtons[i].setIcon(ExtraBoardImages.arrows[2]);
+			insertButtons[i].setVisible(true);
+			insertButtons[i].setContentAreaFilled(false);
+			insertButtons[i].setBorderPainted(false);
+			screen.add(insertButtons[i]);
+		}
 			
-			for(int i=9; i<12; i++) {
-				insertButtons[i]=new JButton();
-				insertButtons[i].addActionListener(this);
-				insertButtons[i].setBounds(5, 100+110*(i-9), 16, 24);
-				insertButtons[i].setIcon(ExtraBoardImages.arrows[3]);
-				insertButtons[i].setVisible(true);
-				insertButtons[i].setContentAreaFilled(false);
-				insertButtons[i].setBorderPainted(false);
-				screen.add(insertButtons[i]);
-			}
+		for(int i=9; i<12; i++) {
+			insertButtons[i]=new JButton();
+			insertButtons[i].addActionListener(this);
+			insertButtons[i].setBounds(5, 100+110*(i-9), 16, 24);
+			insertButtons[i].setIcon(ExtraBoardImages.arrows[3]);
+			insertButtons[i].setVisible(true);
+			insertButtons[i].setContentAreaFilled(false);
+			insertButtons[i].setBorderPainted(false);
+			screen.add(insertButtons[i]);
+		}
+			
+		notification=new JLabel("Player "+currentPlayer+" inserts the tile!");
+		notification.setBackground(new java.awt.Color(47, 47, 47));
+		notification.setForeground(Color.white);
+		notification.setBounds(510, 200, 150, 20);
+		notification.setOpaque(true);
+		notification.setVisible(true);
+		
+		screen.add(notification);
 		
 		frame.repaint();
 		
@@ -454,6 +465,9 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 						
 						currentPlayer = currentPlayer==0 ? 1:0;
 						
+						notification.setText("Player "+currentPlayer+" inserts the tile!");
+						notification.setBounds(510, 200, 150, 20);
+						
 						for(int x=0; x<12; x++) {
 							insertButtons[x].setEnabled(true);
 						}
@@ -522,6 +536,8 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		int removeRow=0;
 		int removeColumn=0;
 		
+		notification.setText("Player "+currentPlayer+" moves!");
+		notification.setBounds(530, 200, 150, 20);
 		
 		if(row==0) {
 			removeRow=6;
