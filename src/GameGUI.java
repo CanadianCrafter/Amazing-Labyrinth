@@ -36,6 +36,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	
 	//Player
 	public static int currentPlayer=0;
+	private int disabledInsertButton;
 	
 	
 	// constructor method
@@ -452,6 +453,12 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 						
 						currentPlayer = currentPlayer==0 ? 1:0;
 						
+						for(int x=0; x<12; x++) {
+							insertButtons[x].setVisible(true);
+						}
+						
+						insertButtons[disabledInsertButton].setVisible(false);
+						
 					}
 					break loop; 
 					
@@ -462,6 +469,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		for(int i=0; i<3; i++) {
 			if(event.getSource()==insertButtons[i]) {
 			insertTileToBoard(0,1+2*i);
+			disabledInsertButton=i+6;
 			
 			}
 		}
@@ -469,18 +477,21 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		for(int i=3; i<6; i++) {
 			if(event.getSource()==insertButtons[i]) {
 				insertTileToBoard(1+2*(i-3), 6);
+				disabledInsertButton=i+6;
 			}
 		}
 		
 		for(int i=6; i<9; i++) {
 			if(event.getSource()==insertButtons[i]) {
-			insertTileToBoard(6,1+2*(i-6));
+				insertTileToBoard(6,1+2*(i-6));
+				disabledInsertButton=i-6;
 			}
 		}
 		
 		for(int i=9; i<12; i++) {
 			if(event.getSource()==insertButtons[i]) {
 				insertTileToBoard(1+2*(i-9), 0);
+				disabledInsertButton=i-6;
 			}
 		}
 		
@@ -501,6 +512,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		
 		int removeRow=0;
 		int removeColumn=0;
+		
 		
 		if(row==0) {
 			removeRow=6;
@@ -537,6 +549,11 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				Board.board[row][y-1]=Board.board[row][y];
 			}
 		}
+		
+		for(int i=0; i<12; i++) {
+			insertButtons[i].setVisible(false);
+		}
+		
 		
 		
 		Board.board[row][column]=Board.getFreeTile();
