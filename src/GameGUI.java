@@ -166,6 +166,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				//the imagesArr index corresponds with the value on the board
 				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]); 
 				
+				tileButtons[i][j].setEnabled(false);
 				//creates a border around the buttons. 
 				//if the tile is not reachable from the player's position, its border is the same colour as the background to hide its existence.
 				//if the tile is reachable, the tile is highlighted blue.
@@ -454,10 +455,18 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 						currentPlayer = currentPlayer==0 ? 1:0;
 						
 						for(int x=0; x<12; x++) {
-							insertButtons[x].setVisible(true);
+							insertButtons[x].setEnabled(true);
 						}
 						
-						insertButtons[disabledInsertButton].setVisible(false);
+						insertButtons[disabledInsertButton].setEnabled(false);
+						
+						for(int x=0; x<7; x++) {
+							for(int y=0; y<7; y++) {
+								tileButtons[x][y].setEnabled(false);
+							}
+						}
+						
+						
 						
 					}
 					break loop; 
@@ -528,6 +537,11 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			removeRow=row;
 		}
 		
+		for(int i=0; i<7; i++) {
+			for(int j=0; j<7; j++) {
+				tileButtons[i][j].setEnabled(true);
+			}
+		}
 		
 		
 		Tile newFreeTile=Initialize.allTiles[Board.board[removeRow][removeColumn]];
@@ -551,7 +565,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		}
 		
 		for(int i=0; i<12; i++) {
-			insertButtons[i].setVisible(false);
+			insertButtons[i].setEnabled(false);
 		}
 		
 		
