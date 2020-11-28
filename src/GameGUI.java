@@ -22,13 +22,9 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private JLabel[][] cardLabels; 
 	private JLabel[] playerIndicationLabel;
 	
-	public static ImageIcon clockwiseImage=new ImageIcon();
-	public static ImageIcon antiClockwiseImage=new ImageIcon();
-	public static ImageIcon[] arrows=new ImageIcon[4];
-	
 	//menubar stuff
 	private static JMenuBar mb = new JMenuBar();
-	private static JMenu menu = new JMenu();;
+	private static JMenu menu = new JMenu();
 	private static JMenuItem save;
 	private static JMenuItem exit;
 	private static JMenuItem restart;
@@ -52,16 +48,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		playerIndicationLabel=new JLabel[Initialize.NUM_PLAYERS];
 		rotateButtons=new JButton[2];
 		freeTileLabel=new JLabel();
-		
 
-		clockwiseImage=new ImageIcon(new ImageIcon("OtherImages/clockwise.png").getImage().getScaledInstance(30, 30, 0));
-		antiClockwiseImage=new ImageIcon(new ImageIcon("OtherImages/anticlockwise.png").getImage().getScaledInstance(30, 30, 0));
-		
-		arrows[0]=new ImageIcon(new ImageIcon("OtherImages/Arrow0.png").getImage().getScaledInstance(24, 16, 0));
-		arrows[1]=new ImageIcon(new ImageIcon("OtherImages/Arrow1.png").getImage().getScaledInstance(16, 24, 0));
-		arrows[2]=new ImageIcon(new ImageIcon("OtherImages/Arrow2.png").getImage().getScaledInstance(24, 16, 0));
-		arrows[3]=new ImageIcon(new ImageIcon("OtherImages/Arrow3.png").getImage().getScaledInstance(16, 24, 0));
-		
     	frame = new JFrame(); 
     	screen = new JPanel();
     	menuBar();
@@ -280,63 +267,62 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		
 		
 		//Rotate Buttons
-		rotateButtons[0]=new JButton();
-		rotateButtons[1]=new JButton();
+		for(int i =0;i<2;i++) {
+			rotateButtons[i]=new JButton();
+			rotateButtons[i].addActionListener(this);
+			rotateButtons[i].setBounds(520+i*100, 110, 30, 30);
+			rotateButtons[i].setIcon(ExtraBoardImages.rotationImages[i]);
+			rotateButtons[i].setVisible(true);
+			rotateButtons[i].setContentAreaFilled(false);
+			rotateButtons[i].setBorderPainted(false);
+			screen.add(rotateButtons[i]);
+		}
 		
-		rotateButtons[0].addActionListener(this);
-		rotateButtons[1].addActionListener(this);
-		
-		rotateButtons[0].setBounds(520, 110, 30, 30);
-		rotateButtons[1].setBounds(620, 110, 30, 30);
-		
-		
-		rotateButtons[0].setIcon(clockwiseImage);
-		rotateButtons[1].setIcon(antiClockwiseImage);
-		
-		rotateButtons[0].setVisible(true);
-		rotateButtons[1].setVisible(true);
-		
-		screen.add(rotateButtons[0]);
-		screen.add(rotateButtons[1]);
 		
 		//Insert Buttons
-		
-		
 			
-		for(int n=0; n<3; n++) {
-			insertButtons[n]=new JButton();
-			insertButtons[n].addActionListener(this);
-			insertButtons[n].setBounds(100+110*n, 10, 24, 16);
-			insertButtons[n].setIcon(arrows[0]);
-			insertButtons[n].setVisible(true);
-			screen.add(insertButtons[n]);
+		for(int i=0; i<3; i++) {
+			insertButtons[i]=new JButton();
+			insertButtons[i].addActionListener(this);
+			insertButtons[i].setBounds(100+110*i, 10, 24, 16);
+			insertButtons[i].setIcon(ExtraBoardImages.arrows[0]);
+			insertButtons[i].setVisible(true);
+			insertButtons[i].setContentAreaFilled(false);
+			insertButtons[i].setBorderPainted(false);
+			screen.add(insertButtons[i]);
 		}
 			
-			for(int n=3; n<6; n++) {
-				insertButtons[n]=new JButton();
-				insertButtons[n].addActionListener(this);
-				insertButtons[n].setBounds(410, 100+110*(n-3), 16, 24);
-				insertButtons[n].setIcon(arrows[1]);
-				insertButtons[n].setVisible(true);
-				screen.add(insertButtons[n]);
+			for(int i=3; i<6; i++) {
+				insertButtons[i]=new JButton();
+				insertButtons[i].addActionListener(this);
+				insertButtons[i].setBounds(410, 100+110*(i-3), 16, 24);
+				insertButtons[i].setIcon(ExtraBoardImages.arrows[1]);
+				insertButtons[i].setVisible(true);
+				insertButtons[i].setContentAreaFilled(false);
+				insertButtons[i].setBorderPainted(false);
+				screen.add(insertButtons[i]);
 			}
 		
-			for(int n=6; n<9; n++) {
-				insertButtons[n]=new JButton();
-				insertButtons[n].addActionListener(this);
-				insertButtons[n].setBounds(100+110*(n-6), 415, 24, 16);
-				insertButtons[n].setIcon(arrows[2]);
-				insertButtons[n].setVisible(true);
-				screen.add(insertButtons[n]);
+			for(int i=6; i<9; i++) {
+				insertButtons[i]=new JButton();
+				insertButtons[i].addActionListener(this);
+				insertButtons[i].setBounds(100+110*(i-6), 415, 24, 16);
+				insertButtons[i].setIcon(ExtraBoardImages.arrows[2]);
+				insertButtons[i].setVisible(true);
+				insertButtons[i].setContentAreaFilled(false);
+				insertButtons[i].setBorderPainted(false);
+				screen.add(insertButtons[i]);
 			}
 			
-			for(int n=9; n<12; n++) {
-				insertButtons[n]=new JButton();
-				insertButtons[n].addActionListener(this);
-				insertButtons[n].setBounds(5, 100+110*(n-9), 16, 24);
-				insertButtons[n].setIcon(arrows[3]);
-				insertButtons[n].setVisible(true);
-				screen.add(insertButtons[n]);
+			for(int i=9; i<12; i++) {
+				insertButtons[i]=new JButton();
+				insertButtons[i].addActionListener(this);
+				insertButtons[i].setBounds(5, 100+110*(i-9), 16, 24);
+				insertButtons[i].setIcon(ExtraBoardImages.arrows[3]);
+				insertButtons[i].setVisible(true);
+				insertButtons[i].setContentAreaFilled(false);
+				insertButtons[i].setBorderPainted(false);
+				screen.add(insertButtons[i]);
 			}
 		
 		frame.repaint();
@@ -434,24 +420,12 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			playingMusic = !playingMusic;
 		}
 		
-		if(event.getSource()==rotateButtons[0]) {
-			if(Board.tileFreeTile.getOrientation()==3) {
-				Board.tileFreeTile.setOrientation(0);
-			}else {
-				Board.tileFreeTile.setOrientation(Board.tileFreeTile.getOrientation()+1);
+		for(int i = 0; i < 2; i++) {
+			if(event.getSource()==rotateButtons[i]) {
+				int k = i==0?1:-1;
+				Board.tileFreeTile.setOrientation((((Board.tileFreeTile.getOrientation()+k)%4)+4)%4);
+				freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
 			}
-			
-			freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
-		}
-		
-		if(event.getSource()==rotateButtons[1]) {
-			if(Board.tileFreeTile.getOrientation()==0) {
-				Board.tileFreeTile.setOrientation(3);
-			}else {
-				Board.tileFreeTile.setOrientation(Board.tileFreeTile.getOrientation()-1);
-			}
-			
-			freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
 		}
 		
 		//move a player
@@ -468,30 +442,10 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 						
 						
 						if(Board.board[i][j]<24) {
-							
-							System.out.println("checked");
-							
-							if(currentPlayer==0) {
-								
-								System.out.print("Player 1");
-								
-								for(int x=0; x<Initialize.players[0].getDeck().size(); x++) {
-									if(Board.board[i][j]==Initialize.players[0].getDeck().get(x)) {
-										System.out.println(x+" deleted");
-										Initialize.players[0].getDeck().remove(x);
-										cardLabels[0][x].setVisible(false);
-									}
-								}
-							}else if(currentPlayer==1) {
-								
-								System.out.print("Player 2");
-								
-								for(int x=0; x<Initialize.players[1].getDeck().size(); x++) {
-									if(Board.board[i][j]==Initialize.players[1].getDeck().get(x)) {
-										System.out.println(x+" deleted");
-										Initialize.players[1].getDeck().remove(x);
-										cardLabels[1][x].setVisible(false);
-									}
+							for(int k=0; k<Initialize.players[currentPlayer].getDeck().size(); k++) {
+								if(Board.board[i][j]==Initialize.players[currentPlayer].getDeck().get(k)) {
+									Initialize.players[currentPlayer].getDeck().remove(k);
+									cardLabels[currentPlayer][k].setVisible(false);
 								}
 							}
 						}

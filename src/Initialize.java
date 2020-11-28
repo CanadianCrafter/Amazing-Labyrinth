@@ -33,6 +33,7 @@ public class Initialize {
 			
 			new TileImages();
 			new CardImages();
+			new ExtraBoardImages();
 			new Board();
 			
 		}
