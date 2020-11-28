@@ -255,6 +255,8 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				
 				cardLabels[i][j].setVisible(true);
 				
+				
+				
 				screen.add(cardLabels[i][j]);
 				
 			}
@@ -458,7 +460,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 							for(int k=0; k<Initialize.players[currentPlayer].getDeck().size(); k++) {
 								if(Board.board[i][j]==Initialize.players[currentPlayer].getDeck().get(k)) {
 									Initialize.players[currentPlayer].getDeck().remove(k);
-									cardLabels[currentPlayer][k].setVisible(false);
+									cardLabels[currentPlayer][k].setEnabled(false);
 								}
 							}
 						}
@@ -493,7 +495,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			if(event.getSource()==insertButtons[i]) {
 			insertTileToBoard(0,1+2*i);
 			disabledInsertButton=i+6;
-			
+			panelUpdate();
 			}
 		}
 		
@@ -501,6 +503,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			if(event.getSource()==insertButtons[i]) {
 				insertTileToBoard(1+2*(i-3), 6);
 				disabledInsertButton=i+6;
+				panelUpdate();
 			}
 		}
 		
@@ -508,6 +511,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			if(event.getSource()==insertButtons[i]) {
 				insertTileToBoard(6,1+2*(i-6));
 				disabledInsertButton=i-6;
+				panelUpdate();
 			}
 		}
 		
@@ -515,6 +519,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			if(event.getSource()==insertButtons[i]) {
 				insertTileToBoard(1+2*(i-9), 0);
 				disabledInsertButton=i-6;
+				panelUpdate();
 			}
 		}
 		
@@ -584,12 +589,44 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			insertButtons[i].setEnabled(false);
 		}
 		
+		for(int i=0; i<2; i++) {
+			if(Initialize.players[i].getColumn()==column) {
+				if(row==0) {
+					if(Initialize.players[i].getRow()!=6) {
+						Initialize.players[i].setRow(Initialize.players[i].getRow()+1);
+					}else {
+						Initialize.players[i].setRow(0);
+					}
+				}	else if(row==6) {
+					if(Initialize.players[i].getRow()!=0) {
+						Initialize.players[i].setRow(Initialize.players[i].getRow()-1);
+					}else {
+						Initialize.players[i].setRow(6);
+					}
+				}
+			}else if(Initialize.players[i].getRow()==row) {
+				if(column==0) {
+					if(Initialize.players[i].getColumn()!=6) {
+						Initialize.players[i].setColumn(Initialize.players[i].getColumn()+1);
+					}else {
+						Initialize.players[i].setColumn(0);
+					}
+				}	else if(column==6) {
+					if(Initialize.players[i].getColumn()!=0) {
+						Initialize.players[i].setColumn(Initialize.players[i].getColumn()-1);
+					}else {
+						Initialize.players[i].setColumn(6);
+					}
+				}
+			}
+		}
 		
 		
 		Board.board[row][column]=Board.getFreeTile();
 		Board.setFreeTile(newFreeTile.getID());
-		freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
 		Board.createTileBoard();
+		freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
+		
 	}
 
 	public void keyPressed(KeyEvent key) {

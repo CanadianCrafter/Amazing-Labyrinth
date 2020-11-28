@@ -98,8 +98,8 @@ public class Board {
 				
 			}
 		}
-		tileFreeTile = Initialize.allTiles[freeTile];
 		
+		tileFreeTile = Initialize.allTiles[freeTile];
 	}
 
 	public static int[][] getBoard() {

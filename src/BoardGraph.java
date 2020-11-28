@@ -98,7 +98,6 @@ public class BoardGraph {
 	}
 	
 	public static boolean[] possiblePaths (int sID) {
-		
 		//BFS
 		Queue<Integer> que = new LinkedList<Integer>();
     	que.add(sID);
