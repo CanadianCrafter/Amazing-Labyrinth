@@ -19,7 +19,7 @@ public class Initialize {
 		public static Map<String, Integer> tileNameToID = new HashMap();
 		
 		public static int cardsPerPlayer;
-		boolean cardChosen[]=new boolean[NUM_CARDS];
+		static boolean cardChosen[]=new boolean[NUM_CARDS];
 		public static int playerColours[];
 		
 		
@@ -101,7 +101,7 @@ public class Initialize {
 				
 		}
 		
-		private void initializePlayers() {
+		public static void initializePlayers() {
 			
 			for(int i =0;i<NUM_PLAYERS;i++)
 				players[i] =new Player();
@@ -128,7 +128,7 @@ public class Initialize {
 			
 		}
 		
-		public ArrayList<Integer> generateDeck(int playerID) {
+		public static ArrayList<Integer> generateDeck(int playerID) {
 			
 			ArrayList<Integer> cards=new ArrayList<Integer>();
 			

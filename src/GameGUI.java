@@ -4,9 +4,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
+
+import audio.AudioPlayer;
 import audio.MusicPlayer;
 
-public class GameGUI extends JFrame implements KeyListener, ActionListener{
+public class GameGUI extends JFrame implements ActionListener{
 	
 	//Buffered Reader
 	static StringTokenizer st;
@@ -21,7 +23,6 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private JLabel[] playerLabel;
 	private JLabel[][] cardLabels; 
 	private JLabel[] playerIndicationLabel;
-	private JLabel notification;
 	
 	//menubar stuff
 	private static JMenuBar mb = new JMenuBar();
@@ -31,13 +32,12 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private static JMenuItem restart;
 	private static JMenuItem music;
 	private static boolean playingMusic = true;
-	private static long time;
 	
 	
 	
 	//Player
 	public static int currentPlayer=0;
-	private int disabledInsertButton;
+	private int disabledInsertButton=-1;
 	
 	
 	// constructor method
@@ -46,11 +46,10 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		tileButtons = new JButton[7][7];
 		insertButtons=new JButton[12];
 		playerLabel=new JLabel[Initialize.NUM_PLAYERS];
-		cardLabels= new JLabel [Initialize.NUM_PLAYERS][Initialize.cardsPerPlayer];
+		cardLabels= new JLabel [Initialize.NUM_PLAYERS][Initialize.cardsPerPlayer]; //player ID, player's cards
 		playerIndicationLabel=new JLabel[Initialize.NUM_PLAYERS];
 		rotateButtons=new JButton[2];
 		freeTileLabel=new JLabel();
-		notification=new JLabel();
 
     	frame = new JFrame(); 
     	screen = new JPanel();
@@ -87,7 +86,6 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			
 			br.close();
 			
-			
 		}
 		
 		// print the error if there is one
@@ -119,8 +117,6 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		frame.validate();
 		frame.repaint();
 		frame.setVisible(true); 
-		frame.addKeyListener(this);
-		
 	}
 	
 	//creates menubar
@@ -151,6 +147,7 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 
 	//sets up the panel
 	private void panelDesign() {
+		
 		screen.setBorder(null);
 		screen.setBackground(new java.awt.Color(47, 47, 47));
 		screen.setBounds(0,0,750,500);
@@ -168,7 +165,6 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 				//the imagesArr index corresponds with the value on the board
 				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]); 
 				
-				tileButtons[i][j].setEnabled(false);
 				//creates a border around the buttons. 
 				//if the tile is not reachable from the player's position, its border is the same colour as the background to hide its existence.
 				//if the tile is reachable, the tile is highlighted blue.
@@ -224,16 +220,14 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			
 			playerIndicationLabel[i].setBounds(430, 230+100*i, 305, 80);
 			
-			if(Initialize.players[i].getColourID()==0)
-				playerIndicationLabel[i].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 3));
-				
-			else if(Initialize.players[i].getColourID()==1)
+			int colourID=Initialize.players[i].getColourID();
+			if(colourID==0)
+				playerIndicationLabel[i].setBorder(BorderFactory.createLineBorder(new java.awt.Color(232, 17, 35), 3));
+			else if(colourID==1)
 				playerIndicationLabel[i].setBorder(BorderFactory.createLineBorder(new java.awt.Color(255, 185, 0), 3));
-				
-			else if(Initialize.players[i].getColourID()==2)
+			else if(colourID==2)
 				playerIndicationLabel[i].setBorder(BorderFactory.createLineBorder(new java.awt.Color(16, 124, 16), 3));
-				
-			else if(Initialize.players[i].getColourID()==3) 
+			else if(colourID==3)
 				playerIndicationLabel[i].setBorder(BorderFactory.createLineBorder(new java.awt.Color(0,120,215), 3));
 
 			
@@ -248,21 +242,12 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			for(int j=0; j<Initialize.players[i].getDeck().size(); j++) {
 				
 				cardLabels[i][j]=new JLabel();
-				
 				cardLabels[i][j].setBounds(435+50*j, 235+i*100, 45, 70);
-				
 				cardLabels[i][j].setIcon(CardImages.cardImages[Initialize.players[i].getDeck().get(j)]);
-				
 				cardLabels[i][j].setVisible(true);
-				
-				
-				
 				screen.add(cardLabels[i][j]);
 				
 			}
-			System.out.println();
-			
-			
 		}
 		
 		// Free Tile Label
@@ -285,67 +270,59 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		}
 		
 		
-		//Insert Buttons
+		//Push Tile Buttons
+		int index=0;
+		for(int i=0; i<3; i++) {
+			insertButtons[index]=new JButton();
+			insertButtons[index].addActionListener(this);
+			insertButtons[index].setBounds(100+110*i, 10, 24, 16);
+			insertButtons[index].setIcon(ExtraBoardImages.arrows[0]);
+			insertButtons[index].setVisible(true);
+			insertButtons[index].setContentAreaFilled(false);
+			insertButtons[index].setBorderPainted(false);
+			screen.add(insertButtons[index++]);
+		}
 			
 		for(int i=0; i<3; i++) {
-			insertButtons[i]=new JButton();
-			insertButtons[i].addActionListener(this);
-			insertButtons[i].setBounds(100+110*i, 10, 24, 16);
-			insertButtons[i].setIcon(ExtraBoardImages.arrows[0]);
-			insertButtons[i].setVisible(true);
-			insertButtons[i].setContentAreaFilled(false);
-			insertButtons[i].setBorderPainted(false);
-			screen.add(insertButtons[i]);
-		}
-			
-		for(int i=3; i<6; i++) {
-			insertButtons[i]=new JButton();
-			insertButtons[i].addActionListener(this);
-			insertButtons[i].setBounds(410, 100+110*(i-3), 16, 24);
-			insertButtons[i].setIcon(ExtraBoardImages.arrows[1]);
-			insertButtons[i].setVisible(true);				
-			insertButtons[i].setContentAreaFilled(false);
-			insertButtons[i].setBorderPainted(false);
-			screen.add(insertButtons[i]);
+			insertButtons[index]=new JButton();
+			insertButtons[index].addActionListener(this);
+			insertButtons[index].setBounds(410, 100+110*i, 16, 24);
+			insertButtons[index].setIcon(ExtraBoardImages.arrows[1]);
+			insertButtons[index].setVisible(true);				
+			insertButtons[index].setContentAreaFilled(false);
+			insertButtons[index].setBorderPainted(false);
+			screen.add(insertButtons[index++]);
 		}
 		
-		for(int i=6; i<9; i++) {
-			insertButtons[i]=new JButton();
-			insertButtons[i].addActionListener(this);
-			insertButtons[i].setBounds(100+110*(i-6), 415, 24, 16);
-			insertButtons[i].setIcon(ExtraBoardImages.arrows[2]);
-			insertButtons[i].setVisible(true);
-			insertButtons[i].setContentAreaFilled(false);
-			insertButtons[i].setBorderPainted(false);
-			screen.add(insertButtons[i]);
+		for(int i=0; i<3; i++) {
+			insertButtons[index]=new JButton();
+			insertButtons[index].addActionListener(this);
+			insertButtons[index].setBounds(100+110*i, 415, 24, 16);
+			insertButtons[index].setIcon(ExtraBoardImages.arrows[2]);
+			insertButtons[index].setVisible(true);
+			insertButtons[index].setContentAreaFilled(false);
+			insertButtons[index].setBorderPainted(false);
+			screen.add(insertButtons[index++]);
 		}
 			
-		for(int i=9; i<12; i++) {
-			insertButtons[i]=new JButton();
-			insertButtons[i].addActionListener(this);
-			insertButtons[i].setBounds(5, 100+110*(i-9), 16, 24);
-			insertButtons[i].setIcon(ExtraBoardImages.arrows[3]);
-			insertButtons[i].setVisible(true);
-			insertButtons[i].setContentAreaFilled(false);
-			insertButtons[i].setBorderPainted(false);
-			screen.add(insertButtons[i]);
+		for(int i=0; i<3; i++) {
+			insertButtons[index]=new JButton();
+			insertButtons[index].addActionListener(this);
+			insertButtons[index].setBounds(5, 100+110*i, 16, 24);
+			insertButtons[index].setIcon(ExtraBoardImages.arrows[3]);
+			insertButtons[index].setVisible(true);
+			insertButtons[index].setContentAreaFilled(false);
+			insertButtons[index].setBorderPainted(false);
+			screen.add(insertButtons[index++]);
 		}
 			
-		notification=new JLabel("Player "+currentPlayer+" inserts the tile!");
-		notification.setBackground(new java.awt.Color(47, 47, 47));
-		notification.setForeground(Color.white);
-		notification.setBounds(510, 200, 150, 20);
-		notification.setOpaque(true);
-		notification.setVisible(true);
-		
-		screen.add(notification);
-		
 		frame.repaint();
 		
 	}
 	
 	//updates the board again
 	private void panelUpdate() {
+		
 		for(int i =0;i<7;i++) {
 			for(int j =0;j<7;j++){
 				tileButtons[i][j].setIcon(TileImages.tileImages[Board.board[i][j]][Initialize.allTiles[Board.board[i][j]].getOrientation()]); 
@@ -375,7 +352,107 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		for(int i=0; i<Initialize.NUM_PLAYERS; i++)
 			playerLabel[i].setBounds(40+55*Initialize.players[i].getColumn(), 40+55*Initialize.players[i].getRow(), 30, 30);
 		
+		for(int i =0;i<12;i++)
+			insertButtons[i].setVisible(true);
+		if(disabledInsertButton!=-1)
+			insertButtons[disabledInsertButton].setVisible(false);
+		
 		frame.repaint();
+	}
+	
+	private void updateCardLabels() {
+		for(int i=0; i<Initialize.players[currentPlayer].getDeck().size(); i++)
+			cardLabels[currentPlayer][i].setIcon(CardImages.cardImages[Initialize.players[currentPlayer].getDeck().get(i)]);
+		
+		for(int i =Initialize.players[currentPlayer].getDeck().size();i<Initialize.cardsPerPlayer;i++)
+			cardLabels[currentPlayer][i].setVisible(false);
+		
+	}
+	
+	public void insertTileToBoard(int row, int column) {
+		
+		// Tile Board Array AND Tile Free Tile is not updated in this method.
+		
+		int removeRow=0;
+		int removeColumn=0;
+		
+//		notification.setText("Player "+currentPlayer+" moves!");
+//		notification.setBounds(530, 200, 150, 20);
+		
+		if(row==0) {
+			removeRow=6;
+			removeColumn=column;
+		}else if(row==6) {
+			removeRow=0;
+			removeColumn=column;
+		}else if(column==0) {
+			removeColumn=6;
+			removeRow=row;
+		}else if(column==6) {
+			removeColumn=0;
+			removeRow=row;
+		}
+				
+		Tile newFreeTile=Initialize.allTiles[Board.board[removeRow][removeColumn]];
+		
+		if(row==0) {
+			for(int x=5; x>=0; x--)
+				Board.board[x+1][column]=Board.board[x][column];
+			
+		}else if(row==6) {
+			for(int x=1; x<=6; x++)
+				Board.board[x-1][column]=Board.board[x][column];
+			
+		}else if(column==0) {
+			for(int y=5; y>=0; y--) 
+				Board.board[row][y+1]=Board.board[row][y];
+			
+		}else if(column==6)
+			for(int y=1; y<=6; y++) {
+				Board.board[row][y-1]=Board.board[row][y];
+		}
+		
+		
+		for(int i=0; i<2; i++) {
+			if(Initialize.players[i].getColumn()==column) {
+				if(row==0) {
+					if(Initialize.players[i].getRow()!=6) {
+						Initialize.players[i].setRow(Initialize.players[i].getRow()+1);
+					}else {
+						Initialize.players[i].setRow(0);
+					}
+				}	else if(row==6) {
+					if(Initialize.players[i].getRow()!=0) {
+						Initialize.players[i].setRow(Initialize.players[i].getRow()-1);
+					}else {
+						Initialize.players[i].setRow(6);
+					}
+				}
+			}else if(Initialize.players[i].getRow()==row) {
+				if(column==0) {
+					if(Initialize.players[i].getColumn()!=6) {
+						Initialize.players[i].setColumn(Initialize.players[i].getColumn()+1);
+					}else {
+						Initialize.players[i].setColumn(0);
+					}
+				}	else if(column==6) {
+					if(Initialize.players[i].getColumn()!=0) {
+						Initialize.players[i].setColumn(Initialize.players[i].getColumn()-1);
+					}else {
+						Initialize.players[i].setColumn(6);
+					}
+				}
+			}
+		}
+		
+		
+		Board.board[row][column]=Board.getFreeTile();
+		Board.setFreeTile(newFreeTile.getID());
+		Board.createTileBoard();
+		freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
+		BoardGraph.createBoardGraph();
+		panelUpdate();
+		
 	}
 
 	
@@ -383,7 +460,8 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 	private static void checkWin() {
 		if(Initialize.players[currentPlayer].getDeck().isEmpty()) {
 			frame.setVisible(false);
-		//	new WinScreenGUI(currentPlayer);
+			MusicPlayer.stopMusic();
+			new WinScreenGUI(Initialize.players[currentPlayer].getColourID());
 		}
 			
 	}
@@ -404,6 +482,8 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	//carries out the actions for each of the menu bar buttons
 	public void actionPerformed(ActionEvent event) {
@@ -456,32 +536,23 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 						Initialize.players[currentPlayer].setColumn(j);
 						
 						
+						boolean flag = false;
+						
 						if(Board.board[i][j]<24) {
 							for(int k=0; k<Initialize.players[currentPlayer].getDeck().size(); k++) {
 								if(Board.board[i][j]==Initialize.players[currentPlayer].getDeck().get(k)) {
 									Initialize.players[currentPlayer].getDeck().remove(k);
-									cardLabels[currentPlayer][k].setEnabled(false);
+									updateCardLabels();
+									flag=true;
 								}
 							}
 						}
+						if(flag)
+							AudioPlayer.playAudio("Audio/SE/Voltorb Flip Point.wav");
+						else
+							AudioPlayer.playAudio("Audio/SE/Voltorb Flip Mark.wav");
 						
-						currentPlayer = currentPlayer==0 ? 1:0;
-						
-						notification.setText("Player "+currentPlayer+" inserts the tile!");
-						notification.setBounds(510, 200, 150, 20);
-						
-						for(int x=0; x<12; x++) {
-							insertButtons[x].setEnabled(true);
-						}
-						
-						insertButtons[disabledInsertButton].setEnabled(false);
-						
-						for(int x=0; x<7; x++) {
-							for(int y=0; y<7; y++) {
-								tileButtons[x][y].setEnabled(false);
-							}
-						}
-						
+						changeTurn();
 						
 						
 					}
@@ -492,34 +563,42 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		}
 		
 		for(int i=0; i<3; i++) {
-			if(event.getSource()==insertButtons[i]) {
-			insertTileToBoard(0,1+2*i);
-			disabledInsertButton=i+6;
-			panelUpdate();
+			if(event.getSource()==insertButtons[i]&&i!=disabledInsertButton) {
+				insertTileToBoard(0,1+2*i);
+				disabledInsertButton=i+6;
+				panelUpdate();
+				changeTurn();
+				AudioPlayer.playAudio("Audio/SE/Switch Clack.wav");
 			}
 		}
 		
 		for(int i=3; i<6; i++) {
-			if(event.getSource()==insertButtons[i]) {
+			if(event.getSource()==insertButtons[i]&&i!=disabledInsertButton) {
 				insertTileToBoard(1+2*(i-3), 6);
 				disabledInsertButton=i+6;
 				panelUpdate();
+				changeTurn();
+				AudioPlayer.playAudio("Audio/SE/Switch Clack.wav");
 			}
 		}
 		
 		for(int i=6; i<9; i++) {
-			if(event.getSource()==insertButtons[i]) {
+			if(event.getSource()==insertButtons[i]&&i!=disabledInsertButton) {
 				insertTileToBoard(6,1+2*(i-6));
 				disabledInsertButton=i-6;
 				panelUpdate();
+				changeTurn();
+				AudioPlayer.playAudio("Audio/SE/Switch Clack.wav");
 			}
 		}
 		
 		for(int i=9; i<12; i++) {
-			if(event.getSource()==insertButtons[i]) {
+			if(event.getSource()==insertButtons[i]&&i!=disabledInsertButton) {
 				insertTileToBoard(1+2*(i-9), 0);
 				disabledInsertButton=i-6;
 				panelUpdate();
+				changeTurn();
+				AudioPlayer.playAudio("Audio/SE/Switch Clack.wav");
 			}
 		}
 		
@@ -534,105 +613,10 @@ public class GameGUI extends JFrame implements KeyListener, ActionListener{
 		
 	}
 	
-	public void insertTileToBoard(int row, int column) {
-		
-		// Tile Board Array AND Tile Free Tile is not updated in this method.
-		
-		int removeRow=0;
-		int removeColumn=0;
-		
-		notification.setText("Player "+currentPlayer+" moves!");
-		notification.setBounds(530, 200, 150, 20);
-		
-		if(row==0) {
-			removeRow=6;
-			removeColumn=column;
-		}else if(row==6) {
-			removeRow=0;
-			removeColumn=column;
-		}else if(column==0) {
-			removeColumn=6;
-			removeRow=row;
-		}else if(column==6) {
-			removeColumn=0;
-			removeRow=row;
-		}
-		
-		for(int i=0; i<7; i++) {
-			for(int j=0; j<7; j++) {
-				tileButtons[i][j].setEnabled(true);
-			}
-		}
-		
-		
-		Tile newFreeTile=Initialize.allTiles[Board.board[removeRow][removeColumn]];
-		
-		if(row==0) {
-			for(int x=5; x>=0; x--) {
-				Board.board[x+1][column]=Board.board[x][column];
-			}
-		}else if(row==6) {
-			for(int x=1; x<=6; x++) {
-				Board.board[x-1][column]=Board.board[x][column];
-			}
-		}else if(column==0) {
-			for(int y=5; y>=0; y--) {
-				Board.board[row][y+1]=Board.board[row][y];
-			}
-		}else if(column==6) {
-			for(int y=1; y<=6; y++) {
-				Board.board[row][y-1]=Board.board[row][y];
-			}
-		}
-		
-		for(int i=0; i<12; i++) {
-			insertButtons[i].setEnabled(false);
-		}
-		
-		for(int i=0; i<2; i++) {
-			if(Initialize.players[i].getColumn()==column) {
-				if(row==0) {
-					if(Initialize.players[i].getRow()!=6) {
-						Initialize.players[i].setRow(Initialize.players[i].getRow()+1);
-					}else {
-						Initialize.players[i].setRow(0);
-					}
-				}	else if(row==6) {
-					if(Initialize.players[i].getRow()!=0) {
-						Initialize.players[i].setRow(Initialize.players[i].getRow()-1);
-					}else {
-						Initialize.players[i].setRow(6);
-					}
-				}
-			}else if(Initialize.players[i].getRow()==row) {
-				if(column==0) {
-					if(Initialize.players[i].getColumn()!=6) {
-						Initialize.players[i].setColumn(Initialize.players[i].getColumn()+1);
-					}else {
-						Initialize.players[i].setColumn(0);
-					}
-				}	else if(column==6) {
-					if(Initialize.players[i].getColumn()!=0) {
-						Initialize.players[i].setColumn(Initialize.players[i].getColumn()-1);
-					}else {
-						Initialize.players[i].setColumn(6);
-					}
-				}
-			}
-		}
-		
-		
-		Board.board[row][column]=Board.getFreeTile();
-		Board.setFreeTile(newFreeTile.getID());
-		Board.createTileBoard();
-		freeTileLabel.setIcon(TileImages.tileImages[Board.freeTile][Board.tileFreeTile.getOrientation()]);
-		
-	}
 
-	public void keyPressed(KeyEvent key) {
-	}
-	public void keyReleased(KeyEvent e) {
-	}
-	public void keyTyped(KeyEvent e) {
+
+
+	public void changeTurn(){
+		currentPlayer = currentPlayer==0 ? 1:0;
 	}
 }

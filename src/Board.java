@@ -13,7 +13,13 @@ public class Board {
 	public static Tile tileFreeTile;
 	
 	public Board() {
+		createBoard();
+		createTileBoard();
+		new BoardGraph();
 		
+	}
+
+	public static void createBoard() {
 		//initialize board with -1 to indicate what positions don't have tiles
 		for(int i =0; i<7; i++)
 			Arrays.fill(board[i],-1);
@@ -83,10 +89,6 @@ public class Board {
 				break;
 			}
 		}
-		
-		createTileBoard();
-		new BoardGraph();
-		
 	}
 
 	public static void createTileBoard() {

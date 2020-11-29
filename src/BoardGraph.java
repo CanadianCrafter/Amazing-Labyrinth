@@ -8,7 +8,7 @@ public class BoardGraph {
 //	private static final int NUM_BOARD_TILES = 49;
 	
 	public static ArrayList<Integer> adj[]= new ArrayList[Initialize.NUM_TILES];
-	private static int tempAdj[][] = new int [Initialize.NUM_TILES][Initialize.NUM_TILES];
+	private static int tempAdj[][]; 
 	
 	//tile shape, orientation, movement directions
 	private static int directions[][][][] = {
@@ -48,6 +48,8 @@ public class BoardGraph {
 	public static void createBoardGraph() {
 		for(int i =0;i<Initialize.NUM_TILES;i++)
 			adj[i] = new ArrayList<Integer>();
+		
+		tempAdj=new int [Initialize.NUM_TILES][Initialize.NUM_TILES];
 		
 		for(int r =0;r<7;r++) {
 			for(int c =0;c<7;c++) {
@@ -92,6 +94,9 @@ public class BoardGraph {
     			}
     		}
 		}
+    	//can't go on the same spot as the other player, but can go over them
+    	int otherPlayer = GameGUI.currentPlayer==0?1:0;
+    	vis[Board.board[Initialize.players[otherPlayer].getRow()][Initialize.players[otherPlayer].getColumn()]] = false;
     	return vis[dID];
 		
 		
@@ -114,6 +119,9 @@ public class BoardGraph {
     			}
     		}
 		}
+    	//can't go on the same spot as the other player, but can go over them
+    	int otherPlayer = GameGUI.currentPlayer==0?1:0;
+    	vis[Board.board[Initialize.players[otherPlayer].getRow()][Initialize.players[otherPlayer].getColumn()]] = false;
     	return vis;
 	}
 	
