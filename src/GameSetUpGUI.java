@@ -35,13 +35,13 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 	private JButton numC5;
 	private JButton numC6;
 	
-	private JLabel statusLabel;
-	
 	JButton playButton;
 	JButton loadButton;
 	
 	int[] playerColour=new int[2];
 	int cardNum;
+	
+	int playerSelection;
 	
 	
 
@@ -79,7 +79,12 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 		playButton=new JButton();
 		loadButton=new JButton();
 		
-		statusLabel=new JLabel();
+		playerColour[0]=-1;
+		playerColour[1]=-1;
+		
+		cardNum=0;
+		
+		playerSelection=0;
 		
 		frameSetup();
 		panelDesign();
@@ -262,15 +267,10 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 		image3.setVisible(false);
 		screen.add(image3);
 		
-		image2.setBounds(0, 0, 750, 500);
-		image2.setIcon(ExtraBoardImages.startScreenImages[3]);
-		image2.setVisible(false);
+		image4.setBounds(0, 0, 750, 500);
+		image4.setIcon(ExtraBoardImages.startScreenImages[3]);
+		image4.setVisible(false);
 		screen.add(image4);
-		
-		statusLabel.setBounds(80, 360, 200, 50);
-		statusLabel.setForeground(Color.red);
-		statusLabel.setVisible(false);
-		screen.add(statusLabel);
 		
 		frame.repaint();
 
@@ -281,21 +281,27 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 		//starts a new game
 		if(event.getSource()==playButton) {
 			//wipes the save file
-			try {
-				new PrintWriter("Files/Save.txt").close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+			
+			if(playerColour[0]!=-1 && playerColour[1]!=-1 && cardNum!=0 && playerSelection==0) {
+				try {
+					new PrintWriter("Files/Save.txt").close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				dispose();
+				try {
+					//NEED TO double check that the array doesn't have two of the same values
+					int arr[] = {1,0};
+					frame.setVisible(false);
+					new Initialize(cardNum,playerColour);
+					new GameGUI(false);//starts a game without loading saves
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else {
+				System.out.println("Error");
 			}
-			dispose();
-			try {
-				//NEED TO double check that the array doesn't have two of the same values
-				int arr[] = {1,0};
-				frame.setVisible(false);
-				new Initialize(5,arr);
-				new GameGUI(false);//starts a game without loading saves
-			} catch (IOException e) {
-				e.printStackTrace();
-			} 
+			 
 			
 		}
 		//loads in a saved game
@@ -316,38 +322,88 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 		}
 		
 		else if(event.getSource()==red0) {
-			playerColour[0]=0;
-			System.out.print("0");
-			statusLabel.setText("Player 1 sets red");
-			statusLabel.setVisible(true);
+			
+			if(playerColour[1]==0) {
+				image3.setVisible(true);
+				image1.setVisible(false);
+			}else {
+				image1.setVisible(true);
+				playerColour[0]=0;
+			}
 		}
 		
 		else if(event.getSource()==red1) {
-			playerColour[1]=0;
+			
+			if(playerColour[0]==0) {
+				image3.setVisible(true);
+				image1.setVisible(false);
+			}else {
+				image1.setVisible(true);
+				playerColour[1]=0;
+			}
+			
 		}
 		
 		else if(event.getSource()==yellow0) {
-			playerColour[0]=1;
+			
+			if(playerColour[1]==1) {
+				image3.setVisible(true);
+				image1.setVisible(false);
+			}else {
+				image1.setVisible(true);
+				playerColour[0]=1;
+			}
 		}
 		
 		else if(event.getSource()==yellow1) {
-			playerColour[1]=1;
+			if(playerColour[0]==1) {
+				image3.setVisible(true);
+				image1.setVisible(false);
+			}else {
+				image1.setVisible(true);
+				playerColour[1]=1;
+			}
 		}
 		
 		else if(event.getSource()==green0) {
-			playerColour[0]=2;
+			if(playerColour[1]==2) {
+				image3.setVisible(true);
+				image1.setVisible(false);
+			}else {
+				image1.setVisible(true);
+				playerColour[0]=2;
+			}
 		}
 		
 		else if(event.getSource()==green1) {
-			playerColour[1]=2;
+			if(playerColour[0]==2) {
+				image3.setVisible(true);
+				image1.setVisible(false);
+			}else {
+				image1.setVisible(true);
+				playerColour[1]=2;
+			}
 		}
 		
 		else if(event.getSource()==blue0) {
-			playerColour[0]=3;
+			if(playerColour[1]==3) {
+				image3.setVisible(true);
+				image1.setVisible(false);
+			}else {
+				image1.setVisible(true);
+				playerColour[0]=3;
+			}
+			
 		}
 		
 		else if(event.getSource()==blue1) {
-			playerColour[1]=3;
+			if(playerColour[0]==3) {
+				image3.setVisible(true);
+				image1.setVisible(false);
+			}else {
+				image1.setVisible(true);
+				playerColour[1]=3;
+			}
 		}
 		
 		else if(event.getSource()==numC2) {
@@ -363,8 +419,26 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 			cardNum=5;
 		}
 		else if(event.getSource()==numC6) {
-			
+			cardNum=6;
 		}
+		
+		else if(event.getSource()==playerOnly) {
+			playerSelection=0;
+		}
+		
+		else if(event.getSource()==easy) {
+			System.out.println("Not Available");
+		}
+		else if(event.getSource()==medium) {
+			System.out.println("Not Available");
+		}
+		else if(event.getSource()==hard) {
+			System.out.println("Not Available");
+		}
+		
+		
+		
+		frame.repaint();
 	}
 	
 	//checks if the save file has data
