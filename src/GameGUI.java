@@ -206,7 +206,7 @@ public class GameGUI extends JFrame implements ActionListener{
 				playerLabel[i].setBackground(new java.awt.Color(16, 124, 16));
 				
 			else if(Initialize.players[i].getColourID()==3)
-				playerLabel[i].setBackground(new java.awt.Color(16, 124, 16));
+				playerLabel[i].setBackground(new java.awt.Color(0 ,120 ,215));
 			
 			playerLabel[i].setOpaque(true);
 			playerLabel[i].setVisible(true);
@@ -414,6 +414,7 @@ public class GameGUI extends JFrame implements ActionListener{
 		
 		
 		for(int i=0; i<2; i++) {
+
 			if(Initialize.players[i].getColumn()==column) {
 				if(row==0) {
 					if(Initialize.players[i].getRow()!=6) {
@@ -428,7 +429,12 @@ public class GameGUI extends JFrame implements ActionListener{
 						Initialize.players[i].setRow(6);
 					}
 				}
-			}else if(Initialize.players[i].getRow()==row) {
+			}
+			
+			if(Initialize.players[i].getRow()==row) {
+				
+				
+				
 				if(column==0) {
 					if(Initialize.players[i].getColumn()!=6) {
 						Initialize.players[i].setColumn(Initialize.players[i].getColumn()+1);
@@ -442,8 +448,10 @@ public class GameGUI extends JFrame implements ActionListener{
 						Initialize.players[i].setColumn(6);
 					}
 				}
+			
 			}
 		}
+		
 		
 		
 		Board.board[row][column]=Board.getFreeTile();
