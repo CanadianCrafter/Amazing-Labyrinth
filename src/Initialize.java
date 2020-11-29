@@ -20,7 +20,7 @@ public class Initialize {
 		
 		public static int cardsPerPlayer;
 		boolean cardChosen[]=new boolean[NUM_CARDS];
-		private static int playerColours[];
+		public static int playerColours[];
 		
 		
 		public Initialize(int cardsPerPlayer, int[] playerColours) throws IOException {

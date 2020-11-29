@@ -4,6 +4,7 @@ public class ExtraBoardImages {
 	
 	public static ImageIcon rotationImages[]=new ImageIcon[2];
 	public static ImageIcon arrows[]=new ImageIcon[4];
+	public static ImageIcon startScreenImages[]=new ImageIcon[4];
 	
 	
 	public ExtraBoardImages() {
@@ -20,5 +21,10 @@ public class ExtraBoardImages {
 		arrows[1]=new ImageIcon(new ImageIcon("OtherImages/Arrow1.png").getImage().getScaledInstance(16, 24, 0));
 		arrows[2]=new ImageIcon(new ImageIcon("OtherImages/Arrow2.png").getImage().getScaledInstance(24, 16, 0));
 		arrows[3]=new ImageIcon(new ImageIcon("OtherImages/Arrow3.png").getImage().getScaledInstance(16, 24, 0));
+		
+		startScreenImages[0]=new ImageIcon(new ImageIcon("OtherImages/Setup_Screen.png").getImage().getScaledInstance(750, 500, 0));
+		startScreenImages[1]=new ImageIcon(new ImageIcon("OtherImages/Setup_Screen_Error_1.png").getImage().getScaledInstance(750, 500, 0));
+		startScreenImages[2]=new ImageIcon(new ImageIcon("OtherImages/Setup_Screen_Error_2.png").getImage().getScaledInstance(750, 500, 0));
+		startScreenImages[3]=new ImageIcon(new ImageIcon("OtherImages/Setup_Screen_Error_3.png").getImage().getScaledInstance(750, 500, 0));
 	}
 }
