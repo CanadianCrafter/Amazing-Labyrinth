@@ -23,6 +23,7 @@ public class GameGUI extends JFrame implements ActionListener {
 	private JButton[] rotateButtons; // the buttons that rotate the free tile (two buttons)
 	private JLabel[][] cardLabels; // the labels for the cards (player, number of cards at the start);
 	private JLabel[] playerIndicationLabel; // organizes the cards by player
+	private JLabel notification; //Message showing the player what to do
 
 	// menubar stuff
 	private static JMenuBar mb = new JMenuBar();
@@ -48,6 +49,8 @@ public class GameGUI extends JFrame implements ActionListener {
 		freeTileLabel = new JLabel();
 		frame = new JFrame();
 		screen = new JPanel();
+		
+		notification=new JLabel();
 		// Set up Menu Bar
 		menuBar();
 		// Set up the frame
@@ -266,6 +269,23 @@ public class GameGUI extends JFrame implements ActionListener {
 			insertButtons[index].setBorderPainted(false);
 			screen.add(insertButtons[index++]);
 		}
+		
+		notification.setBounds(525, 205, 135, 30);
+		
+		if(Initialize.players[currentPlayer].getColourID()==0){
+			notification.setText("Red inserts tile!");
+		}else if(Initialize.players[currentPlayer].getColourID()==1) {
+			notification.setText("Yellow inserts tile!");
+		}else if(Initialize.players[currentPlayer].getColourID()==2) {
+			notification.setText("Green inserts tile!");
+		}else if(Initialize.players[currentPlayer].getColourID()==3) {
+			notification.setText("Blue inserts tile!");
+		}
+		notification.setOpaque(true);
+		notification.setBackground(new java.awt.Color(47, 47, 47));
+		notification.setForeground(Color.white);
+		notification.setVisible(true);
+		screen.add(notification);
 
 		frame.repaint();
 
@@ -346,6 +366,16 @@ public class GameGUI extends JFrame implements ActionListener {
 
 	// The insert button function
 	public void insertTileToBoard(int row, int column) {
+		
+		if(Initialize.players[currentPlayer].getColourID()==0){
+			notification.setText("Red moves token!");
+		}else if(Initialize.players[currentPlayer].getColourID()==1) {
+			notification.setText("Yellow moves token!");
+		}else if(Initialize.players[currentPlayer].getColourID()==2) {
+			notification.setText("Green moves token!");
+		}else if(Initialize.players[currentPlayer].getColourID()==3) {
+			notification.setText("Blue moves token!");
+		}
 
 		// The row of the tile that becomes the new free tile
 		int removeRow = 0;
@@ -542,6 +572,8 @@ public class GameGUI extends JFrame implements ActionListener {
 
 		// move a player
 		if (hasInsertTile) {
+			
+			
 			loop: for (int i = 0; i < 7; i++) {
 				for (int j = 0; j < 7; j++) {
 					if (event.getSource() == tileButtons[i][j]) {
@@ -573,9 +605,23 @@ public class GameGUI extends JFrame implements ActionListener {
 								AudioPlayer.playAudio("Audio/SE/Voltorb Flip Point.wav");
 							else
 								AudioPlayer.playAudio("Audio/SE/Voltorb Flip Mark.wav");
-
+							
+							//Change Player
 							currentPlayer = currentPlayer == 0 ? 1 : 0;
+							
+							//Reset the variable
 							hasInsertTile=!hasInsertTile;
+							
+							if(Initialize.players[currentPlayer].getColourID()==0){
+								notification.setText("Red inserts tile!");
+							}else if(Initialize.players[currentPlayer].getColourID()==1) {
+								notification.setText("Yellow inserts tile!");
+							}else if(Initialize.players[currentPlayer].getColourID()==2) {
+								notification.setText("Green inserts tile!");
+							}else if(Initialize.players[currentPlayer].getColourID()==3) {
+								notification.setText("Blue inserts tile!");
+							}
+						
 
 						}
 						break loop;
@@ -587,6 +633,8 @@ public class GameGUI extends JFrame implements ActionListener {
 
 		// If the player has not inserted the tile
 		if (!hasInsertTile) {
+			
+			
 			// For the insert buttons on the top
 			for (int i = 0; i < 3; i++) {
 				if (event.getSource() == insertButtons[i] && i != disabledInsertButton) {
