@@ -3,12 +3,16 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/*
+ * Creates a graph based on the board's tile's shape and orientation
+ * Using that graph, run BFS to see what tiles are reachable from a certain tile
+ * 
+ */
+
 public class BoardGraph {
 	
-//	private static final int NUM_BOARD_TILES = 49;
-	
-	public static ArrayList<Integer> adj[]= new ArrayList[Initialize.NUM_TILES];
-	private static int tempAdj[][]; 
+	public static ArrayList<Integer> adj[]= new ArrayList[Initialize.NUM_TILES]; //adjacency list
+	private static int tempAdj[][]; //temporary adjacency matrix like structure
 	
 	//tile shape, orientation, movement directions
 	private static int directions[][][][] = {
@@ -32,9 +36,6 @@ public class BoardGraph {
 			}
 			
 		};
-	//down, right, left, up
-	private static int direction[][] = {{1,0},{0,1},{0,-1},{-1,0}};
-	
 	
 	
 	public BoardGraph() {
@@ -43,20 +44,27 @@ public class BoardGraph {
 		
 	}
 
-
-
 	public static void createBoardGraph() {
+		
+		//initialize adjacency list and matrix
 		for(int i =0;i<Initialize.NUM_TILES;i++)
 			adj[i] = new ArrayList<Integer>();
 		
 		tempAdj=new int [Initialize.NUM_TILES][Initialize.NUM_TILES];
 		
+		//for each tile t1, mark the adjacent tiles that t1 has paths leading to 
+		//if two tiles both have paths leading to each other, then t1 and t2 is connected.
+		//otherwise, one tile has a path, the other has a wall.
 		for(int r =0;r<7;r++) {
 			for(int c =0;c<7;c++) {
 				for(int d=0;d<directions[Board.tileBoard[r][c].getShape()][Board.tileBoard[r][c].getOrientation()].length;d++) {
+					
+					//row of the adjacent tile
 					int r2 = directions[Board.tileBoard[r][c].getShape()][Board.tileBoard[r][c].getOrientation()][d][0]+r;
 					int c2 = directions[Board.tileBoard[r][c].getShape()][Board.tileBoard[r][c].getOrientation()][d][1]+c;
-					if(r2<0||r2>=7||c2<0||c2>=7)continue;
+					
+					if(r2<0||r2>=7||c2<0||c2>=7)continue; //if the adjacent tile is out of bounds; skip it
+					
 					tempAdj[Board.board[r][c]][Board.board[r2][c2]]++;
 					tempAdj[Board.board[r2][c2]][Board.board[r][c]]++;
 					
@@ -65,6 +73,7 @@ public class BoardGraph {
 			}
 		}
 		
+		//using the temporary adjacency matrix, any dual connections becomes and edge
 		for(int r =0;r<Initialize.NUM_TILES;r++) {
 			for(int c =0;c<Initialize.NUM_TILES;c++) {
 				if(tempAdj[r][c]==2) {
@@ -76,6 +85,7 @@ public class BoardGraph {
 		
 	}
 	
+	//returns true if sId and dID contain an edge and are connected. Otherwise return false.
 	public static boolean canMove(int sID, int dID) {
 		
 		//BFS
@@ -97,12 +107,15 @@ public class BoardGraph {
     	//can't go on the same spot as the other player, but can go over them
     	int otherPlayer = GameGUI.currentPlayer==0?1:0;
     	vis[Board.board[Initialize.players[otherPlayer].getRow()][Initialize.players[otherPlayer].getColumn()]] = false;
+    	
     	return vis[dID];
-		
 		
 	}
 	
+	//similar to the canMove method, but instead returns a boolean array
+	//where reachable tiles are indicated with true
 	public static boolean[] possiblePaths (int sID) {
+		
 		//BFS
 		Queue<Integer> que = new LinkedList<Integer>();
     	que.add(sID);
@@ -119,9 +132,11 @@ public class BoardGraph {
     			}
     		}
 		}
+    	
     	//can't go on the same spot as the other player, but can go over them
     	int otherPlayer = GameGUI.currentPlayer==0?1:0;
     	vis[Board.board[Initialize.players[otherPlayer].getRow()][Initialize.players[otherPlayer].getColumn()]] = false;
+    	
     	return vis;
 	}
 	

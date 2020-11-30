@@ -1,16 +1,27 @@
+/**
+ * TileImages class holds the images of tiles
+ */
+
 import javax.swing.*;
 
+//load in the tile images
 public class TileImages {
 	
-	public static final ImageIcon tileImages[][] = new ImageIcon[50][4];
+	//The array containing the tile images. 
+	public static final ImageIcon tileImages[][] = new ImageIcon[50][4]; //The first index is for the tile ID. The second is for the orientation.
 	
+	//Constructor
 	public TileImages() {
 		
+		//Load all images
 		loadImages();
 		
 	}
 
+	//load all card images
 	private void loadImages() {
+		
+		//tile ID of the image corresponding the tile
 		int index = 0;
 		
 	    //Bat
@@ -87,7 +98,7 @@ public class TileImages {
 	    
 	    index+= 16;
 	    
-	    //Fixed Tiles
+	    //Fixed Tiles(Orientation does not matter so loops through four times to fill the array)
 	    for(int i =0;i<4;i++) {
 	    	index-=16;
 		    tileImages[index++][i] = new ImageIcon(new ImageIcon("TileImages/GoldCoins.png").getImage().getScaledInstance(50, 50, 0));

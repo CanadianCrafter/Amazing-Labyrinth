@@ -2,17 +2,16 @@
 import java.util.*;
 
 public class Board {
-	
-	
-	
+
 	public static int freeTile;
-	public static int board[][]=new int[7][7];
+	public static int board[][]=new int[7][7]; //board of tile IDs
 	private static boolean vis[] = new boolean [Initialize.NUM_TILES];
 	
 	public static Tile tileBoard[][] = new Tile[7][7];
 	public static Tile tileFreeTile;
 	
 	public Board() {
+		
 		createBoard();
 		createTileBoard();
 		new BoardGraph();
@@ -46,11 +45,15 @@ public class Board {
 		board[6][2]=Initialize.tileNameToID.get("Menorah");
 		board[6][4]=Initialize.tileNameToID.get("Helmet");
 		
+		//Unmovable tiles are already added; no need to add again
+		//Unmovable Non-Treasure
+		
 		vis[Initialize.tileNameToID.get("Red")]=true;
 		vis[Initialize.tileNameToID.get("Yellow")]=true;
 		vis[Initialize.tileNameToID.get("Green")]=true;
 		vis[Initialize.tileNameToID.get("Blue")]=true;
-	
+		
+		//Unmovable Treasure
 		vis[Initialize.tileNameToID.get("Book")]=true;
 		vis[Initialize.tileNameToID.get("Gold_Coins")]=true;
 		vis[Initialize.tileNameToID.get("Treasure_Map")]=true;
@@ -76,7 +79,6 @@ public class Board {
 				while(vis[index])
 					index = (int)(Initialize.NUM_TILES*Math.random());
 				
-				
 				board[i][j]=index;
 				vis[index]=true;
 				
@@ -91,6 +93,7 @@ public class Board {
 		}
 	}
 
+	//given the board, make a board of tiles
 	public static void createTileBoard() {
 		
 		for(int i =0;i<7;i++) {

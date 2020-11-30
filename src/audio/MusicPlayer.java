@@ -44,6 +44,7 @@ public class MusicPlayer {
 	}
 	
 	//added by Bryan
+	//pauses and unpauses the music
 	public static void pauseMusic(){
 		
 		time = clip.getMicrosecondPosition();
@@ -51,7 +52,6 @@ public class MusicPlayer {
 		clip.stop();
 		
 	}
-	
 	public static void unpauseMusic(){
 		
 		clip.loop(Clip.LOOP_CONTINUOUSLY);

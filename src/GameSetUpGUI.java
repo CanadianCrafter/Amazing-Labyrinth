@@ -5,22 +5,22 @@ import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
 
-import audio.MusicPlayer;
-
 public class GameSetUpGUI extends JFrame implements ActionListener {
+	
 	//gui stuff
 	static JFrame frame;
 	private static JPanel screen;
 	
-	private JLabel image1;
-	private JLabel image2;
-	private JLabel image3;
-	private JLabel image4;
+	//setup screen
+	private JLabel setUpScreen;
 	
+	//difficulty buttons 
 	private JButton playerOnly;
 	private JButton easy;
 	private JButton medium;
 	private JButton hard;
+	
+	//Colours
 	private JButton red0;
 	private JButton red1;
 	private JButton yellow0;
@@ -29,34 +29,43 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 	private JButton green1;
 	private JButton blue0;
 	private JButton blue1;
+	
+	//Number of cards
 	private JButton numC2;
 	private JButton numC3;
 	private JButton numC4;
 	private JButton numC5;
 	private JButton numC6;
 	
+	//selection label
+	private JLabel playerSelectionLabel;
+	private JLabel playerColourLabel[]=new JLabel[2];;
+	private JLabel cardNumLabel;
+	
+	//game start buttons
 	JButton playButton;
 	JButton loadButton;
 	
-	int[] playerColour=new int[2];
-	int cardNum;
-	
-	int playerSelection;
+	public static int[] playerColour=new int[2];
+	public static int cardNum=5;
+	public static int playerSelection=0;
 	
 	
 
 	// constructor method
 	public GameSetUpGUI() {
+		
 		new ExtraBoardImages();
-		MusicPlayer.playAudio("Audio/BGM/Actraiser - Birth of the People Medley.wav");
+		
 		frame=new JFrame();
 		screen=new JPanel();
 		
-		image1=new JLabel();
-		image2=new JLabel();
-		image3=new JLabel();
-		image4=new JLabel();
+		setUpScreen=new JLabel();
 		
+		cardNumLabel=new JLabel();
+		playerSelectionLabel=new JLabel();
+		for(int i =0;i<2;i++)
+			playerColourLabel[i]=new JLabel();
 		
 		playerOnly = new JButton ();
 		easy = new JButton ();
@@ -79,12 +88,9 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 		playButton=new JButton();
 		loadButton=new JButton();
 		
-		playerColour[0]=-1;
-		playerColour[1]=-1;
+		playerColour[0]=0;
+		playerColour[1]=1;
 		
-		cardNum=0;
-		
-		playerSelection=0;
 		
 		frameSetup();
 		panelDesign();
@@ -92,6 +98,7 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 
 	//set up the frame
 	private void frameSetup() {
+		
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //program will end when exited
 		frame.setSize(750,500); // sets the size of the frame
 		frame.setTitle("Amazing Labyrinth");
@@ -102,17 +109,18 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 		frame.validate();
 		frame.repaint();
 		frame.setVisible(true); 
+	
 	}
 
 	//set up the panel
 	private void panelDesign() {
+		
 		//add features for the screen
 		screen.setBorder(null);
 		screen.setBackground(new java.awt.Color(47, 47, 47));
 		screen.setBounds(0,0,750,500);
 		screen.setLayout(null);
-		
-		
+			
 		
 		//add features for the buttons
 		playButton.addActionListener(this);
@@ -171,7 +179,6 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 		red1.setContentAreaFilled(false);
 		red1.setBorderPainted(false);
 		screen.add(red1);
-		
 		
 		yellow0.setBounds(185,270,75,35);
 		yellow0.addActionListener(this);
@@ -252,200 +259,216 @@ public class GameSetUpGUI extends JFrame implements ActionListener {
 		numC6.setContentAreaFilled(false);
 		numC6.setBorderPainted(false);;
 		
-		image1.setBounds(0, 0, 750, 500);
-		image1.setIcon(ExtraBoardImages.startScreenImages[0]);
-		image1.setVisible(true);
-		screen.add(image1);
 		
-		image2.setBounds(0, 0, 750, 500);
-		image2.setIcon(ExtraBoardImages.startScreenImages[1]);
-		image2.setVisible(false);
-		screen.add(image2);
-	
-		image3.setBounds(0, 0, 750, 500);
-		image3.setIcon(ExtraBoardImages.startScreenImages[2]);
-		image3.setVisible(false);
-		screen.add(image3);
 		
-		image4.setBounds(0, 0, 750, 500);
-		image4.setIcon(ExtraBoardImages.startScreenImages[3]);
-		image4.setVisible(false);
-		screen.add(image4);
+		for(int i=0; i<2; i++) {
+			playerColourLabel[i].setBackground(Color.white);
+			playerColourLabel[i].setOpaque(true);
+			playerColourLabel[i].setVisible(true);
+			screen.add(playerColourLabel[i]);
+		}
+		playerColourLabel[0].setBounds(142,295,40,5);
+		playerColourLabel[1].setBounds(187,335,68,5);
+		
+		cardNumLabel.setBounds(206, 460, 15, 5);
+		cardNumLabel.setBackground(Color.white);
+		cardNumLabel.setVisible(true);
+		cardNumLabel.setOpaque(true);
+		screen.add(cardNumLabel);
+		
+		playerSelectionLabel.setBounds(30,237,130,5);
+		playerSelectionLabel.setVisible(true);
+		playerSelectionLabel.setOpaque(true);
+		playerSelectionLabel.setBackground(Color.white);
+		screen.add(playerSelectionLabel);
+		
+		
+		setUpScreen.setBounds(0, 0, 750, 500);
+		setUpScreen.setIcon(ExtraBoardImages.startScreenImages[0]);
+		setUpScreen.setVisible(true);
+		screen.add(setUpScreen);
 		
 		frame.repaint();
 
 	}
 	
+	//checks if the save file has data
+	//if the save file is empty, return false
+	private boolean checkLoad() {
+		File newFile = new File("Files/Save.txt");
+	    if (newFile.length() == 0) return false;
+		return true;
+	}
+		
 	//carries out the actions for each of the buttons
 	public void actionPerformed(ActionEvent event) {
 		//starts a new game
+		//checks if all settings are entered
+			
 		if(event.getSource()==playButton) {
 			//wipes the save file
-			
-			if(playerColour[0]!=-1 && playerColour[1]!=-1 && cardNum!=0 && playerSelection==0) {
-				try {
-					new PrintWriter("Files/Save.txt").close();
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-				dispose();
-				try {
-					//NEED TO double check that the array doesn't have two of the same values
-					int arr[] = {1,0};
-					frame.setVisible(false);
-					new Initialize(cardNum,playerColour);
-					new GameGUI(false);//starts a game without loading saves
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}else {
-				System.out.println("Error");
+			try {
+				new PrintWriter("Files/Save.txt").close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
 			}
-			 
+			dispose();
 			
+			try {
+				frame.setVisible(false);
+				new Initialize(cardNum,playerColour,false); //starts a game without loading saves
+				new GameGUI();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		
 		//loads in a saved game
-		else if(event.getSource()==loadButton) {
+		if(event.getSource()==loadButton) {
 			//if the save file is empty, change the splash screen image to show an error message
 			if(!checkLoad()) {
-//				image.setIcon(new ImageIcon(new ImageIcon("Images/Splash Screen Error.png").getImage().getScaledInstance(500, 500, 0)));
+				setUpScreen.setIcon(ExtraBoardImages.startScreenImages[1]);
+				repaint();
 			}
 			//if the save file isn't empty, start a game that loads the save
 			else {
 				dispose();
 				try {
-					new GameGUI(true);
+					frame.setVisible(false);
+					new Initialize(true);
+					new GameGUI();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 		
-		else if(event.getSource()==red0) {
-			
-			if(playerColour[1]==0) {
-				image3.setVisible(true);
-				image1.setVisible(false);
-			}else {
-				image1.setVisible(true);
-				playerColour[0]=0;
-			}
-		}
-		
-		else if(event.getSource()==red1) {
-			
-			if(playerColour[0]==0) {
-				image3.setVisible(true);
-				image1.setVisible(false);
-			}else {
-				image1.setVisible(true);
-				playerColour[1]=0;
+		//displays the right background images in response to player choices
+			//record player's choices
+			if(event.getSource()==red0) {
+				if(playerColour[1]==0) {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[2]);
+				}else {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[0]);
+					playerColour[0]=0;
+					playerColourLabel[0].setBounds(142,295,40,5);
+				}
 			}
 			
-		}
-		
-		else if(event.getSource()==yellow0) {
-			
-			if(playerColour[1]==1) {
-				image3.setVisible(true);
-				image1.setVisible(false);
-			}else {
-				image1.setVisible(true);
-				playerColour[0]=1;
-			}
-		}
-		
-		else if(event.getSource()==yellow1) {
-			if(playerColour[0]==1) {
-				image3.setVisible(true);
-				image1.setVisible(false);
-			}else {
-				image1.setVisible(true);
-				playerColour[1]=1;
-			}
-		}
-		
-		else if(event.getSource()==green0) {
-			if(playerColour[1]==2) {
-				image3.setVisible(true);
-				image1.setVisible(false);
-			}else {
-				image1.setVisible(true);
-				playerColour[0]=2;
-			}
-		}
-		
-		else if(event.getSource()==green1) {
-			if(playerColour[0]==2) {
-				image3.setVisible(true);
-				image1.setVisible(false);
-			}else {
-				image1.setVisible(true);
-				playerColour[1]=2;
-			}
-		}
-		
-		else if(event.getSource()==blue0) {
-			if(playerColour[1]==3) {
-				image3.setVisible(true);
-				image1.setVisible(false);
-			}else {
-				image1.setVisible(true);
-				playerColour[0]=3;
+			else if(event.getSource()==red1) {
+				
+				if(playerColour[0]==0) {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[2]);
+				}else {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[0]);
+					playerColour[1]=0;
+					playerColourLabel[1].setBounds(142,335,40,5);
+				}
+				
 			}
 			
-		}
-		
-		else if(event.getSource()==blue1) {
-			if(playerColour[0]==3) {
-				image3.setVisible(true);
-				image1.setVisible(false);
-			}else {
-				image1.setVisible(true);
-				playerColour[1]=3;
+			else if(event.getSource()==yellow0) {
+				
+				if(playerColour[1]==1) {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[2]);
+				}else {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[0]);
+					playerColour[0]=1;
+					playerColourLabel[0].setBounds(187,295,68,5);
+				}
 			}
-		}
-		
-		else if(event.getSource()==numC2) {
-			cardNum=2;
-		}
-		else if(event.getSource()==numC3) {
-			cardNum=3;
-		}
-		else if(event.getSource()==numC4) {
-			cardNum=4;
-		}
-		else if(event.getSource()==numC5) {
-			cardNum=5;
-		}
-		else if(event.getSource()==numC6) {
-			cardNum=6;
-		}
-		
-		else if(event.getSource()==playerOnly) {
-			playerSelection=0;
-		}
-		
-		else if(event.getSource()==easy) {
-			System.out.println("Not Available");
-		}
-		else if(event.getSource()==medium) {
-			System.out.println("Not Available");
-		}
-		else if(event.getSource()==hard) {
-			System.out.println("Not Available");
-		}
-		
-		
-		
-		frame.repaint();
+			
+			else if(event.getSource()==yellow1) {
+				if(playerColour[0]==1) {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[2]);
+				}else {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[0]);
+					playerColour[1]=1;
+					playerColourLabel[1].setBounds(187,335,68,5);
+				}
+			}
+			
+			else if(event.getSource()==green0) {
+				if(playerColour[1]==2) {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[2]);
+				}else {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[0]);
+					playerColour[0]=2;
+					playerColourLabel[0].setBounds(262,295,55,5);
+				}
+			}
+			
+			else if(event.getSource()==green1) {
+				if(playerColour[0]==2) {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[2]);
+				}else {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[0]);
+					playerColour[1]=2;
+					playerColourLabel[1].setBounds(262,335,55,5);
+				}
+			}
+			
+			else if(event.getSource()==blue0) {
+				if(playerColour[1]==3) {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[2]);
+				}else {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[0]);
+					playerColour[0]=3;
+					playerColourLabel[0].setBounds(322,295,45,5);
+				}
+				
+			}
+			
+			else if(event.getSource()==blue1) {
+				if(playerColour[0]==3) {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[2]);
+				}else {
+					setUpScreen.setIcon(ExtraBoardImages.startScreenImages[0]);
+					playerColour[1]=3;
+					playerColourLabel[1].setBounds(322,335,45,5);
+				}
+			}
+			
+			if(event.getSource()==numC2) {
+				cardNum=2;
+				cardNumLabel.setBounds(127,460,15,5);
+			}
+			else if(event.getSource()==numC3) {
+				cardNum=3;
+				cardNumLabel.setBounds(153, 460, 15, 5);
+			}
+			else if(event.getSource()==numC4) {
+				cardNum=4;
+				cardNumLabel.setBounds(178, 460, 15, 5);
+			}
+			else if(event.getSource()==numC5) {
+				cardNum=5;
+				cardNumLabel.setBounds(206, 460, 15, 5);
+			}
+			else if(event.getSource()==numC6) {
+				cardNum=6;
+				cardNumLabel.setBounds(230, 460, 15, 5);
+			}
+			
+			
+			if(event.getSource()==playerOnly) {
+				playerSelection=0;
+				playerSelectionLabel.setBounds(30,237,130,5);
+			}
+			
+			//these are dummy
+			if(event.getSource()==easy) {
+				System.out.println("Not Available");
+			}
+			else if(event.getSource()==medium) {
+				System.out.println("Not Available");
+			}
+			else if(event.getSource()==hard) {
+				System.out.println("Not Available");
+			}
+			
+			frame.repaint();
 	}
 	
-	//checks if the save file has data
-	//if the save file is empty, return false
-	private boolean checkLoad() {
-		File newFile = new File("Save.txt");
-	    if (newFile.length() == 0) return false;
-		return true;
-	}
+	
 }

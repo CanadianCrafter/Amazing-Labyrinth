@@ -11,19 +11,23 @@ public class Initialize {
 		public final static int NUM_CARDS=24;
 		public final static int NUM_PLAYERS=2;
 		
-		
+		//saves all the tiles
 		public static Tile allTiles[] = new Tile [NUM_TILES];
 		
+		//saves all the players
 		public static Player players[] = new Player [NUM_PLAYERS];
 		
+		// tile's string name as a key, tileID as value. This is to save time for coding
 		public static Map<String, Integer> tileNameToID = new HashMap();
 		
+		//game set up options
 		public static int cardsPerPlayer;
 		static boolean cardChosen[]=new boolean[NUM_CARDS];
-		public static int playerColours[];
+		public static int playerColours[] = new int [NUM_PLAYERS];
 		
-		
-		public Initialize(int cardsPerPlayer, int[] playerColours) throws IOException {
+		//constructer method
+		public Initialize(int cardsPerPlayer, int[] playerColours, boolean ifLoad) throws IOException {
+			
 			this.cardsPerPlayer = cardsPerPlayer;
 			this.playerColours  =playerColours;
 			
@@ -36,9 +40,31 @@ public class Initialize {
 			new ExtraBoardImages();
 			new Board();
 			
+			if(ifLoad) loadSaveState();
+			
 		}
 		
-
+		
+		//this constructor is only called if there is a save file. this ifLoad is a little redundant
+		public Initialize(boolean ifLoad) throws IOException {
+			
+			initializeTiles();
+			initializeTileNameToID();
+			
+			
+			new TileImages();
+			new CardImages();
+			new ExtraBoardImages();
+			new Board();
+			
+			for(int i =0;i<NUM_PLAYERS;i++)
+				players[i] =new Player();
+			
+			if(ifLoad) loadSaveState();
+			
+		}
+		
+		//initializes the tile data
 		private void initializeTiles() {
 			
 			int index=0;
@@ -82,6 +108,7 @@ public class Initialize {
 			
 		}
 		
+		//reads in the tile name and its corresponding tile ID. this simplifies some of the code later on
 		private void initializeTileNameToID() throws IOException{
 			BufferedReader br = new BufferedReader(new java.io.FileReader(new File("Files/UnmovableTileIDs.txt")));
 			
@@ -101,6 +128,7 @@ public class Initialize {
 				
 		}
 		
+		//initializes the players
 		public static void initializePlayers() {
 			
 			for(int i =0;i<NUM_PLAYERS;i++)
@@ -128,6 +156,7 @@ public class Initialize {
 			
 		}
 		
+		//randomly generates a deck of cards for the players to start off with
 		public static ArrayList<Integer> generateDeck(int playerID) {
 			
 			ArrayList<Integer> cards=new ArrayList<Integer>();
@@ -143,6 +172,106 @@ public class Initialize {
 				cardChosen[cardIndex]=true;
 			}
 			return cards;
+			
+		}
+		
+		//Loads in a save state
+		private void loadSaveState() throws IOException {
+			
+			try {
+				BufferedReader br = new BufferedReader(new java.io.FileReader(new File("Files/Save.txt")));
+				
+				//load in board
+				int tempBoard[][] = new int[7][7];
+				for(int i =0;i<7;i++) {
+					for(int j=0;j<7;j++) {
+						while (st == null || !st.hasMoreTokens())
+				            st = new StringTokenizer(br.readLine().trim());
+						tempBoard[i][j] = Integer.parseInt(st.nextToken());
+					}
+				}
+				
+				//load in free tile
+				while (st == null || !st.hasMoreTokens())
+		            st = new StringTokenizer(br.readLine().trim());
+				Board.setFreeTile(Integer.parseInt(st.nextToken()));
+				
+				Board.setBoard(tempBoard);
+				
+				
+				//load in tile orientation
+				int tempOrientation[][] = new int[7][7];
+				for(int i =0;i<7;i++) {
+					for(int j=0;j<7;j++) {
+						while (st == null || !st.hasMoreTokens())
+				            st = new StringTokenizer(br.readLine().trim());
+						int orientation = Integer.parseInt(st.nextToken());
+						allTiles[Board.board[i][j]].setOrientation(orientation) ;
+					}
+				}
+				
+				Board.createTileBoard();
+				BoardGraph.createBoardGraph();		
+				
+				
+				//load in player colours
+				for(int i =0;i<NUM_PLAYERS;i++) {
+					while (st == null || !st.hasMoreTokens())
+			            st = new StringTokenizer(br.readLine().trim());
+					playerColours[i]=Integer.parseInt(st.nextToken());
+					players[i].setColourID(playerColours[i]);
+				}
+				
+				//load in number of cards per player
+				while (st == null || !st.hasMoreTokens())
+		            st = new StringTokenizer(br.readLine().trim());
+				cardsPerPlayer=Integer.parseInt(st.nextToken());
+				
+				//loads in the player's cards
+				for(int i =0;i<NUM_PLAYERS;i++) {
+					for(int j=0;j<cardsPerPlayer;j++) {
+						while (st == null || !st.hasMoreTokens())
+				            st = new StringTokenizer(br.readLine().trim());
+						int val = Integer.parseInt(st.nextToken());
+						if(val!=-1)
+							players[i].getDeck().add(val);
+					}
+				}
+				
+				
+				//loads in player positions
+				for(int i =0;i<NUM_PLAYERS;i++) {
+					//sets row
+					while (st == null || !st.hasMoreTokens())
+			            st = new StringTokenizer(br.readLine().trim());
+					players[i].setRow(Integer.parseInt(st.nextToken()));
+					
+					//sets column
+					while (st == null || !st.hasMoreTokens())
+			            st = new StringTokenizer(br.readLine().trim());
+					players[i].setColumn(Integer.parseInt(st.nextToken()));
+					
+				}
+				
+				
+				br.close();
+				
+			}
+			
+			// print the error if there is one
+			catch (FileNotFoundException error) {
+				System.out.println(error);
+			}
+			
+			//after the data is extracted, the save is wiped so that, you cannot return to a used save.
+			//saving merely pauses time; not reverse it
+			try {
+				new PrintWriter("Save.txt").close();
+			} 
+			
+			catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 			
 		}
 		
